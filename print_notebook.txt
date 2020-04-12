@@ -1,0 +1,6 @@
+jupyter nbconvert --to PDF "my-notebook.ipynb"
+
+jupyter nbconvert --to latex "my-notebook.ipynb"
+vim arquivo .tex
+\documentclass[10pt]{article}
+\documentclass[11pt,landscape]{article}
