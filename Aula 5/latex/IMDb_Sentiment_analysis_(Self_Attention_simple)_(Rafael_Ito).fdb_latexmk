@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1586398718 "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).tex" "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).pdf" "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)" 1586398718
+["pdflatex"] 1587482956 "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).tex" "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).pdf" "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)" 1587482957
   "/home/rafael/.texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1576676982 334320 d10c2901904b0a572e57c10ac4826b67 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc" 1572595918 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1572595918 2971 def0b6c1f0b107b3b936def894055589 ""
@@ -196,16 +196,16 @@
   "/usr/share/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1572595918 4962 9c1069474ff71dbc47d5006555e352d3 ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1572595918 33301 a3134070eacafb10b1f371612ce2650d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1585753501 8044938 b99b700dbafbf77de94f29b04c614412 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).aux" 1586398718 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).out" 0 -1 0 "pdflatex"
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).tex" 1586398716 131730 d6f662f388cb02eac1feb3f8916f1c47 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_100_0.png" 1586398685 19484 c06d63753504d5be73a317e361efdb13 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_112_0.png" 1586398685 9377 5e2a0cf6b1656b253aeae444287afe87 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_113_0.png" 1586398685 10686 e8448af7834973bd66883a2d5736d932 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_96_0.png" 1586398685 18869 74cb2cf0dcb1661e817e69ffd3f9d4a9 ""
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_98_1.png" 1586398685 14587 1a38201fea5eafd93eb145fc131631e0 ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).aux" 1587482957 10740 5f857e12a23f21a6c324e55c67a855a0 "pdflatex"
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).out" 1587482957 3500 d59e5752cb3d713bd0865b64b65eac05 "pdflatex"
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).tex" 1587482950 129389 4381cb3c59f2e729467431fea6cd000f ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_100_0.png" 1587482913 22152 2d3f1da5a8e41a29246555e26fc7254b ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_112_0.png" 1587482913 9804 ce3e8a3c82cc58a10aac40c3da49d7d4 ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_113_0.png" 1587482913 11018 c6fe4c179c78976b05db43892e397fff ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_96_0.png" 1587482913 19013 a796f01ecc10b3fa82c399aa593ace78 ""
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_files/IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito)_98_1.png" 1587482913 18798 ec030ea153ef6465ffeac5a41cddbc1c ""
   (generated)
+  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).aux"
   "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).out"
   "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).pdf"
   "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).log"
-  "IMDb_Sentiment_analysis_(Self_Attention_simple)_(Rafael_Ito).aux"

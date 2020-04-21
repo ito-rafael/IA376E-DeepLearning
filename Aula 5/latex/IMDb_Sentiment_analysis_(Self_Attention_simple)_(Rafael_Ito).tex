@@ -401,7 +401,7 @@ as features the self-attention of the GloVe embeddings.
 \subsubsection{1.1 Install packages}\label{install-packages}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{1}{\boxspacing}
+\prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{o}{!}pip install \PYZhy{}q \PY{err}{\PYZbs{}}
     \PY{n}{numpy}       \PYZbs{}
@@ -411,11 +411,6 @@ as features the self-attention of the GloVe embeddings.
     \PY{n}{matplotlib}  
 \end{Verbatim}
 \end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-     |████████████████████████████████| 112kB 7.3MB/s
-
-    \end{Verbatim}
 
     \hypertarget{import-libraries}{%
 \subsubsection{1.2 Import libraries}\label{import-libraries}}
@@ -494,10 +489,6 @@ Device: cuda
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{c+c1}{\PYZsh{} choose if the features to be used will be TF\PYZhy{}IDF or word embeddings}
-\PY{n}{TFIDF} \PY{o}{=} \PY{k+kc}{True}
-\PY{c+c1}{\PYZsh{}TFIDF = False}
-\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
 \PY{c+c1}{\PYZsh{} define the size of embeddings (options: 50, 100, 200, 300)}
 \PY{n}{EMBEDDING\PYZus{}DIM} \PY{o}{=} \PY{l+m+mi}{300}
 \end{Verbatim}
@@ -633,7 +624,7 @@ embeddings
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
+\prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{def} \PY{n+nf}{pre\PYZus{}processing}\PY{p}{(}\PY{n}{corpus}\PY{p}{,} \PY{n}{stopwords}\PY{p}{,} \PY{n}{embedding}\PY{o}{=}\PY{n}{GloVe}\PY{p}{(}\PY{n}{name}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{6B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,} \PY{n}{cache}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./glove\PYZus{}dir}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{:}
     \PY{n}{corpus\PYZus{}pp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -651,11 +642,6 @@ embeddings
     \PY{k}{return} \PY{n}{corpus\PYZus{}pp}
 \end{Verbatim}
 \end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-./glove\_dir/glove.6B.zip: 862MB [06:31, 2.20MB/s]
-100\%|█████████▉| 399630/400000 [00:38<00:00, 9998.81it/s]
-    \end{Verbatim}
 
     \hypertarget{classes}{%
 \subsubsection{2.2 Classes}\label{classes}}
@@ -778,16 +764,7 @@ embeddings
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
---2020-04-09 02:04:39--  http://files.fast.ai/data/examples/imdb\_sample.tgz
-Resolving files.fast.ai (files.fast.ai){\ldots} 67.205.15.147
-Connecting to files.fast.ai (files.fast.ai)|67.205.15.147|:80{\ldots} connected.
-HTTP request sent, awaiting response{\ldots} 200 OK
-Length: 571827 (558K) [application/x-gtar-compressed]
-Saving to: ‘imdb\_sample.tgz’
-
-imdb\_sample.tgz     100\%[===================>] 558.42K  1.27MB/s    in 0.4s
-
-2020-04-09 02:04:40 (1.27 MB/s) - ‘imdb\_sample.tgz’ saved [571827/571827]
+File ‘imdb\_sample.tgz’ already there; not retrieving.
 
     \end{Verbatim}
 
@@ -935,7 +912,7 @@ lowercase)
 
     \begin{Verbatim}[commandchars=\\\{\}]
 [nltk\_data] Downloading package stopwords to /root/nltk\_data{\ldots}
-[nltk\_data]   Unzipping corpora/stopwords.zip.
+[nltk\_data]   Package stopwords is already up-to-date!
 ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're"]
     \end{Verbatim}
 
@@ -1073,7 +1050,7 @@ Approach}\label{self-attention-using-the-loop-approach}}
 \PY{l+s+sd}{  \PYZhy{} q, k, v: (1 x 300)}
 \PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
 \PY{l+s+sd}{input:}
-\PY{l+s+sd}{  \PYZhy{} corpus\PYZus{}tokenized: (800 x 131 x 300)}
+\PY{l+s+sd}{  \PYZhy{} embedding\PYZus{}corpus\PYZus{}tokenized: (800 x 131 x 300)}
 \PY{l+s+sd}{    embeddings of the first \PYZdq{}max\PYZus{}length\PYZdq{} words of the sentence, }
 \PY{l+s+sd}{    truncated if bigger or completed with \PYZlt{}PAD\PYZgt{} if smaller.}
 \PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
@@ -1081,15 +1058,13 @@ Approach}\label{self-attention-using-the-loop-approach}}
 \PY{l+s+sd}{  \PYZhy{} net\PYZus{}inp\PYZus{}sa: (800 x 131 x 300)}
 \PY{l+s+sd}{  new embeddings calculated with self\PYZhy{}attention algorithm}
 \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
-\PY{k}{def} \PY{n+nf}{self\PYZus{}attention\PYZus{}loop}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
-    \PY{n}{N\PYZus{}SAMPLES} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}
-    \PY{n}{L} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-    \PY{n}{EMBEDDING\PYZus{}DIM} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{self\PYZus{}attention\PYZus{}loop}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
+    \PY{n}{SAMPLES} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}
+    \PY{n}{L} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+    \PY{n}{EMBEDDING\PYZus{}DIM} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
     \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-    \PY{n}{net\PYZus{}inp\PYZus{}sa} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{N\PYZus{}SAMPLES}\PY{p}{,} \PY{n}{L}\PY{p}{,} \PY{n}{EMBEDDING\PYZus{}DIM}\PY{p}{)}   \PY{c+c1}{\PYZsh{} in this case, (800 x 131 x 300)}
-    \PY{n}{rafael} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-    \PY{n}{ito} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-    \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{seq} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
+    \PY{n}{net\PYZus{}inp\PYZus{}sa} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{SAMPLES}\PY{p}{,} \PY{n}{L}\PY{p}{,} \PY{n}{EMBEDDING\PYZus{}DIM}\PY{p}{)}   \PY{c+c1}{\PYZsh{} in this case, (800 x 131 x 300)}
+    \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{seq} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
         \PY{k}{for} \PY{n}{q\PYZus{}idx}\PY{p}{,} \PY{n}{q} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{seq}\PY{p}{)}\PY{p}{:}
             \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
             \PY{c+c1}{\PYZsh{} calculate scores and probabilities}
@@ -1110,7 +1085,7 @@ Approach}\label{self-attention-using-the-loop-approach}}
                 \PY{n}{new\PYZus{}embedding} \PY{o}{+}\PY{o}{=} \PY{n}{v} \PY{o}{*} \PY{n}{probs}\PY{p}{[}\PY{n}{j}\PY{p}{]}
             \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
             \PY{c+c1}{\PYZsh{} save new embedding}
-            \PY{n}{net\PYZus{}inp\PYZus{}sa}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{n}{q\PYZus{}idx}\PY{p}{]} \PY{o}{=} \PY{n}{new\PYZus{}embedding}
+            \PY{n}{net\PYZus{}inp\PYZus{}sa}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{n}{q\PYZus{}idx}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{n}{new\PYZus{}embedding}
     \PY{k}{return} \PY{n}{net\PYZus{}inp\PYZus{}sa}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1122,17 +1097,18 @@ Approach}\label{self-attention-using-the-matrix-approach}}
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{k}{def} \PY{n+nf}{self\PYZus{}attention\PYZus{}matrix}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
-    \PY{n}{N\PYZus{}SAMPLES} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}
-    \PY{n}{L} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-    \PY{n}{EMBEDDING\PYZus{}DIM} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+\PY{k}{def} \PY{n+nf}{self\PYZus{}attention\PYZus{}matrix}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
+    \PY{n}{SAMPLES} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}
+    \PY{n}{L} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+    \PY{n}{EMBEDDING\PYZus{}DIM} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
     \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-    \PY{n}{net\PYZus{}inp\PYZus{}sa} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{N\PYZus{}SAMPLES}\PY{p}{,} \PY{n}{L}\PY{p}{,} \PY{n}{EMBEDDING\PYZus{}DIM}\PY{p}{)}   \PY{c+c1}{\PYZsh{} in this case, (800 x 131 x 300)}
-    \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{seq} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
+    \PY{n}{net\PYZus{}inp\PYZus{}sa} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n}{SAMPLES}\PY{p}{,} \PY{n}{L}\PY{p}{,} \PY{n}{EMBEDDING\PYZus{}DIM}\PY{p}{)}   \PY{c+c1}{\PYZsh{} in this case, (800 x 131 x 300)}
+    \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{seq} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{embedding\PYZus{}corpus\PYZus{}tokenized}\PY{p}{)}\PY{p}{:}
         \PY{n}{X} \PY{o}{=} \PY{n}{seq}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} new shape: (131 x 300)}
         \PY{n}{Q} \PY{o}{=} \PY{n}{K} \PY{o}{=} \PY{n}{V} \PY{o}{=} \PY{n}{X}
         \PY{n}{scores} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{Q}\PY{p}{,} \PY{n}{K}\PY{o}{.}\PY{n}{T}\PY{p}{)}
         \PY{n}{scores}\PY{p}{[}\PY{n}{scores} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mf}{1e10}  \PY{c+c1}{\PYZsh{} force scores = 0 to be very negative (\PYZhy{}1e10), so prob is almost 0}
+        \PY{c+c1}{\PYZsh{}probs = F.softmax(scores, dim=\PYZhy{}1)}
         \PY{n}{probs} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{softmax}\PY{p}{(}\PY{n}{scores}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
         \PY{n}{net\PYZus{}inp\PYZus{}sa}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{matmul}\PY{p}{(}\PY{n}{probs}\PY{p}{,} \PY{n}{V}\PY{p}{)}
     \PY{k}{return} \PY{n}{net\PYZus{}inp\PYZus{}sa}
@@ -1151,13 +1127,9 @@ Approach}\label{self-attention-using-the-matrix-approach}}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-100\%|█████████▉| 399630/400000 [00:50<00:00, 9998.81it/s]
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
 torch.Size([10, 131, 300])
-CPU times: user 4.97 s, sys: 1.55 ms, total: 4.97 s
-Wall time: 4.99 s
+CPU times: user 5.5 s, sys: 803 µs, total: 5.5 s
+Wall time: 5.51 s
     \end{Verbatim}
 
     Now we will test the same self attention ``layer'', but using the matrix
@@ -1174,8 +1146,8 @@ approach for all the dataset (800 samples)
 
     \begin{Verbatim}[commandchars=\\\{\}]
 torch.Size([800, 131, 300])
-CPU times: user 495 ms, sys: 46.7 ms, total: 541 ms
-Wall time: 560 ms
+CPU times: user 665 ms, sys: 54.9 ms, total: 720 ms
+Wall time: 721 ms
     \end{Verbatim}
 
     The first approach took 6.55 seconds for only 10 samples. If all the
@@ -1239,8 +1211,8 @@ tensor(0.0011)
 
     \begin{Verbatim}[commandchars=\\\{\}]
 torch.Size([200, 131, 300])
-CPU times: user 116 ms, sys: 14.1 ms, total: 130 ms
-Wall time: 131 ms
+CPU times: user 167 ms, sys: 15.1 ms, total: 182 ms
+Wall time: 201 ms
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1252,11 +1224,13 @@ Wall time: 131 ms
     \PY{c+c1}{\PYZsh{} clear entries for PAD}
     \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{L} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{length}\PY{p}{)}\PY{p}{:}
         \PY{n}{mask}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n+nb}{int}\PY{p}{(}\PY{n}{L}\PY{o}{.}\PY{n}{item}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{:}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{0}
-        \PY{k}{return} \PY{n}{mask}
     \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
     \PY{c+c1}{\PYZsh{} use mask to calculate mean}
     \PY{n}{masked\PYZus{}mean} \PY{o}{=} \PY{n}{mask}\PY{o}{.}\PY{n}{unsqueeze}\PY{p}{(}\PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)} \PY{o}{*} \PY{n}{sa\PYZus{}embeddings}
-    \PY{n}{masked\PYZus{}mean} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{masked\PYZus{}mean}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}    masked\PYZus{}mean = torch.mean(masked\PYZus{}mean, dim=2)}
+    \PY{c+c1}{\PYZsh{} do not use mean! instead, sum and divide by length (because there are PADs)}
+    \PY{n}{masked\PYZus{}mean} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{masked\PYZus{}mean}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+    \PY{n}{masked\PYZus{}mean} \PY{o}{=} \PY{n}{masked\PYZus{}mean} \PY{o}{/} \PY{n}{length}\PY{o}{.}\PY{n}{unsqueeze}\PY{p}{(}\PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
     \PY{k}{return} \PY{n}{masked\PYZus{}mean}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1273,8 +1247,8 @@ Wall time: 131 ms
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-torch.Size([800, 131])
-torch.Size([200, 131])
+torch.Size([800, 300])
+torch.Size([200, 300])
     \end{Verbatim}
 
     Target
@@ -1388,8 +1362,8 @@ visualization}\label{verifying-shape-batch-data-type-from-loader-and-optionally-
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-train: torch.Size([100, 131]) torch.float32 torch.Size([100]) torch.int64
-val: torch.Size([100, 131]) torch.float32 torch.Size([100]) torch.int64
+train: torch.Size([100, 300]) torch.float32 torch.Size([100]) torch.int64
+val: torch.Size([100, 300]) torch.float32 torch.Size([100]) torch.int64
 last batch size: 0 0
     \end{Verbatim}
 
@@ -1404,31 +1378,24 @@ definition}\label{network-class-definition}}
 \prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k}{class} \PY{n+nc}{NN}\PY{p}{(}\PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Module}\PY{p}{)}\PY{p}{:}
-    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{inputs}\PY{p}{,} \PY{n}{layer1\PYZus{}neurons}\PY{p}{,} \PY{n}{layer2\PYZus{}neurons}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{inputs}\PY{p}{,} \PY{n}{layer1\PYZus{}neurons}\PY{p}{)}\PY{p}{:}
         \PY{n+nb}{super}\PY{p}{(}\PY{n}{NN}\PY{p}{,} \PY{n+nb+bp}{self}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{p}{)}
         \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{inputs} \PY{o}{=} \PY{n}{inputs}
         \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1\PYZus{}neurons} \PY{o}{=} \PY{n}{layer1\PYZus{}neurons}
-        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2\PYZus{}neurons} \PY{o}{=} \PY{n}{layer2\PYZus{}neurons}
 
         \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dropout} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Dropout}\PY{p}{(}\PY{l+m+mf}{0.5}\PY{p}{)}
         \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Linear}\PY{p}{(}\PY{n}{in\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{inputs}\PY{p}{,}  \PY{n}{out\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1\PYZus{}neurons}\PY{p}{)}
-        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Linear}\PY{p}{(}\PY{n}{in\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1\PYZus{}neurons}\PY{p}{,}  \PY{n}{out\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2\PYZus{}neurons}\PY{p}{)}
-        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer3} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Linear}\PY{p}{(}\PY{n}{in\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2\PYZus{}neurons}\PY{p}{,}  \PY{n}{out\PYZus{}features}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{Linear}\PY{p}{(}\PY{n}{in\PYZus{}features}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1\PYZus{}neurons}\PY{p}{,}  \PY{n}{out\PYZus{}features}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
 
     \PY{k}{def} \PY{n+nf}{forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
         \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
         \PY{c+c1}{\PYZsh{} dense layer, ReLU, dropout}
         \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer1}\PY{p}{(}\PY{n}{x}\PY{p}{)}
         \PY{n}{x} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{relu}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-        \PY{c+c1}{\PYZsh{}x = self.dropout(x)}
-        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-        \PY{c+c1}{\PYZsh{} dense layer, ReLU, dropout}
-        \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-        \PY{n}{x} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{relu}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-        \PY{c+c1}{\PYZsh{}x = self.dropout(x)}
+        \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dropout}\PY{p}{(}\PY{n}{x}\PY{p}{)}
         \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
         \PY{c+c1}{\PYZsh{} dense layer}
-        \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer3}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+        \PY{n}{x} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{layer2}\PY{p}{(}\PY{n}{x}\PY{p}{)}
         \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
         \PY{k}{return} \PY{n}{x}
 \end{Verbatim}
@@ -1440,7 +1407,7 @@ definition}\label{network-class-definition}}
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{model} \PY{o}{=} \PY{n}{NN}\PY{p}{(}\PY{n}{inputs}\PY{o}{=}\PY{n}{max\PYZus{}length}\PY{p}{,} \PY{n}{layer1\PYZus{}neurons}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,} \PY{n}{layer2\PYZus{}neurons}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{)}
+\PY{n}{model} \PY{o}{=} \PY{n}{NN}\PY{p}{(}\PY{n}{inputs}\PY{o}{=}\PY{n}{EMBEDDING\PYZus{}DIM}\PY{p}{,} \PY{n}{layer1\PYZus{}neurons}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}
 \PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{device}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
@@ -1450,9 +1417,8 @@ definition}\label{network-class-definition}}
 \begin{Verbatim}[commandchars=\\\{\}]
 NN(
   (dropout): Dropout(p=0.5, inplace=False)
-  (layer1): Linear(in\_features=131, out\_features=500, bias=True)
-  (layer2): Linear(in\_features=500, out\_features=500, bias=True)
-  (layer3): Linear(in\_features=500, out\_features=2, bias=True)
+  (layer1): Linear(in\_features=300, out\_features=100, bias=True)
+  (layer2): Linear(in\_features=100, out\_features=2, bias=True)
 )
 \end{Verbatim}
 \end{tcolorbox}
@@ -1471,7 +1437,7 @@ loader}\label{network-predict-with-few-samples-of-batch-from-loader}}
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
 \prompt{Out}{outcolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-tensor([0.0336, 0.0095], device='cuda:0', grad\_fn=<AddBackward0>)
+tensor([-0.0852, -0.0925], device='cuda:0', grad\_fn=<AddBackward0>)
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1495,9 +1461,9 @@ tensor([0.0336, 0.0095], device='cuda:0', grad\_fn=<AddBackward0>)
 \prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Training parameters}
-\PY{n}{EPOCH} \PY{o}{=} \PY{l+m+mi}{1000}
-\PY{n}{LR} \PY{o}{=} \PY{l+m+mf}{0.1}
-\PY{n}{PATIENCE} \PY{o}{=} \PY{l+m+mi}{100}
+\PY{n}{EPOCH} \PY{o}{=} \PY{l+m+mi}{2000}
+\PY{n}{LR} \PY{o}{=} \PY{l+m+mf}{0.01}
+\PY{n}{PATIENCE} \PY{o}{=} \PY{l+m+mi}{50}
 \PY{n}{loss\PYZus{}func} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{nn}\PY{o}{.}\PY{n}{CrossEntropyLoss}\PY{p}{(}\PY{p}{)}
 \PY{n}{opt} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{optim}\PY{o}{.}\PY{n}{SGD}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{n}{LR}\PY{p}{)}
 \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
@@ -1520,8 +1486,9 @@ tensor([0.0336, 0.0095], device='cuda:0', grad\_fn=<AddBackward0>)
 \subsubsection{5.2 Training loop}\label{training-loop}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}\PYZpc{}time}
 \PY{k}{for} \PY{n}{epoch} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{EPOCH}\PY{p}{)}\PY{p}{:}
     \PY{c+c1}{\PYZsh{} training}
     \PY{n}{his\PYZus{}train} \PY{o}{=} \PY{n}{trainer}\PY{p}{(}\PY{p}{)}
@@ -1544,7 +1511,7 @@ tensor([0.0336, 0.0095], device='cuda:0', grad\_fn=<AddBackward0>)
             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Early stopping:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{PATIENCE}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{iterations without validation loss improve}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
             \PY{k}{break}
     \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
-    \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{epoch} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{o+ow}{not} \PY{p}{(}\PY{n}{epoch} \PY{o}{\PYZpc{}} \PY{l+m+mi}{100}\PY{p}{)}\PY{p}{:}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch =}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{epoch}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{; }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss\PYZus{}train = }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss\PYZus{}train\PYZus{}his}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{; }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss\PYZus{}val = }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss\PYZus{}valid\PYZus{}his}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{; }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1554,29 +1521,37 @@ tensor([0.0336, 0.0095], device='cuda:0', grad\_fn=<AddBackward0>)
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-epoch = 0; loss\_train = 0.7149; loss\_val = 0.6936; acc\_train = 0.4925; acc\_val =
-0.4650
-epoch = 10; loss\_train = 0.6940; loss\_val = 0.7039; acc\_train = 0.5212; acc\_val
-= 0.4650
-epoch = 20; loss\_train = 0.6930; loss\_val = 0.6915; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 30; loss\_train = 0.6928; loss\_val = 0.6910; acc\_train = 0.4988; acc\_val
-= 0.5350
-epoch = 40; loss\_train = 0.6926; loss\_val = 0.6911; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 50; loss\_train = 0.6924; loss\_val = 0.6914; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 60; loss\_train = 0.6929; loss\_val = 0.6918; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 70; loss\_train = 0.6927; loss\_val = 0.6915; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 80; loss\_train = 0.6927; loss\_val = 0.6914; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 90; loss\_train = 0.6925; loss\_val = 0.6913; acc\_train = 0.5212; acc\_val
-= 0.5350
-epoch = 100; loss\_train = 0.6922; loss\_val = 0.6914; acc\_train = 0.5212; acc\_val
-= 0.5350
-Early stopping: 100 iterations without validation loss improve
+epoch = 0; loss\_train = 0.6921; loss\_val = 0.6893; acc\_train = 0.5188; acc\_val =
+0.5900
+epoch = 100; loss\_train = 0.6790; loss\_val = 0.6761; acc\_train = 0.6025; acc\_val
+= 0.6000
+epoch = 200; loss\_train = 0.6564; loss\_val = 0.6533; acc\_train = 0.6800; acc\_val
+= 0.6900
+epoch = 300; loss\_train = 0.6103; loss\_val = 0.6151; acc\_train = 0.7338; acc\_val
+= 0.7400
+epoch = 400; loss\_train = 0.5594; loss\_val = 0.5755; acc\_train = 0.7675; acc\_val
+= 0.7650
+epoch = 500; loss\_train = 0.5317; loss\_val = 0.5466; acc\_train = 0.7462; acc\_val
+= 0.7600
+epoch = 600; loss\_train = 0.4937; loss\_val = 0.5275; acc\_train = 0.7638; acc\_val
+= 0.7750
+epoch = 700; loss\_train = 0.4849; loss\_val = 0.5138; acc\_train = 0.7788; acc\_val
+= 0.7800
+epoch = 800; loss\_train = 0.4514; loss\_val = 0.5048; acc\_train = 0.8037; acc\_val
+= 0.7850
+epoch = 900; loss\_train = 0.4289; loss\_val = 0.4975; acc\_train = 0.8213; acc\_val
+= 0.7800
+epoch = 1000; loss\_train = 0.4156; loss\_val = 0.4922; acc\_train = 0.8187;
+acc\_val = 0.7700
+epoch = 1100; loss\_train = 0.3937; loss\_val = 0.4891; acc\_train = 0.8263;
+acc\_val = 0.7750
+epoch = 1200; loss\_train = 0.3934; loss\_val = 0.4858; acc\_train = 0.8313;
+acc\_val = 0.7900
+epoch = 1300; loss\_train = 0.3715; loss\_val = 0.4837; acc\_train = 0.8438;
+acc\_val = 0.7850
+Early stopping: 50 iterations without validation loss improve
+CPU times: user 25.8 s, sys: 867 ms, total: 26.7 s
+Wall time: 26.9 s
     \end{Verbatim}
 
     \hypertarget{training-evaluation}{%
@@ -1603,7 +1578,7 @@ Early stopping: 100 iterations without validation loss improve
 Losses}\label{training-and-validation-losses}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
+\prompt{In}{incolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} plot training and validation loss}
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{loss\PYZus{}train\PYZus{}his}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{training loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1632,7 +1607,7 @@ Losses}\label{training-and-validation-losses}}
 curve}\label{zoom-at-the-minimum-ce-loss-in-the-validation-loss-curve}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{BEST\PYZus{}EPOCH} \PY{o}{=} \PY{n}{loss\PYZus{}valid\PYZus{}his}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{loss\PYZus{}valid\PYZus{}his}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{1}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Epoch with minimum validation loss =}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{BEST\PYZus{}EPOCH}\PY{p}{)}
@@ -1649,7 +1624,7 @@ curve}\label{zoom-at-the-minimum-ce-loss-in-the-validation-loss-curve}}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Epoch with minimum validation loss = 4
+Epoch with minimum validation loss = 1300
     \end{Verbatim}
 
     \begin{center}
@@ -1661,7 +1636,7 @@ Epoch with minimum validation loss = 4
 \subsubsection{6.3 Accuracy}\label{accuracy}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} plot training and validation accuracy}
 \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{acc\PYZus{}train\PYZus{}his}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{training accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1699,7 +1674,7 @@ variables:}\label{print-the-final-values-of-the-main-training-monitoring-variabl
 \end{itemize}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{last training loss = }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss\PYZus{}train\PYZus{}his}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{last validation loss = }\PY{l+s+si}{\PYZob{}0:.4f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{loss\PYZus{}valid\PYZus{}his}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
@@ -1710,11 +1685,11 @@ variables:}\label{print-the-final-values-of-the-main-training-monitoring-variabl
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-last training loss = 0.6926
-last validation loss = 0.6913
+last training loss = 0.3701
+last validation loss = 0.4850
 \#-------------------------------------------------
-last train accuracy = 0.5212
-last validation accuracy = 0.5350
+last train accuracy = 0.8425
+last validation accuracy = 0.7800
     \end{Verbatim}
 
     \hypertarget{metrics-on-test-set}{%
@@ -1724,7 +1699,7 @@ last validation accuracy = 0.5350
 calculate the performance metrics
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{53}{\boxspacing}
+\prompt{In}{incolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} load model in CPU}
 \PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cpu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
@@ -1734,13 +1709,12 @@ calculate the performance metrics
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{53}{\boxspacing}
+\prompt{Out}{outcolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 NN(
   (dropout): Dropout(p=0.5, inplace=False)
-  (layer1): Linear(in\_features=131, out\_features=500, bias=True)
-  (layer2): Linear(in\_features=500, out\_features=500, bias=True)
-  (layer3): Linear(in\_features=500, out\_features=2, bias=True)
+  (layer1): Linear(in\_features=300, out\_features=100, bias=True)
+  (layer2): Linear(in\_features=100, out\_features=2, bias=True)
 )
 \end{Verbatim}
 \end{tcolorbox}
@@ -1767,7 +1741,7 @@ NN(
 \subsubsection{7.1 Accuracy}\label{accuracy}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{56}{\boxspacing}
+\prompt{In}{incolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} accuracy}
 \PY{n}{score} \PY{o}{+}\PY{o}{=} \PY{p}{(}\PY{n}{y\PYZus{}true} \PY{o}{==} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}
@@ -1777,9 +1751,9 @@ NN(
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{56}{\boxspacing}
+\prompt{Out}{outcolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-0.5350000262260437
+0.7799999713897705
 \end{Verbatim}
 \end{tcolorbox}
         
@@ -1796,7 +1770,7 @@ NN(
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{58}{\boxspacing}
+\prompt{In}{incolor}{59}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} CM raw}
 \PY{n}{cm\PYZus{}raw} \PY{o}{=} \PY{n}{print\PYZus{}confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{cm}\PY{p}{,} \PY{n}{classes}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confusion Matrix}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
@@ -1809,7 +1783,7 @@ NN(
     { \hspace*{\fill} \\}
     
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{59}{\boxspacing}
+\prompt{In}{incolor}{60}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} CM normalized}
 \PY{n}{cm\PYZus{}norm} \PY{o}{=} \PY{n}{print\PYZus{}confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{cm}\PY{p}{,} \PY{n}{classes}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confusion Matrix normalized}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{5}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
@@ -1835,7 +1809,7 @@ weighted)}\label{f1-score-macro-micro-and-weighted}}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{61}{\boxspacing}
+\prompt{In}{incolor}{62}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F1\PYZhy{}score macro =}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{macro}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{F1\PYZhy{}score micro =}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{micro}\PY{p}{)}
@@ -1844,9 +1818,9 @@ weighted)}\label{f1-score-macro-micro-and-weighted}}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-F1-score macro = 0.3485342019543974
-F1-score micro = 0.535
-F1-score weighted = 0.37293159609120524
+F1-score macro = 0.7767857142857144
+F1-score micro = 0.78
+F1-score weighted = 0.7786607142857145
     \end{Verbatim}
 
     \hypertarget{accuracy-and-precision}{%
@@ -1854,23 +1828,15 @@ F1-score weighted = 0.37293159609120524
 Precision}\label{accuracy-and-precision}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{62}{\boxspacing}
+\prompt{In}{incolor}{0}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{acc} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}true}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}
 \PY{n}{prec} \PY{o}{=} \PY{n}{precision\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}true}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{,} \PY{n}{average}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{macro}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
-    \begin{Verbatim}[commandchars=\\\{\}]
-/usr/local/lib/python3.6/dist-packages/sklearn/metrics/\_classification.py:1272:
-UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels
-with no predicted samples. Use `zero\_division` parameter to control this
-behavior.
-  \_warn\_prf(average, modifier, msg\_start, len(result))
-    \end{Verbatim}
-
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{63}{\boxspacing}
+\prompt{In}{incolor}{64}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Accuracy score = }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{acc}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Precision score = }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prec}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
@@ -1878,8 +1844,8 @@ behavior.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Accuracy score = 0.535
-Precision score = 0.2675
+Accuracy score = 0.78
+Precision score = 0.7822057460611678
     \end{Verbatim}
 
     \hypertarget{precision-recall-and-f1-score-for-each-class}{%
@@ -1887,7 +1853,7 @@ Precision score = 0.2675
 class}\label{precision-recall-and-f1-score-for-each-class}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{64}{\boxspacing}
+\prompt{In}{incolor}{65}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PY{n}{classification\PYZus{}report} \PY{k}{as} \PY{n}{cr}
 \PY{n+nb}{print}\PY{p}{(}\PY{n}{cr}\PY{p}{(}\PY{n}{y\PYZus{}true}\PY{p}{,} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{p}{)}
@@ -1897,41 +1863,31 @@ class}\label{precision-recall-and-f1-score-for-each-class}}
     \begin{Verbatim}[commandchars=\\\{\}]
               precision    recall  f1-score   support
 
-           0       0.54      1.00      0.70       107
-           1       0.00      0.00      0.00        93
+           0       0.77      0.84      0.80       107
+           1       0.80      0.71      0.75        93
 
-    accuracy                           0.54       200
-   macro avg       0.27      0.50      0.35       200
-weighted avg       0.29      0.54      0.37       200
+    accuracy                           0.78       200
+   macro avg       0.78      0.78      0.78       200
+weighted avg       0.78      0.78      0.78       200
 
-    \end{Verbatim}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-/usr/local/lib/python3.6/dist-packages/sklearn/metrics/\_classification.py:1272:
-UndefinedMetricWarning: Precision and F-score are ill-defined and being set to
-0.0 in labels with no predicted samples. Use `zero\_division` parameter to
-control this behavior.
-  \_warn\_prf(average, modifier, msg\_start, len(result))
     \end{Verbatim}
 
     \hypertarget{number-of-parameters}{%
 \subsection{8. Number of parameters}\label{number-of-parameters}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{65}{\boxspacing}
+\prompt{In}{incolor}{66}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{nparam}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-layer 0: layer1.weight; parameters: 65500
-layer 1: layer1.bias; parameters: 500
-layer 2: layer2.weight; parameters: 250000
-layer 3: layer2.bias; parameters: 500
-layer 4: layer3.weight; parameters: 1000
-layer 5: layer3.bias; parameters: 2
-total parameters =  317502
+layer 0: layer1.weight; parameters: 30000
+layer 1: layer1.bias; parameters: 100
+layer 2: layer2.weight; parameters: 200
+layer 3: layer2.bias; parameters: 2
+total parameters =  30302
     \end{Verbatim}
 
     \hypertarget{end-of-the-notebook}{%
