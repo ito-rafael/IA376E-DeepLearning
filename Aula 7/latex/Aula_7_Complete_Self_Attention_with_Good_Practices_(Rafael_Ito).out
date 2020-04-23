@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{Notebook de refer\352ncia}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Preparando Dados}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Carregando o dataset}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Download do word embedding}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Criando Vocabul\341rio a partir do word embedding}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.5}{Tokenizando o dataset e convertendo para \355ndices \(preferencialmente, usar o DataLoader\)}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.6}{Inicializando e testando o DataLoader}{section.1}% 7
+\BOOKMARK [2][-]{subsection.1.7}{Definindo a Rede Neural}{section.1}% 8
+\BOOKMARK [2][-]{subsection.1.8}{N\372mero de par\342metros do modelo}{section.1}% 9
+\BOOKMARK [2][-]{subsection.1.9}{Testando o modelo com um batch}{section.1}% 10
+\BOOKMARK [2][-]{subsection.1.10}{Overfit em um batch}{section.1}% 11
+\BOOKMARK [2][-]{subsection.1.11}{Treinamento e Valida\347\343o no dataset todo}{section.1}% 12
+\BOOKMARK [2][-]{subsection.1.12}{Ap\363s treinado, avaliamos o modelo no dataset de test.}{section.1}% 13
+\BOOKMARK [2][-]{subsection.1.13}{End of Notebook}{section.1}% 14
