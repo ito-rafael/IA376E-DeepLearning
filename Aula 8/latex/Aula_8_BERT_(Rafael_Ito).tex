@@ -1,0 +1,3055 @@
+\documentclass[10pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Aula\_8\_BERT\_(Rafael\_Ito)}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{sentiment-analysis-using-bert}{%
+\section*{Sentiment analysis using
+BERT}\label{sentiment-analysis-using-bert}}
+
+    Author: \textbf{Rafael Ito}\\
+e-mail: ito.rafael@gmail.com
+
+    \hypertarget{dataset-and-description}{%
+\section*{0. Dataset and Description}\label{dataset-and-description}}
+
+\textbf{Name:} IMDb\\
+\textbf{Description:} this notebook uses the IMDb dataset which contains
+movie reviews classified as either positive or negative review. The aim
+is to perform a supervised learning for sentiment classification using
+the BERT model.
+
+    \hypertarget{libraries-and-packages}{%
+\section*{1. Libraries and packages}\label{libraries-and-packages}}
+
+    \hypertarget{install-packages}{%
+\subsection*{1.1 Install packages}\label{install-packages}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{!}pip install \PYZhy{}q \PY{err}{\PYZbs{}}
+    \PY{n}{numpy}       \PYZbs{}
+    \PY{n}{torch}       \PYZbs{}
+    \PY{n}{sklearn}     \PYZbs{}
+    \PY{n}{skorch}      \PYZbs{}
+    \PY{n}{matplotlib}  \PYZbs{}
+    \PY{n}{pytorch}\PY{o}{\PYZhy{}}\PY{n}{lightning}   \PYZbs{}
+    \PY{n}{transformers}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+     |████████████████████████████████| 122kB 2.8MB/s
+     |████████████████████████████████| 235kB 8.7MB/s
+     |████████████████████████████████| 573kB 46.0MB/s
+     |████████████████████████████████| 3.7MB 34.9MB/s
+     |████████████████████████████████| 890kB 45.5MB/s
+     |████████████████████████████████| 1.0MB 44.1MB/s
+  Building wheel for sacremoses (setup.py) {\ldots} done
+\textcolor{ansi-red}{ERROR: pytorch-lightning 0.7.5 has requirement future>=0.17.1, but you'll
+have future 0.16.0 which is incompatible.}
+\textcolor{ansi-red}{ERROR: pytorch-lightning 0.7.5 has requirement tqdm>=4.41.0, but you'll
+have tqdm 4.38.0 which is incompatible.}
+    \end{Verbatim}
+
+    \hypertarget{import-libraries}{%
+\subsection*{1.2 Import libraries}\label{import-libraries}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} general}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{import} \PY{n+nn}{random}
+\PY{k+kn}{import} \PY{n+nn}{itertools}
+\PY{k+kn}{import} \PY{n+nn}{collections}
+\PY{k+kn}{from} \PY{n+nn}{argparse} \PY{k+kn}{import} \PY{n}{Namespace}
+\PY{k+kn}{from} \PY{n+nn}{typing} \PY{k+kn}{import} \PY{n}{Dict}
+\PY{k+kn}{from} \PY{n+nn}{typing} \PY{k+kn}{import} \PY{n}{List}
+\PY{k+kn}{from} \PY{n+nn}{multiprocessing} \PY{k+kn}{import} \PY{n}{cpu\PYZus{}count}
+\PY{k+kn}{import} \PY{n+nn}{tensorboard}
+\PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} tensorboard
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} NLP}
+\PY{k+kn}{import} \PY{n+nn}{re}
+\PY{k+kn}{import} \PY{n+nn}{nltk}
+\PY{k+kn}{from} \PY{n+nn}{transformers} \PY{k+kn}{import} \PY{n}{BertTokenizer}
+\PY{k+kn}{from} \PY{n+nn}{transformers} \PY{k+kn}{import} \PY{n}{BertModel}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} PyTorch}
+\PY{k+kn}{import} \PY{n+nn}{torch}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn} \PY{k+kn}{import} \PY{n}{CrossEntropyLoss}\PY{p}{,} \PY{n}{MSELoss}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn} \PY{k+kn}{import} \PY{n}{Linear}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{optim} \PY{k+kn}{import} \PY{n}{Adam}\PY{p}{,} \PY{n}{SGD}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{optim}\PY{n+nn}{.}\PY{n+nn}{lr\PYZus{}scheduler} \PY{k+kn}{import} \PY{n}{StepLR}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{utils}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k+kn}{import} \PY{n}{TensorDataset}\PY{p}{,} \PY{n}{Dataset}\PY{p}{,} \PY{n}{DataLoader}
+\PY{k+kn}{import} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn}\PY{n+nn}{.}\PY{n+nn}{functional} \PY{k}{as} \PY{n+nn}{F}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} PyTorch Lightning}
+\PY{k+kn}{import} \PY{n+nn}{pytorch\PYZus{}lightning} \PY{k}{as} \PY{n+nn}{pl}
+\PY{k+kn}{from} \PY{n+nn}{pytorch\PYZus{}lightning}\PY{n+nn}{.}\PY{n+nn}{callbacks} \PY{k+kn}{import} \PY{n}{EarlyStopping}\PY{p}{,} \PY{n}{ModelCheckpoint}
+\PY{k+kn}{from} \PY{n+nn}{pytorch\PYZus{}lightning}\PY{n+nn}{.}\PY{n+nn}{loggers} \PY{k+kn}{import} \PY{n}{TensorBoardLogger}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} scikit\PYZhy{}learn}
+\PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k+kn}{import} \PYZbs{}
+    \PY{n}{confusion\PYZus{}matrix}\PY{p}{,} \PY{n}{accuracy\PYZus{}score}\PY{p}{,} \PY{n}{precision\PYZus{}score}\PY{p}{,} \PY{n}{f1\PYZus{}score}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} data visualization}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} additional config}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} random seed generator}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+\PY{n}{torch}\PY{o}{.}\PY{n}{manual\PYZus{}seed}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}\PY{p}{;}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Torch version:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pytorch Lightning version:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pl}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Torch version: 1.5.0+cu101
+Pytorch Lightning version: 0.7.5
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/usr/local/lib/python3.6/dist-packages/statsmodels/tools/\_testing.py:19:
+FutureWarning: pandas.util.testing is deprecated. Use the functions in the
+public API at pandas.testing instead.
+  import pandas.util.testing as tm
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} the next function is based on the reference notebook from Diedre.}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} library and function to monitor GPU usage }
+\PY{c+c1}{\PYZsh{} (which should be always close to 100\PYZpc{} during the training phase)}
+
+\PY{k+kn}{import} \PY{n+nn}{nvidia\PYZus{}smi}
+\PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlInit}\PY{p}{(}\PY{p}{)}
+\PY{n}{handle} \PY{o}{=} \PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlDeviceGetHandleByIndex}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Device name: }\PY{l+s+si}{\PYZob{}}\PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlDeviceGetName}\PY{p}{(}\PY{n}{handle}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{k}{def} \PY{n+nf}{gpu\PYZus{}usage}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{k}{global} \PY{n}{handle}
+    \PY{k}{return} \PY{n+nb}{str}\PY{p}{(}\PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlDeviceGetUtilizationRates}\PY{p}{(}\PY{n}{handle}\PY{p}{)}\PY{o}{.}\PY{n}{gpu}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Device name: b'Tesla P100-PCIE-16GB'
+    \end{Verbatim}
+
+    \hypertarget{check-device}{%
+\subsection*{1.3 Check device}\label{check-device}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cpu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{if} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cuda}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{device\PYZus{}model} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}name}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{device\PYZus{}memory} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}properties}\PY{p}{(}\PY{n}{device}\PY{p}{)}\PY{o}{.}\PY{n}{total\PYZus{}memory} \PY{o}{/} \PY{l+m+mf}{1e9}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Device:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU model:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{device\PYZus{}model}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU memory: }\PY{l+s+si}{\PYZob{}0:.2f\PYZcb{}}\PY{l+s+s1}{ GB}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{device\PYZus{}memory}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPU cores:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cpu\PYZus{}count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Device: cuda
+GPU model: Tesla P100-PCIE-16GB
+GPU memory: 17.07 GB
+\#-------------------
+CPU cores: 4
+    \end{Verbatim}
+
+    \hypertarget{constants-definition}{%
+\subsection*{1.4 Constants definition}\label{constants-definition}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{custom-functions-and-classes}{%
+\section*{2. Custom functions and
+classes}\label{custom-functions-and-classes}}
+
+    \hypertarget{functions}{%
+\subsection*{2.1 Functions}\label{functions}}
+
+    Function that calculates the number of parameters of a network
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{description:}
+\PY{l+s+sd}{    \PYZhy{} given a model, this function returns its number of parameters (weight, bias)}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{positional args:}
+\PY{l+s+sd}{    \PYZhy{} model [torch.nn.Module]: instance of the network}
+\PY{l+s+sd}{optional args:}
+\PY{l+s+sd}{    \PYZhy{} verbose (default=False) [bool]: if True, print a report with the parameters of each layer}
+\PY{l+s+sd}{    \PYZhy{} all\PYZus{}parameters (default=False) [bool]: }
+\PY{l+s+sd}{        if True, return number of all parameters, if False, return only trainable parameters}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{return:}
+\PY{l+s+sd}{    \PYZhy{} [int] total parameters of the network}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{nparam}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{all\PYZus{}parameters}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if}\PY{p}{(}\PY{n}{verbose}\PY{p}{)}\PY{p}{:}
+        \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{n}{total} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{param} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{named\PYZus{}parameters}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{p}{(}\PY{n}{param}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{}print(\PYZsq{}layer \PYZsq{}, i, \PYZsq{} name: \PYZsq{}, name)}
+                \PY{n}{j} \PY{o}{=} \PY{l+m+mi}{1}
+                \PY{k}{for} \PY{n}{dim} \PY{o+ow}{in} \PY{n}{param}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{:}
+                    \PY{n}{j} \PY{o}{=} \PY{n}{j} \PY{o}{*} \PY{n}{dim}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{layer }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{name}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{; parameters: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n}{total} \PY{o}{+}\PY{o}{=} \PY{n}{j}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total parameters = }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{total}\PY{p}{)}
+        \PY{k}{return}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{if} \PY{p}{(}\PY{n}{all\PYZus{}parameters}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{numel}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{numel}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n}{p}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Function to plot confusion matrix
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{description:}
+\PY{l+s+sd}{    \PYZhy{} this function plots the confusion matrix (normalized or not) }
+\PY{l+s+sd}{    using Matplotlib and seaborn in a nice way using heatmap.}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{positional args:}
+\PY{l+s+sd}{    \PYZhy{} confusion\PYZus{}matrix  [numpy.ndarray]:    ex.: array([[88, 19],[22, 71]])}
+\PY{l+s+sd}{    \PYZhy{} class\PYZus{}names       [list of str]:      ex.: [\PYZsq{}negative\PYZsq{}, \PYZsq{}positive\PYZsq{}]}
+
+\PY{l+s+sd}{optional args:}
+\PY{l+s+sd}{    \PYZhy{} title     (default=None)          [str]:      title of the plot}
+\PY{l+s+sd}{    \PYZhy{} normalize (default=False)         [bool]:     values raw or normalized}
+\PY{l+s+sd}{    \PYZhy{} cmap      (default=plt.cm.Blues)     \PYZbs{}}
+\PY{l+s+sd}{       [matplotlib.colors.LinearSegmentedColormap]: colormap to be used}
+\PY{l+s+sd}{    \PYZhy{} fig\PYZus{}size   (default=(10,7))        [tuple]:    size of the figure}
+\PY{l+s+sd}{    \PYZhy{} fontsize  (default=14)            [int]:      size of the text}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{return:}
+\PY{l+s+sd}{  \PYZhy{} fig [matplotlib.figure.Figure]: confusion matrix plotted in a nice way!}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}https://github.com/ito\PYZhy{}rafael/machine\PYZhy{}learning/blob/master/snippets/confusion\PYZus{}matrix.py}
+\PY{k}{def} \PY{n+nf}{print\PYZus{}confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{confusion\PYZus{}matrix}\PY{p}{,} \PY{n}{class\PYZus{}names}\PY{p}{,} \PY{n}{title}\PY{o}{=}\PY{k+kc}{None}\PY{p}{,} \PY{n}{normalize}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{plt}\PY{o}{.}\PY{n}{cm}\PY{o}{.}\PY{n}{Blues}\PY{p}{,} \PY{n}{figsize} \PY{o}{=} \PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{14}\PY{p}{)}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} normalized or raw CM}
+    \PY{k}{if} \PY{n}{normalize}\PY{p}{:}
+        \PY{n}{confusion\PYZus{}matrix} \PY{o}{=} \PY{n}{confusion\PYZus{}matrix}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{float}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{/} \PY{n}{confusion\PYZus{}matrix}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{p}{:}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{newaxis}\PY{p}{]}
+        \PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.2f}\PY{l+s+s1}{\PYZsq{}}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n}{fmt} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{d}\PY{l+s+s1}{\PYZsq{}}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{n}{df\PYZus{}cm} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{confusion\PYZus{}matrix}\PY{p}{,} \PY{n}{index}\PY{o}{=}\PY{n}{class\PYZus{}names}\PY{p}{,} \PY{n}{columns}\PY{o}{=}\PY{n}{class\PYZus{}names}\PY{p}{)}
+    \PY{n}{fig} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{n}{figsize}\PY{p}{)}
+    \PY{k}{try}\PY{p}{:}
+        \PY{n}{heatmap} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{df\PYZus{}cm}\PY{p}{,} \PY{n}{annot}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{fmt}\PY{o}{=}\PY{n}{fmt}\PY{p}{,} \PY{n}{cmap}\PY{o}{=}\PY{n}{cmap}\PY{p}{)}
+    \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Confusion matrix values must be integers.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} fix matplotlib 3.1.1 bug}
+    \PY{c+c1}{\PYZsh{}heatmap.get\PYZus{}ylim() \PYZhy{}\PYZhy{}\PYZgt{} (5.5, 0.5)}
+    \PY{c+c1}{\PYZsh{}heatmap.set\PYZus{}ylim(6.0, 0)}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{n}{heatmap}\PY{o}{.}\PY{n}{yaxis}\PY{o}{.}\PY{n}{set\PYZus{}ticklabels}\PY{p}{(}\PY{n}{heatmap}\PY{o}{.}\PY{n}{yaxis}\PY{o}{.}\PY{n}{get\PYZus{}ticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{n}{fontsize}\PY{p}{)}
+    \PY{n}{heatmap}\PY{o}{.}\PY{n}{xaxis}\PY{o}{.}\PY{n}{set\PYZus{}ticklabels}\PY{p}{(}\PY{n}{heatmap}\PY{o}{.}\PY{n}{xaxis}\PY{o}{.}\PY{n}{get\PYZus{}ticklabels}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{rotation}\PY{o}{=}\PY{l+m+mi}{45}\PY{p}{,} \PY{n}{ha}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{right}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{n}{fontsize}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{True label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predicted label}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{return} \PY{n}{fig}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Function that preprocess a document, returning the mean of word
+embeddings
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{description:}
+\PY{l+s+sd}{    this function receives as parameter a corpus [list of lists] and do the following:}
+\PY{l+s+sd}{      \PYZhy{} convert to lower case,}
+\PY{l+s+sd}{      \PYZhy{} split in tokens,}
+\PY{l+s+sd}{      \PYZhy{} remove stop words}
+\PY{l+s+sd}{return:}
+\PY{l+s+sd}{    the same corpus preprocessed}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{pre\PYZus{}processing}\PY{p}{(}\PY{n}{corpus}\PY{p}{,} \PY{n}{stopwords}\PY{p}{,} \PY{n}{embedding}\PY{p}{)}\PY{p}{:}
+    \PY{n}{corpus\PYZus{}pp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{sentence} \PY{o+ow}{in} \PY{n}{corpus}\PY{p}{:}
+        \PY{n}{sentence} \PY{o}{=} \PY{n}{sentence}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}                 \PY{c+c1}{\PYZsh{} convert to lower case}
+        \PY{n}{sentence} \PY{o}{=} \PY{n}{re}\PY{o}{.}\PY{n}{sub}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{[\PYZca{}}\PY{l+s+s2}{\PYZbs{}}\PY{l+s+s2}{w]}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{ }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}  \PY{n}{sentence}\PY{p}{)}  \PY{c+c1}{\PYZsh{} match word characters [a\PYZhy{}zA\PYZhy{}Z0\PYZhy{}9\PYZus{}]}
+        \PY{n}{sentence} \PY{o}{=} \PY{n}{sentence}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}                 \PY{c+c1}{\PYZsh{} split in tokens}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{sentence\PYZus{}pp} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{token} \PY{o+ow}{in} \PY{n}{sentence}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} remove stop words}
+            \PY{k}{if} \PY{n}{token} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{stopwords}\PY{p}{:} 
+                \PY{n}{sentence\PYZus{}pp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{token}\PY{p}{)}
+        \PY{n}{corpus\PYZus{}pp}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{sentence\PYZus{}pp}\PY{p}{)}
+    \PY{k}{return} \PY{n}{corpus\PYZus{}pp}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{classes}{%
+\subsection*{2.2 Classes}\label{classes}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{dataset-pre-processing}{%
+\section*{3. Dataset Pre-processing}\label{dataset-pre-processing}}
+
+    \hypertarget{download-dataset}{%
+\subsection*{3.1 Download dataset}\label{download-dataset}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} download complete dataset (50k samples: 25k train, 25k test)}
+\PY{o}{!}wget \PYZhy{}nc http://files.fast.ai/data/aclImdb.tgz 
+\PY{o}{!}tar \PYZhy{}xzf aclImdb.tgz
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+--2020-04-29 18:02:09--  http://files.fast.ai/data/aclImdb.tgz
+Resolving files.fast.ai (files.fast.ai){\ldots} 67.205.15.147
+Connecting to files.fast.ai (files.fast.ai)|67.205.15.147|:80{\ldots} connected.
+HTTP request sent, awaiting response{\ldots} 200 OK
+Length: 145982645 (139M) [application/x-gtar-compressed]
+Saving to: ‘aclImdb.tgz’
+
+aclImdb.tgz         100\%[===================>] 139.22M  95.7MB/s    in 1.5s
+
+2020-04-29 18:02:11 (95.7 MB/s) - ‘aclImdb.tgz’ saved [145982645/145982645]
+
+    \end{Verbatim}
+
+    \hypertarget{dataset-class}{%
+\subsection*{3.2 Dataset Class}\label{dataset-class}}
+
+    BERT input:\\
+{[}CLS{]} + tokens + {[}SEP{]} + padding
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class} \PY{n+nc}{IMDbDataset}\PY{p}{(}\PY{n}{Dataset}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} 
+                 \PY{n}{texts}\PY{p}{:} \PY{n}{List}\PY{p}{[}\PY{n+nb}{str}\PY{p}{]}\PY{p}{,} 
+                 \PY{n}{labels}\PY{p}{:} \PY{n}{List}\PY{p}{[}\PY{n+nb}{int}\PY{p}{]}\PY{p}{,} 
+                 \PY{n}{tokenizer}\PY{p}{,}
+                 \PY{n}{max\PYZus{}length}\PY{p}{:} \PY{n+nb}{int} \PY{o}{=} \PY{l+m+mi}{64}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer} \PY{o}{=} \PY{n}{tokenizer}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{texts} \PY{o}{=} \PY{n}{texts}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{labels} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{LongTensor}\PY{p}{(}\PY{n}{labels}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}length} \PY{o}{=} \PY{n}{max\PYZus{}length}
+        \PY{c+c1}{\PYZsh{} special tokens}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{CLS\PYZus{}ID} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{cls\PYZus{}token\PYZus{}id}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{SEP\PYZus{}ID} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{sep\PYZus{}token\PYZus{}id}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{PAD\PYZus{}ID} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{pad\PYZus{}token\PYZus{}id}\PY{p}{]}
+        
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}len\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{labels}\PY{p}{)}
+    
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}getitem\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{idx}\PY{p}{)}\PY{p}{:}
+        \PY{n}{text} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{texts}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} tokenize text}
+        \PY{n}{tokens} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{tokenize}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} truncate}
+        \PY{n}{tokens\PYZus{}trunc} \PY{o}{=} \PY{n}{tokens}\PY{p}{[}\PY{p}{:}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}length} \PY{o}{\PYZhy{}} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{} convert do ids}
+        \PY{n}{word\PYZus{}ids} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{convert\PYZus{}tokens\PYZus{}to\PYZus{}ids}\PY{p}{(}\PY{n}{tokens\PYZus{}trunc}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} create mask}
+        \PY{n}{attention\PYZus{}mask} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{*} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{word\PYZus{}ids}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{*} \PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}length} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{word\PYZus{}ids}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} create token type ID}
+        \PY{n}{token\PYZus{}type\PYZus{}id} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{zeros}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}length}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{torch}\PY{o}{.}\PY{n}{int64}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} complete with pad}
+        \PY{n}{token\PYZus{}ids} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{CLS\PYZus{}ID} \PY{o}{+} \PY{n}{word\PYZus{}ids} \PY{o}{+} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{SEP\PYZus{}ID} \PY{o}{+} \PYZbs{}
+            \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{PAD\PYZus{}ID} \PY{o}{*} \PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{max\PYZus{}length} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{word\PYZus{}ids}\PY{p}{)} \PY{o}{+} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        \PY{k}{return} \PY{n}{torch}\PY{o}{.}\PY{n}{LongTensor}\PY{p}{(}\PY{n}{token\PYZus{}ids}\PY{p}{)}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{LongTensor}\PY{p}{(}\PY{n}{attention\PYZus{}mask}\PY{p}{)}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}id}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{labels}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{dataloader-testing}{%
+\subsection*{3.3 Dataloader testing}\label{dataloader-testing}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{tokenizer} \PY{o}{=} \PY{n}{BertTokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}base\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:filelock:Lock 140253302421432 acquired on /root/.cache/torch/transformers/2
+6bc1ad6c0ac742e9b52263248f6d0f00068293b33709fae12320c0e35ccfbbb.542ce4285a40d23a
+559526243235df47c5f75c197f04f37d1a0c124c32c9a084.lock
+INFO:transformers.file\_utils:https://s3.amazonaws.com/models.huggingface.co/bert
+/bert-base-uncased-vocab.txt not found in cache or force\_download set to True,
+downloading to /root/.cache/torch/transformers/tmp7fju0n3g
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=0, description='Downloading', max=231508, style=ProgressStyle(description_wid…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.file\_utils:storing
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+in cache at /root/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f00068
+293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1a0
+c124c32c9a084
+INFO:transformers.file\_utils:creating metadata file for /root/.cache/torch/trans
+formers/26bc1ad6c0ac742e9b52263248f6d0f00068293b33709fae12320c0e35ccfbbb.542ce42
+85a40d23a559526243235df47c5f75c197f04f37d1a0c124c32c9a084
+INFO:filelock:Lock 140253302421432 released on /root/.cache/torch/transformers/2
+6bc1ad6c0ac742e9b52263248f6d0f00068293b33709fae12320c0e35ccfbbb.542ce4285a40d23a
+559526243235df47c5f75c197f04f37d1a0c124c32c9a084.lock
+INFO:transformers.tokenization\_utils:loading file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+from cache at /root/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f000
+68293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1
+a0c124c32c9a084
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{texts} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{we like pizza}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{he does not like apples}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+\PY{n}{labels} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}
+\PY{n}{dataset\PYZus{}debug} \PY{o}{=} \PY{n}{IMDbDataset}\PY{p}{(}
+    \PY{n}{texts}\PY{o}{=}\PY{n}{texts}\PY{p}{,}
+    \PY{n}{labels}\PY{o}{=}\PY{n}{labels}\PY{p}{,}
+    \PY{n}{tokenizer}\PY{o}{=}\PY{n}{tokenizer}\PY{p}{,}
+    \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+    
+\PY{n}{dataloader\PYZus{}debug} \PY{o}{=} \PY{n}{DataLoader}\PY{p}{(}\PY{n}{dataset\PYZus{}debug}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} 
+                              \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n}{token\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{n+nb}{next}\PY{p}{(}\PY{n+nb}{iter}\PY{p}{(}\PY{n}{dataloader\PYZus{}debug}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{token\PYZus{}ids:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{token\PYZus{}ids}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{token\PYZus{}type\PYZus{}ids:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{attention\PYZus{}mask:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{labels:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{token\PYZus{}ids.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{token\PYZus{}ids}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{token\PYZus{}type\PYZus{}ids.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{attention\PYZus{}mask.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{labels.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{labels}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+token\_ids:
+ tensor([[  101,  2057,  2066, 10733,   102,     0,     0,     0,     0,     0,
+             0,     0,     0,     0,     0,     0,     0,     0,     0,     0],
+        [  101,  2002,  2515,  2025,  2066, 18108,   102,     0,     0,     0,
+             0,     0,     0,     0,     0,     0,     0,     0,     0,     0]])
+token\_type\_ids:
+ tensor([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+attention\_mask:
+ tensor([[1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]])
+labels:
+ tensor([0, 1])
+\#-------------------
+token\_ids.shape: torch.Size([2, 20])
+token\_type\_ids.shape: torch.Size([2, 20])
+attention\_mask.shape: torch.Size([2, 20])
+labels.shape: torch.Size([2])
+    \end{Verbatim}
+
+    \hypertarget{network-model}{%
+\section*{4. Network Model}\label{network-model}}
+
+    \hypertarget{hiperparameters}{%
+\subsection*{4.1 Hiperparameters}\label{hiperparameters}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hyperparameters} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{c+c1}{\PYZsh{} description}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BERT\PYZus{}v1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} training / early stopping}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{10}\PY{p}{,} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{patience}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} dataset}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dataset\PYZus{}class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{IMDbDataset}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{split\PYZus{}train\PYZus{}val}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.8}\PY{p}{,} 
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} dataloader}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8}\PY{p}{,} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nworkers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} network architecture}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tokenizer}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BERT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{num\PYZus{}classes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{2}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{512}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} optimizer}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss\PYZus{}func}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opt\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{1e\PYZhy{}5}\PY{p}{,} 
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scheduling\PYZus{}factor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.95}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} others}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{manual\PYZus{}seed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{42}\PY{p}{,}  \PY{c+c1}{\PYZsh{} RNG seed}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{network-model-definition}{%
+\subsection*{4.2 Network model
+definition}\label{network-model-definition}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{LightnigModule based on the reference notebook from Diedre.}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{class} \PY{n+nc}{BertFinetuner}\PY{p}{(}\PY{n}{pl}\PY{o}{.}\PY{n}{LightningModule}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{hparams}\PY{p}{,} \PY{n}{dl\PYZus{}shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{super}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams} \PY{o}{=} \PY{n}{hparams}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dl\PYZus{}shuffle} \PY{o}{=} \PY{n}{dl\PYZus{}shuffle}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{dataset\PYZus{}class}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{get\PYZus{}tokenizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}func} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{get\PYZus{}loss\PYZus{}func}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{loss\PYZus{}func}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model} \PY{o}{=} \PY{n}{BertModel}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}base\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{classification\PYZus{}layer} \PY{o}{=} \PY{n}{Linear}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{config}\PY{o}{.}\PY{n}{hidden\PYZus{}size}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{num\PYZus{}classes}\PY{p}{)}
+
+
+    \PY{k}{def} \PY{n+nf}{forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}\PY{p}{:}
+        \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{bert\PYZus{}output} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{p}{(}\PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{o}{=}\PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{o}{=}\PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}
+        \PY{n}{logits} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{classification\PYZus{}layer}\PY{p}{(}\PY{n}{bert\PYZus{}output}\PY{p}{)}
+        \PY{k}{return} \PY{n}{logits}
+
+    \PY{k}{def} \PY{n+nf}{training\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate logits and loss}
+        \PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{n}{batch}
+        \PY{n}{y\PYZus{}logits} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}
+        \PY{n}{loss} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{cross\PYZus{}entropy}\PY{p}{(}\PY{n}{y\PYZus{}logits}\PY{p}{,} \PY{n}{label}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gpu\PYZus{}usage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{gpu\PYZus{}usage}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}        \PY{c+c1}{\PYZsh{} monitor GPU usage}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}train\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} log batch training loss in TensorBoard}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{}return \PYZob{}\PYZsq{}loss\PYZsq{}: loss, \PYZsq{}log\PYZsq{}: tensorboard\PYZus{}logs\PYZcb{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{training\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate epoch loss based on mini\PYZhy{}batch average loss}
+        \PY{n}{avg\PYZus{}loss} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} log training epoch loss in TensorBoard}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch\PYZus{}train\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}loss}\PY{p}{\PYZcb{}}
+        \PY{c+c1}{\PYZsh{} send \PYZsq{}log\PYZsq{} key to the logger (TensorBoard)}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{validation\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate logits and loss}
+        \PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{n}{batch}
+        \PY{n}{y\PYZus{}logits} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}
+        \PY{n}{loss} \PY{o}{=} \PY{n}{F}\PY{o}{.}\PY{n}{cross\PYZus{}entropy}\PY{p}{(}\PY{n}{y\PYZus{}logits}\PY{p}{,} \PY{n}{label}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} calculate accuracy}
+        \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{y\PYZus{}logits}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{val\PYZus{}acc} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}pred}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{val\PYZus{}acc} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{tensor}\PY{p}{(}\PY{n}{val\PYZus{}acc}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gpu\PYZus{}usage}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{gpu\PYZus{}usage}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}  \PY{c+c1}{\PYZsh{} monitor GPU usage}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}valid\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} log batch validation loss in TensorBoard}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{val\PYZus{}acc}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{validation\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate validation epoch loss and accuracy}
+        \PY{n}{avg\PYZus{}loss} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{n}{avg\PYZus{}val\PYZus{}acc} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}loss}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}val\PYZus{}acc}\PY{p}{\PYZcb{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logs}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}loss}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}val\PYZus{}acc}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{,} \PY{n}{label} \PY{o}{=} \PY{n}{batch}        
+        \PY{n}{y\PYZus{}logits} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{input\PYZus{}ids}\PY{p}{,} \PY{n}{attention\PYZus{}mask}\PY{p}{,} \PY{n}{token\PYZus{}type\PYZus{}ids}\PY{p}{)}
+        \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{n}{y\PYZus{}logits}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{n}{test\PYZus{}acc} \PY{o}{=} \PY{n}{accuracy\PYZus{}score}\PY{p}{(}\PY{n}{y\PYZus{}pred}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{label}\PY{o}{.}\PY{n}{cpu}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{n}{test\PYZus{}acc} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{tensor}\PY{p}{(}\PY{n}{test\PYZus{}acc}\PY{p}{)}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{test\PYZus{}acc}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{n}{avg\PYZus{}test\PYZus{}acc} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}test\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}test\PYZus{}acc}\PY{p}{\PYZcb{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logs}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}test\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}test\PYZus{}acc}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{prepare\PYZus{}data}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} load both classes}
+        \PY{n}{X\PYZus{}train\PYZus{}pos} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{load\PYZus{}texts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aclImdb/train/pos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{X\PYZus{}train\PYZus{}neg} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{load\PYZus{}texts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aclImdb/train/neg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{X\PYZus{}test\PYZus{}pos}  \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{load\PYZus{}texts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aclImdb/test/pos}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{X\PYZus{}test\PYZus{}neg}  \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{load\PYZus{}texts}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aclImdb/test/neg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} join positive and negative classes}
+        \PY{n}{X\PYZus{}train\PYZus{}raw} \PY{o}{=} \PY{n}{X\PYZus{}train\PYZus{}pos} \PY{o}{+} \PY{n}{X\PYZus{}train\PYZus{}neg}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}test}  \PY{o}{=} \PY{n}{X\PYZus{}test\PYZus{}pos}  \PY{o}{+} \PY{n}{X\PYZus{}test\PYZus{}neg}
+        \PY{n}{y\PYZus{}train\PYZus{}raw} \PY{o}{=} \PY{p}{[}\PY{k+kc}{True}\PY{p}{]} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}pos}\PY{p}{)} \PY{o}{+} \PY{p}{[}\PY{k+kc}{False}\PY{p}{]} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}neg}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}test}  \PY{o}{=} \PY{p}{[}\PY{k+kc}{True}\PY{p}{]} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}test\PYZus{}pos}\PY{p}{)}  \PY{o}{+} \PY{p}{[}\PY{k+kc}{False}\PY{p}{]} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}test\PYZus{}neg}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} train/valid split}
+        \PY{n}{c} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}raw}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}raw}\PY{p}{)}\PY{p}{)}
+        \PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{manual\PYZus{}seed}\PY{p}{)}
+        \PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{c}\PY{p}{)}   \PY{c+c1}{\PYZsh{} shuffle data before spliting}
+        \PY{n}{X\PYZus{}train\PYZus{}raw}\PY{p}{,} \PY{n}{y\PYZus{}train\PYZus{}raw} \PY{o}{=} \PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{c}\PY{p}{)}
+        \PY{n}{n\PYZus{}train} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{split\PYZus{}train\PYZus{}val} \PY{o}{*} \PY{n+nb}{len}\PY{p}{(}\PY{n}{X\PYZus{}train\PYZus{}raw}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} create validation set}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{X\PYZus{}train\PYZus{}raw}\PY{p}{[}\PY{p}{:}\PY{n}{n\PYZus{}train}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{y\PYZus{}train\PYZus{}raw}\PY{p}{[}\PY{p}{:}\PY{n}{n\PYZus{}train}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}valid} \PY{o}{=} \PY{n}{X\PYZus{}train\PYZus{}raw}\PY{p}{[}\PY{n}{n\PYZus{}train}\PY{p}{:}\PY{p}{]}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}valid} \PY{o}{=} \PY{n}{y\PYZus{}train\PYZus{}raw}\PY{p}{[}\PY{n}{n\PYZus{}train}\PY{p}{:}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} create datesets}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}train} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{max\PYZus{}length}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}valid} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}valid}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}valid}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{max\PYZus{}length}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}test}  \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{X\PYZus{}test}\PY{p}{,}  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{y\PYZus{}test}\PY{p}{,}  \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{max\PYZus{}length}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{train\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}train}\PY{p}{,} 
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dl\PYZus{}shuffle}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{val\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}                
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}valid}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+        
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}test}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{configure\PYZus{}optimizers}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n}{optimizer} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{get\PYZus{}optimizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{opt\PYZus{}name}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{lr}\PY{p}{)}
+        \PY{n}{scheduler} \PY{o}{=} \PY{n}{StepLR}\PY{p}{(}\PY{n}{optimizer}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{scheduling\PYZus{}factor}\PY{p}{)}
+        \PY{k}{return} \PY{p}{[}\PY{n}{optimizer}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{scheduler}\PY{p}{]}
+    
+    \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{    function that returns the loss function associated to a string}
+\PY{l+s+sd}{    \PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{    parameters:}
+\PY{l+s+sd}{      loss\PYZus{}func:}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}CE\PYZsq{}:   returns the Cross Entropy loss function}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}MSE\PYZsq{}:  returns the Mean Squared Error loss function}
+\PY{l+s+sd}{        \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+    \PY{k}{def} \PY{n+nf}{get\PYZus{}loss\PYZus{}func}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{loss\PYZus{}func}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{p}{(}\PY{n}{loss\PYZus{}func} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{CrossEntropyLoss}\PY{p}{(}\PY{p}{)}
+        \PY{k}{elif} \PY{p}{(}\PY{n}{loss\PYZus{}func} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{MSELoss}\PY{p}{(}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported loss function: }\PY{l+s+si}{\PYZob{}}\PY{n}{loss\PYZus{}func}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+    \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{    function that returns the optimizer associated to a string}
+\PY{l+s+sd}{    \PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{    parameters:}
+\PY{l+s+sd}{      opt:}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}Adam\PYZsq{}: returns the Adam optimizer}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}SGD\PYZsq{}:  returns the Stochastic Gradient Descent optimizer}
+\PY{l+s+sd}{        \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{      lr: learning rate}
+\PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+    \PY{k}{def} \PY{n+nf}{get\PYZus{}optimizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{opt}\PY{p}{,} \PY{n}{lr}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{p}{(}\PY{n}{opt} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}return Adam(self.model.parameters(), lr=self.hparams.lr)}
+            \PY{k}{return} \PY{n}{Adam}\PY{p}{(} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n}{p}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{]}\PY{p}{,}
+                \PY{n}{lr}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{lr}\PY{p}{,} \PY{n}{eps}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}08}\PY{p}{)}
+        \PY{k}{elif} \PY{p}{(}\PY{n}{opt} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SGD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{SGD}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{lr}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported optimizer: }\PY{l+s+si}{\PYZob{}}\PY{n}{opt}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+    \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{    function that returns the tokenizer associated to a string}
+\PY{l+s+sd}{    \PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{    parameters:}
+\PY{l+s+sd}{      tokenizer:}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}BERT\PYZsq{}: returns the BERT tokenizer}
+\PY{l+s+sd}{        \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+    \PY{k}{def} \PY{n+nf}{get\PYZus{}tokenizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{tokenizer}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{p}{(}\PY{n}{tokenizer} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BERT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n}{BertTokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}base\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported tokenizer: }\PY{l+s+si}{\PYZob{}}\PY{n}{tokenizer}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+   
+    \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{    function that reads .txt files and return them as a list}
+\PY{l+s+sd}{    \PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{    parameters:}
+\PY{l+s+sd}{      folder: directory where the .txt files are}
+\PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+    \PY{c+c1}{\PYZsh{} function that reads .txt files and return them as a list}
+    \PY{k}{def} \PY{n+nf}{load\PYZus{}texts}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{folder}\PY{p}{)}\PY{p}{:}
+        \PY{n}{texts} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{path} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{n}{folder}\PY{p}{)}\PY{p}{:}
+            \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{folder}\PY{p}{,} \PY{n}{path}\PY{p}{)}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                \PY{n}{texts}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{k}{return} \PY{n}{texts}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{fast-dev-run-unit-test}{%
+\subsection*{4.3 Fast dev run (unit test)}\label{fast-dev-run-unit-test}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} the dictionary of hyperparameters must be converted to a Namespace}
+\PY{c+c1}{\PYZsh{} this way, it is possible to save it alongside with the checkpoint and logger}
+\PY{n}{model} \PY{o}{=} \PY{n}{BertFinetuner}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{fast\PYZus{}dev\PYZus{}run} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,}            \PY{c+c1}{\PYZsh{} perform unit test}
+    \PY{n}{profiler} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} run profiler}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}                       \PY{c+c1}{\PYZsh{} GPUs}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{32}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{logger} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} do not use logging (TensorBoard)}
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}    \PY{c+c1}{\PYZsh{} do not stop early}
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}    \PY{c+c1}{\PYZsh{} do not save checkpoints}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.tokenization\_utils:loading file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+from cache at /root/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f000
+68293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1
+a0c124c32c9a084
+INFO:filelock:Lock 140253147788848 acquired on /root/.cache/torch/transformers/4
+dad0251492946e18ac39290fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c
+3016baca0775ffce230789d7fa2a42ef516483e4ca884517.lock
+INFO:transformers.file\_utils:https://s3.amazonaws.com/models.huggingface.co/bert
+/bert-base-uncased-config.json not found in cache or force\_download set to True,
+downloading to /root/.cache/torch/transformers/tmpa3d\_gof9
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=0, description='Downloading', max=433, style=ProgressStyle(description_width=…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.file\_utils:storing
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+config.json in cache at /root/.cache/torch/transformers/4dad0251492946e18ac39290
+fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce230789d
+7fa2a42ef516483e4ca884517
+INFO:transformers.file\_utils:creating metadata file for /root/.cache/torch/trans
+formers/4dad0251492946e18ac39290fcfe91b89d370fee250efe9521476438fe8ca185.7156163
+d5fdc189c3016baca0775ffce230789d7fa2a42ef516483e4ca884517
+INFO:filelock:Lock 140253147788848 released on /root/.cache/torch/transformers/4
+dad0251492946e18ac39290fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c
+3016baca0775ffce230789d7fa2a42ef516483e4ca884517.lock
+INFO:transformers.configuration\_utils:loading configuration file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+config.json from cache at /root/.cache/torch/transformers/4dad0251492946e18ac392
+90fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce23078
+9d7fa2a42ef516483e4ca884517
+INFO:transformers.configuration\_utils:Model config BertConfig \{
+  "\_num\_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention\_probs\_dropout\_prob": 0.1,
+  "bad\_words\_ids": null,
+  "bos\_token\_id": null,
+  "decoder\_start\_token\_id": null,
+  "do\_sample": false,
+  "early\_stopping": false,
+  "eos\_token\_id": null,
+  "finetuning\_task": null,
+  "hidden\_act": "gelu",
+  "hidden\_dropout\_prob": 0.1,
+  "hidden\_size": 768,
+  "id2label": \{
+    "0": "LABEL\_0",
+    "1": "LABEL\_1"
+  \},
+  "initializer\_range": 0.02,
+  "intermediate\_size": 3072,
+  "is\_decoder": false,
+  "is\_encoder\_decoder": false,
+  "label2id": \{
+    "LABEL\_0": 0,
+    "LABEL\_1": 1
+  \},
+  "layer\_norm\_eps": 1e-12,
+  "length\_penalty": 1.0,
+  "max\_length": 20,
+  "max\_position\_embeddings": 512,
+  "min\_length": 0,
+  "model\_type": "bert",
+  "no\_repeat\_ngram\_size": 0,
+  "num\_attention\_heads": 12,
+  "num\_beams": 1,
+  "num\_hidden\_layers": 12,
+  "num\_return\_sequences": 1,
+  "output\_attentions": false,
+  "output\_hidden\_states": false,
+  "output\_past": true,
+  "pad\_token\_id": 0,
+  "prefix": null,
+  "pruned\_heads": \{\},
+  "repetition\_penalty": 1.0,
+  "task\_specific\_params": null,
+  "temperature": 1.0,
+  "top\_k": 50,
+  "top\_p": 1.0,
+  "torchscript": false,
+  "type\_vocab\_size": 2,
+  "use\_bfloat16": false,
+  "vocab\_size": 30522
+\}
+
+INFO:filelock:Lock 140253302421768 acquired on /root/.cache/torch/transformers/a
+a1ef1aede4482d0dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5
+fa7bc3d03d55c4fa650fed07220e2eeebc06ce58d0e9a157.lock
+INFO:transformers.file\_utils:https://s3.amazonaws.com/models.huggingface.co/bert
+/bert-base-uncased-pytorch\_model.bin not found in cache or force\_download set to
+True, downloading to /root/.cache/torch/transformers/tmp0mpnh6ij
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=0, description='Downloading', max=440473133, style=ProgressStyle(description_…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.file\_utils:storing
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+pytorch\_model.bin in cache at /root/.cache/torch/transformers/aa1ef1aede4482d0db
+cd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4fa6
+50fed07220e2eeebc06ce58d0e9a157
+INFO:transformers.file\_utils:creating metadata file for /root/.cache/torch/trans
+formers/aa1ef1aede4482d0dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03a
+b34a1a5d5fa7bc3d03d55c4fa650fed07220e2eeebc06ce58d0e9a157
+INFO:filelock:Lock 140253302421768 released on /root/.cache/torch/transformers/a
+a1ef1aede4482d0dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5
+fa7bc3d03d55c4fa650fed07220e2eeebc06ce58d0e9a157.lock
+INFO:transformers.modeling\_utils:loading weights file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+pytorch\_model.bin from cache at /root/.cache/torch/transformers/aa1ef1aede4482d0
+dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4f
+a650fed07220e2eeebc06ce58d0e9a157
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:lightning:Running in fast\_dev\_run mode: will run a full train, val and test
+loop using a single batch
+INFO:lightning:GPU available: True, used: True
+INFO:lightning:CUDA\_VISIBLE\_DEVICES: [0]
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{device}\PY{p}{)}\PY{p}{;}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{k}{del} \PY{n}{model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:lightning:
+    | Name                                              | Type              |
+Params
+--------------------------------------------------------------------------------
+----
+0   | loss\_func                                         | CrossEntropyLoss  | 0
+1   | model                                             | BertModel         |
+109 M
+2   | model.embeddings                                  | BertEmbeddings    | 23
+M
+3   | model.embeddings.word\_embeddings                  | Embedding         | 23
+M
+4   | model.embeddings.position\_embeddings              | Embedding         |
+393 K
+5   | model.embeddings.token\_type\_embeddings            | Embedding         | 1
+K
+6   | model.embeddings.LayerNorm                        | LayerNorm         | 1
+K
+7   | model.embeddings.dropout                          | Dropout           | 0
+8   | model.encoder                                     | BertEncoder       | 85
+M
+9   | model.encoder.layer                               | ModuleList        | 85
+M
+10  | model.encoder.layer.0                             | BertLayer         | 7
+M
+11  | model.encoder.layer.0.attention                   | BertAttention     | 2
+M
+12  | model.encoder.layer.0.attention.self              | BertSelfAttention | 1
+M
+13  | model.encoder.layer.0.attention.self.query        | Linear            |
+590 K
+14  | model.encoder.layer.0.attention.self.key          | Linear            |
+590 K
+15  | model.encoder.layer.0.attention.self.value        | Linear            |
+590 K
+16  | model.encoder.layer.0.attention.self.dropout      | Dropout           | 0
+17  | model.encoder.layer.0.attention.output            | BertSelfOutput    |
+592 K
+18  | model.encoder.layer.0.attention.output.dense      | Linear            |
+590 K
+19  | model.encoder.layer.0.attention.output.LayerNorm  | LayerNorm         | 1
+K
+20  | model.encoder.layer.0.attention.output.dropout    | Dropout           | 0
+21  | model.encoder.layer.0.intermediate                | BertIntermediate  | 2
+M
+22  | model.encoder.layer.0.intermediate.dense          | Linear            | 2
+M
+23  | model.encoder.layer.0.output                      | BertOutput        | 2
+M
+24  | model.encoder.layer.0.output.dense                | Linear            | 2
+M
+25  | model.encoder.layer.0.output.LayerNorm            | LayerNorm         | 1
+K
+26  | model.encoder.layer.0.output.dropout              | Dropout           | 0
+27  | model.encoder.layer.1                             | BertLayer         | 7
+M
+28  | model.encoder.layer.1.attention                   | BertAttention     | 2
+M
+29  | model.encoder.layer.1.attention.self              | BertSelfAttention | 1
+M
+30  | model.encoder.layer.1.attention.self.query        | Linear            |
+590 K
+31  | model.encoder.layer.1.attention.self.key          | Linear            |
+590 K
+32  | model.encoder.layer.1.attention.self.value        | Linear            |
+590 K
+33  | model.encoder.layer.1.attention.self.dropout      | Dropout           | 0
+34  | model.encoder.layer.1.attention.output            | BertSelfOutput    |
+592 K
+35  | model.encoder.layer.1.attention.output.dense      | Linear            |
+590 K
+36  | model.encoder.layer.1.attention.output.LayerNorm  | LayerNorm         | 1
+K
+37  | model.encoder.layer.1.attention.output.dropout    | Dropout           | 0
+38  | model.encoder.layer.1.intermediate                | BertIntermediate  | 2
+M
+39  | model.encoder.layer.1.intermediate.dense          | Linear            | 2
+M
+40  | model.encoder.layer.1.output                      | BertOutput        | 2
+M
+41  | model.encoder.layer.1.output.dense                | Linear            | 2
+M
+42  | model.encoder.layer.1.output.LayerNorm            | LayerNorm         | 1
+K
+43  | model.encoder.layer.1.output.dropout              | Dropout           | 0
+44  | model.encoder.layer.2                             | BertLayer         | 7
+M
+45  | model.encoder.layer.2.attention                   | BertAttention     | 2
+M
+46  | model.encoder.layer.2.attention.self              | BertSelfAttention | 1
+M
+47  | model.encoder.layer.2.attention.self.query        | Linear            |
+590 K
+48  | model.encoder.layer.2.attention.self.key          | Linear            |
+590 K
+49  | model.encoder.layer.2.attention.self.value        | Linear            |
+590 K
+50  | model.encoder.layer.2.attention.self.dropout      | Dropout           | 0
+51  | model.encoder.layer.2.attention.output            | BertSelfOutput    |
+592 K
+52  | model.encoder.layer.2.attention.output.dense      | Linear            |
+590 K
+53  | model.encoder.layer.2.attention.output.LayerNorm  | LayerNorm         | 1
+K
+54  | model.encoder.layer.2.attention.output.dropout    | Dropout           | 0
+55  | model.encoder.layer.2.intermediate                | BertIntermediate  | 2
+M
+56  | model.encoder.layer.2.intermediate.dense          | Linear            | 2
+M
+57  | model.encoder.layer.2.output                      | BertOutput        | 2
+M
+58  | model.encoder.layer.2.output.dense                | Linear            | 2
+M
+59  | model.encoder.layer.2.output.LayerNorm            | LayerNorm         | 1
+K
+60  | model.encoder.layer.2.output.dropout              | Dropout           | 0
+61  | model.encoder.layer.3                             | BertLayer         | 7
+M
+62  | model.encoder.layer.3.attention                   | BertAttention     | 2
+M
+63  | model.encoder.layer.3.attention.self              | BertSelfAttention | 1
+M
+64  | model.encoder.layer.3.attention.self.query        | Linear            |
+590 K
+65  | model.encoder.layer.3.attention.self.key          | Linear            |
+590 K
+66  | model.encoder.layer.3.attention.self.value        | Linear            |
+590 K
+67  | model.encoder.layer.3.attention.self.dropout      | Dropout           | 0
+68  | model.encoder.layer.3.attention.output            | BertSelfOutput    |
+592 K
+69  | model.encoder.layer.3.attention.output.dense      | Linear            |
+590 K
+70  | model.encoder.layer.3.attention.output.LayerNorm  | LayerNorm         | 1
+K
+71  | model.encoder.layer.3.attention.output.dropout    | Dropout           | 0
+72  | model.encoder.layer.3.intermediate                | BertIntermediate  | 2
+M
+73  | model.encoder.layer.3.intermediate.dense          | Linear            | 2
+M
+74  | model.encoder.layer.3.output                      | BertOutput        | 2
+M
+75  | model.encoder.layer.3.output.dense                | Linear            | 2
+M
+76  | model.encoder.layer.3.output.LayerNorm            | LayerNorm         | 1
+K
+77  | model.encoder.layer.3.output.dropout              | Dropout           | 0
+78  | model.encoder.layer.4                             | BertLayer         | 7
+M
+79  | model.encoder.layer.4.attention                   | BertAttention     | 2
+M
+80  | model.encoder.layer.4.attention.self              | BertSelfAttention | 1
+M
+81  | model.encoder.layer.4.attention.self.query        | Linear            |
+590 K
+82  | model.encoder.layer.4.attention.self.key          | Linear            |
+590 K
+83  | model.encoder.layer.4.attention.self.value        | Linear            |
+590 K
+84  | model.encoder.layer.4.attention.self.dropout      | Dropout           | 0
+85  | model.encoder.layer.4.attention.output            | BertSelfOutput    |
+592 K
+86  | model.encoder.layer.4.attention.output.dense      | Linear            |
+590 K
+87  | model.encoder.layer.4.attention.output.LayerNorm  | LayerNorm         | 1
+K
+88  | model.encoder.layer.4.attention.output.dropout    | Dropout           | 0
+89  | model.encoder.layer.4.intermediate                | BertIntermediate  | 2
+M
+90  | model.encoder.layer.4.intermediate.dense          | Linear            | 2
+M
+91  | model.encoder.layer.4.output                      | BertOutput        | 2
+M
+92  | model.encoder.layer.4.output.dense                | Linear            | 2
+M
+93  | model.encoder.layer.4.output.LayerNorm            | LayerNorm         | 1
+K
+94  | model.encoder.layer.4.output.dropout              | Dropout           | 0
+95  | model.encoder.layer.5                             | BertLayer         | 7
+M
+96  | model.encoder.layer.5.attention                   | BertAttention     | 2
+M
+97  | model.encoder.layer.5.attention.self              | BertSelfAttention | 1
+M
+98  | model.encoder.layer.5.attention.self.query        | Linear            |
+590 K
+99  | model.encoder.layer.5.attention.self.key          | Linear            |
+590 K
+100 | model.encoder.layer.5.attention.self.value        | Linear            |
+590 K
+101 | model.encoder.layer.5.attention.self.dropout      | Dropout           | 0
+102 | model.encoder.layer.5.attention.output            | BertSelfOutput    |
+592 K
+103 | model.encoder.layer.5.attention.output.dense      | Linear            |
+590 K
+104 | model.encoder.layer.5.attention.output.LayerNorm  | LayerNorm         | 1
+K
+105 | model.encoder.layer.5.attention.output.dropout    | Dropout           | 0
+106 | model.encoder.layer.5.intermediate                | BertIntermediate  | 2
+M
+107 | model.encoder.layer.5.intermediate.dense          | Linear            | 2
+M
+108 | model.encoder.layer.5.output                      | BertOutput        | 2
+M
+109 | model.encoder.layer.5.output.dense                | Linear            | 2
+M
+110 | model.encoder.layer.5.output.LayerNorm            | LayerNorm         | 1
+K
+111 | model.encoder.layer.5.output.dropout              | Dropout           | 0
+112 | model.encoder.layer.6                             | BertLayer         | 7
+M
+113 | model.encoder.layer.6.attention                   | BertAttention     | 2
+M
+114 | model.encoder.layer.6.attention.self              | BertSelfAttention | 1
+M
+115 | model.encoder.layer.6.attention.self.query        | Linear            |
+590 K
+116 | model.encoder.layer.6.attention.self.key          | Linear            |
+590 K
+117 | model.encoder.layer.6.attention.self.value        | Linear            |
+590 K
+118 | model.encoder.layer.6.attention.self.dropout      | Dropout           | 0
+119 | model.encoder.layer.6.attention.output            | BertSelfOutput    |
+592 K
+120 | model.encoder.layer.6.attention.output.dense      | Linear            |
+590 K
+121 | model.encoder.layer.6.attention.output.LayerNorm  | LayerNorm         | 1
+K
+122 | model.encoder.layer.6.attention.output.dropout    | Dropout           | 0
+123 | model.encoder.layer.6.intermediate                | BertIntermediate  | 2
+M
+124 | model.encoder.layer.6.intermediate.dense          | Linear            | 2
+M
+125 | model.encoder.layer.6.output                      | BertOutput        | 2
+M
+126 | model.encoder.layer.6.output.dense                | Linear            | 2
+M
+127 | model.encoder.layer.6.output.LayerNorm            | LayerNorm         | 1
+K
+128 | model.encoder.layer.6.output.dropout              | Dropout           | 0
+129 | model.encoder.layer.7                             | BertLayer         | 7
+M
+130 | model.encoder.layer.7.attention                   | BertAttention     | 2
+M
+131 | model.encoder.layer.7.attention.self              | BertSelfAttention | 1
+M
+132 | model.encoder.layer.7.attention.self.query        | Linear            |
+590 K
+133 | model.encoder.layer.7.attention.self.key          | Linear            |
+590 K
+134 | model.encoder.layer.7.attention.self.value        | Linear            |
+590 K
+135 | model.encoder.layer.7.attention.self.dropout      | Dropout           | 0
+136 | model.encoder.layer.7.attention.output            | BertSelfOutput    |
+592 K
+137 | model.encoder.layer.7.attention.output.dense      | Linear            |
+590 K
+138 | model.encoder.layer.7.attention.output.LayerNorm  | LayerNorm         | 1
+K
+139 | model.encoder.layer.7.attention.output.dropout    | Dropout           | 0
+140 | model.encoder.layer.7.intermediate                | BertIntermediate  | 2
+M
+141 | model.encoder.layer.7.intermediate.dense          | Linear            | 2
+M
+142 | model.encoder.layer.7.output                      | BertOutput        | 2
+M
+143 | model.encoder.layer.7.output.dense                | Linear            | 2
+M
+144 | model.encoder.layer.7.output.LayerNorm            | LayerNorm         | 1
+K
+145 | model.encoder.layer.7.output.dropout              | Dropout           | 0
+146 | model.encoder.layer.8                             | BertLayer         | 7
+M
+147 | model.encoder.layer.8.attention                   | BertAttention     | 2
+M
+148 | model.encoder.layer.8.attention.self              | BertSelfAttention | 1
+M
+149 | model.encoder.layer.8.attention.self.query        | Linear            |
+590 K
+150 | model.encoder.layer.8.attention.self.key          | Linear            |
+590 K
+151 | model.encoder.layer.8.attention.self.value        | Linear            |
+590 K
+152 | model.encoder.layer.8.attention.self.dropout      | Dropout           | 0
+153 | model.encoder.layer.8.attention.output            | BertSelfOutput    |
+592 K
+154 | model.encoder.layer.8.attention.output.dense      | Linear            |
+590 K
+155 | model.encoder.layer.8.attention.output.LayerNorm  | LayerNorm         | 1
+K
+156 | model.encoder.layer.8.attention.output.dropout    | Dropout           | 0
+157 | model.encoder.layer.8.intermediate                | BertIntermediate  | 2
+M
+158 | model.encoder.layer.8.intermediate.dense          | Linear            | 2
+M
+159 | model.encoder.layer.8.output                      | BertOutput        | 2
+M
+160 | model.encoder.layer.8.output.dense                | Linear            | 2
+M
+161 | model.encoder.layer.8.output.LayerNorm            | LayerNorm         | 1
+K
+162 | model.encoder.layer.8.output.dropout              | Dropout           | 0
+163 | model.encoder.layer.9                             | BertLayer         | 7
+M
+164 | model.encoder.layer.9.attention                   | BertAttention     | 2
+M
+165 | model.encoder.layer.9.attention.self              | BertSelfAttention | 1
+M
+166 | model.encoder.layer.9.attention.self.query        | Linear            |
+590 K
+167 | model.encoder.layer.9.attention.self.key          | Linear            |
+590 K
+168 | model.encoder.layer.9.attention.self.value        | Linear            |
+590 K
+169 | model.encoder.layer.9.attention.self.dropout      | Dropout           | 0
+170 | model.encoder.layer.9.attention.output            | BertSelfOutput    |
+592 K
+171 | model.encoder.layer.9.attention.output.dense      | Linear            |
+590 K
+172 | model.encoder.layer.9.attention.output.LayerNorm  | LayerNorm         | 1
+K
+173 | model.encoder.layer.9.attention.output.dropout    | Dropout           | 0
+174 | model.encoder.layer.9.intermediate                | BertIntermediate  | 2
+M
+175 | model.encoder.layer.9.intermediate.dense          | Linear            | 2
+M
+176 | model.encoder.layer.9.output                      | BertOutput        | 2
+M
+177 | model.encoder.layer.9.output.dense                | Linear            | 2
+M
+178 | model.encoder.layer.9.output.LayerNorm            | LayerNorm         | 1
+K
+179 | model.encoder.layer.9.output.dropout              | Dropout           | 0
+180 | model.encoder.layer.10                            | BertLayer         | 7
+M
+181 | model.encoder.layer.10.attention                  | BertAttention     | 2
+M
+182 | model.encoder.layer.10.attention.self             | BertSelfAttention | 1
+M
+183 | model.encoder.layer.10.attention.self.query       | Linear            |
+590 K
+184 | model.encoder.layer.10.attention.self.key         | Linear            |
+590 K
+185 | model.encoder.layer.10.attention.self.value       | Linear            |
+590 K
+186 | model.encoder.layer.10.attention.self.dropout     | Dropout           | 0
+187 | model.encoder.layer.10.attention.output           | BertSelfOutput    |
+592 K
+188 | model.encoder.layer.10.attention.output.dense     | Linear            |
+590 K
+189 | model.encoder.layer.10.attention.output.LayerNorm | LayerNorm         | 1
+K
+190 | model.encoder.layer.10.attention.output.dropout   | Dropout           | 0
+191 | model.encoder.layer.10.intermediate               | BertIntermediate  | 2
+M
+192 | model.encoder.layer.10.intermediate.dense         | Linear            | 2
+M
+193 | model.encoder.layer.10.output                     | BertOutput        | 2
+M
+194 | model.encoder.layer.10.output.dense               | Linear            | 2
+M
+195 | model.encoder.layer.10.output.LayerNorm           | LayerNorm         | 1
+K
+196 | model.encoder.layer.10.output.dropout             | Dropout           | 0
+197 | model.encoder.layer.11                            | BertLayer         | 7
+M
+198 | model.encoder.layer.11.attention                  | BertAttention     | 2
+M
+199 | model.encoder.layer.11.attention.self             | BertSelfAttention | 1
+M
+200 | model.encoder.layer.11.attention.self.query       | Linear            |
+590 K
+201 | model.encoder.layer.11.attention.self.key         | Linear            |
+590 K
+202 | model.encoder.layer.11.attention.self.value       | Linear            |
+590 K
+203 | model.encoder.layer.11.attention.self.dropout     | Dropout           | 0
+204 | model.encoder.layer.11.attention.output           | BertSelfOutput    |
+592 K
+205 | model.encoder.layer.11.attention.output.dense     | Linear            |
+590 K
+206 | model.encoder.layer.11.attention.output.LayerNorm | LayerNorm         | 1
+K
+207 | model.encoder.layer.11.attention.output.dropout   | Dropout           | 0
+208 | model.encoder.layer.11.intermediate               | BertIntermediate  | 2
+M
+209 | model.encoder.layer.11.intermediate.dense         | Linear            | 2
+M
+210 | model.encoder.layer.11.output                     | BertOutput        | 2
+M
+211 | model.encoder.layer.11.output.dense               | Linear            | 2
+M
+212 | model.encoder.layer.11.output.LayerNorm           | LayerNorm         | 1
+K
+213 | model.encoder.layer.11.output.dropout             | Dropout           | 0
+214 | model.pooler                                      | BertPooler        |
+590 K
+215 | model.pooler.dense                                | Linear            |
+590 K
+216 | model.pooler.activation                           | Tanh              | 0
+217 | classification\_layer                              | Linear            | 1
+K
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Training', layout=Layout(flex='2'), max=1, …
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:lightning:
+
+Profiler Report
+
+Action                  |  Mean duration (s)    |  Total time (s)
+-----------------------------------------------------------------
+on\_train\_start          |  0.03086              |  0.03086
+on\_epoch\_start          |  0.0025166            |  0.0025166
+get\_train\_batch         |  0.35123              |  0.35123
+on\_batch\_start          |  0.00010312           |  0.00010312
+model\_forward           |  0.1594               |  0.1594
+model\_backward          |  0.36685              |  0.36685
+on\_after\_backward       |  3.522e-06            |  3.522e-06
+optimizer\_step          |  0.065248             |  0.065248
+on\_batch\_end            |  0.0052582            |  0.0052582
+on\_epoch\_end            |  1.8249e-05           |  1.8249e-05
+on\_train\_end            |  0.0018023            |  0.0018023
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Testing', layout=Layout(flex='2'), max=1, s…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+TEST RESULTS
+\{'avg\_test\_acc': tensor(0.2500, dtype=torch.float64)\}
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \hypertarget{batch-overfitting}{%
+\subsection*{4.4 Batch overfitting}\label{batch-overfitting}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} network instantiation}
+\PY{c+c1}{\PYZsh{} !!! important !!! set dataloader shuffle parameter to False}
+\PY{n}{model} \PY{o}{=} \PY{n}{BertFinetuner}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{,} \PY{n}{dl\PYZus{}shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{max\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,}              \PY{c+c1}{\PYZsh{} run for 10 epochs}
+    \PY{n}{profiler} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}              \PY{c+c1}{\PYZsh{} do not run profiler}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}                     \PY{c+c1}{\PYZsh{} GPUs}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{32}\PY{p}{,}               \PY{c+c1}{\PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{logger} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}               \PY{c+c1}{\PYZsh{} do not use logging (TensorBoard)}
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}  \PY{c+c1}{\PYZsh{} do not stop early}
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}  \PY{c+c1}{\PYZsh{} do not save checkpoint}
+    \PY{n}{overfit\PYZus{}pct} \PY{o}{=} \PY{l+m+mf}{0.01}\PY{p}{,}            \PY{c+c1}{\PYZsh{} ratio of data to overfit}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.tokenization\_utils:loading file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+from cache at /root/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f000
+68293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1
+a0c124c32c9a084
+INFO:transformers.configuration\_utils:loading configuration file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+config.json from cache at /root/.cache/torch/transformers/4dad0251492946e18ac392
+90fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce23078
+9d7fa2a42ef516483e4ca884517
+INFO:transformers.configuration\_utils:Model config BertConfig \{
+  "\_num\_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention\_probs\_dropout\_prob": 0.1,
+  "bad\_words\_ids": null,
+  "bos\_token\_id": null,
+  "decoder\_start\_token\_id": null,
+  "do\_sample": false,
+  "early\_stopping": false,
+  "eos\_token\_id": null,
+  "finetuning\_task": null,
+  "hidden\_act": "gelu",
+  "hidden\_dropout\_prob": 0.1,
+  "hidden\_size": 768,
+  "id2label": \{
+    "0": "LABEL\_0",
+    "1": "LABEL\_1"
+  \},
+  "initializer\_range": 0.02,
+  "intermediate\_size": 3072,
+  "is\_decoder": false,
+  "is\_encoder\_decoder": false,
+  "label2id": \{
+    "LABEL\_0": 0,
+    "LABEL\_1": 1
+  \},
+  "layer\_norm\_eps": 1e-12,
+  "length\_penalty": 1.0,
+  "max\_length": 20,
+  "max\_position\_embeddings": 512,
+  "min\_length": 0,
+  "model\_type": "bert",
+  "no\_repeat\_ngram\_size": 0,
+  "num\_attention\_heads": 12,
+  "num\_beams": 1,
+  "num\_hidden\_layers": 12,
+  "num\_return\_sequences": 1,
+  "output\_attentions": false,
+  "output\_hidden\_states": false,
+  "output\_past": true,
+  "pad\_token\_id": 0,
+  "prefix": null,
+  "pruned\_heads": \{\},
+  "repetition\_penalty": 1.0,
+  "task\_specific\_params": null,
+  "temperature": 1.0,
+  "top\_k": 50,
+  "top\_p": 1.0,
+  "torchscript": false,
+  "type\_vocab\_size": 2,
+  "use\_bfloat16": false,
+  "vocab\_size": 30522
+\}
+
+INFO:transformers.modeling\_utils:loading weights file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+pytorch\_model.bin from cache at /root/.cache/torch/transformers/aa1ef1aede4482d0
+dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4f
+a650fed07220e2eeebc06ce58d0e9a157
+INFO:lightning:GPU available: True, used: True
+INFO:lightning:CUDA\_VISIBLE\_DEVICES: [0]
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{device}\PY{p}{)}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}del model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:lightning:
+    | Name                                              | Type              |
+Params
+--------------------------------------------------------------------------------
+----
+0   | loss\_func                                         | CrossEntropyLoss  | 0
+1   | model                                             | BertModel         |
+109 M
+2   | model.embeddings                                  | BertEmbeddings    | 23
+M
+3   | model.embeddings.word\_embeddings                  | Embedding         | 23
+M
+4   | model.embeddings.position\_embeddings              | Embedding         |
+393 K
+5   | model.embeddings.token\_type\_embeddings            | Embedding         | 1
+K
+6   | model.embeddings.LayerNorm                        | LayerNorm         | 1
+K
+7   | model.embeddings.dropout                          | Dropout           | 0
+8   | model.encoder                                     | BertEncoder       | 85
+M
+9   | model.encoder.layer                               | ModuleList        | 85
+M
+10  | model.encoder.layer.0                             | BertLayer         | 7
+M
+11  | model.encoder.layer.0.attention                   | BertAttention     | 2
+M
+12  | model.encoder.layer.0.attention.self              | BertSelfAttention | 1
+M
+13  | model.encoder.layer.0.attention.self.query        | Linear            |
+590 K
+14  | model.encoder.layer.0.attention.self.key          | Linear            |
+590 K
+15  | model.encoder.layer.0.attention.self.value        | Linear            |
+590 K
+16  | model.encoder.layer.0.attention.self.dropout      | Dropout           | 0
+17  | model.encoder.layer.0.attention.output            | BertSelfOutput    |
+592 K
+18  | model.encoder.layer.0.attention.output.dense      | Linear            |
+590 K
+19  | model.encoder.layer.0.attention.output.LayerNorm  | LayerNorm         | 1
+K
+20  | model.encoder.layer.0.attention.output.dropout    | Dropout           | 0
+21  | model.encoder.layer.0.intermediate                | BertIntermediate  | 2
+M
+22  | model.encoder.layer.0.intermediate.dense          | Linear            | 2
+M
+23  | model.encoder.layer.0.output                      | BertOutput        | 2
+M
+24  | model.encoder.layer.0.output.dense                | Linear            | 2
+M
+25  | model.encoder.layer.0.output.LayerNorm            | LayerNorm         | 1
+K
+26  | model.encoder.layer.0.output.dropout              | Dropout           | 0
+27  | model.encoder.layer.1                             | BertLayer         | 7
+M
+28  | model.encoder.layer.1.attention                   | BertAttention     | 2
+M
+29  | model.encoder.layer.1.attention.self              | BertSelfAttention | 1
+M
+30  | model.encoder.layer.1.attention.self.query        | Linear            |
+590 K
+31  | model.encoder.layer.1.attention.self.key          | Linear            |
+590 K
+32  | model.encoder.layer.1.attention.self.value        | Linear            |
+590 K
+33  | model.encoder.layer.1.attention.self.dropout      | Dropout           | 0
+34  | model.encoder.layer.1.attention.output            | BertSelfOutput    |
+592 K
+35  | model.encoder.layer.1.attention.output.dense      | Linear            |
+590 K
+36  | model.encoder.layer.1.attention.output.LayerNorm  | LayerNorm         | 1
+K
+37  | model.encoder.layer.1.attention.output.dropout    | Dropout           | 0
+38  | model.encoder.layer.1.intermediate                | BertIntermediate  | 2
+M
+39  | model.encoder.layer.1.intermediate.dense          | Linear            | 2
+M
+40  | model.encoder.layer.1.output                      | BertOutput        | 2
+M
+41  | model.encoder.layer.1.output.dense                | Linear            | 2
+M
+42  | model.encoder.layer.1.output.LayerNorm            | LayerNorm         | 1
+K
+43  | model.encoder.layer.1.output.dropout              | Dropout           | 0
+44  | model.encoder.layer.2                             | BertLayer         | 7
+M
+45  | model.encoder.layer.2.attention                   | BertAttention     | 2
+M
+46  | model.encoder.layer.2.attention.self              | BertSelfAttention | 1
+M
+47  | model.encoder.layer.2.attention.self.query        | Linear            |
+590 K
+48  | model.encoder.layer.2.attention.self.key          | Linear            |
+590 K
+49  | model.encoder.layer.2.attention.self.value        | Linear            |
+590 K
+50  | model.encoder.layer.2.attention.self.dropout      | Dropout           | 0
+51  | model.encoder.layer.2.attention.output            | BertSelfOutput    |
+592 K
+52  | model.encoder.layer.2.attention.output.dense      | Linear            |
+590 K
+53  | model.encoder.layer.2.attention.output.LayerNorm  | LayerNorm         | 1
+K
+54  | model.encoder.layer.2.attention.output.dropout    | Dropout           | 0
+55  | model.encoder.layer.2.intermediate                | BertIntermediate  | 2
+M
+56  | model.encoder.layer.2.intermediate.dense          | Linear            | 2
+M
+57  | model.encoder.layer.2.output                      | BertOutput        | 2
+M
+58  | model.encoder.layer.2.output.dense                | Linear            | 2
+M
+59  | model.encoder.layer.2.output.LayerNorm            | LayerNorm         | 1
+K
+60  | model.encoder.layer.2.output.dropout              | Dropout           | 0
+61  | model.encoder.layer.3                             | BertLayer         | 7
+M
+62  | model.encoder.layer.3.attention                   | BertAttention     | 2
+M
+63  | model.encoder.layer.3.attention.self              | BertSelfAttention | 1
+M
+64  | model.encoder.layer.3.attention.self.query        | Linear            |
+590 K
+65  | model.encoder.layer.3.attention.self.key          | Linear            |
+590 K
+66  | model.encoder.layer.3.attention.self.value        | Linear            |
+590 K
+67  | model.encoder.layer.3.attention.self.dropout      | Dropout           | 0
+68  | model.encoder.layer.3.attention.output            | BertSelfOutput    |
+592 K
+69  | model.encoder.layer.3.attention.output.dense      | Linear            |
+590 K
+70  | model.encoder.layer.3.attention.output.LayerNorm  | LayerNorm         | 1
+K
+71  | model.encoder.layer.3.attention.output.dropout    | Dropout           | 0
+72  | model.encoder.layer.3.intermediate                | BertIntermediate  | 2
+M
+73  | model.encoder.layer.3.intermediate.dense          | Linear            | 2
+M
+74  | model.encoder.layer.3.output                      | BertOutput        | 2
+M
+75  | model.encoder.layer.3.output.dense                | Linear            | 2
+M
+76  | model.encoder.layer.3.output.LayerNorm            | LayerNorm         | 1
+K
+77  | model.encoder.layer.3.output.dropout              | Dropout           | 0
+78  | model.encoder.layer.4                             | BertLayer         | 7
+M
+79  | model.encoder.layer.4.attention                   | BertAttention     | 2
+M
+80  | model.encoder.layer.4.attention.self              | BertSelfAttention | 1
+M
+81  | model.encoder.layer.4.attention.self.query        | Linear            |
+590 K
+82  | model.encoder.layer.4.attention.self.key          | Linear            |
+590 K
+83  | model.encoder.layer.4.attention.self.value        | Linear            |
+590 K
+84  | model.encoder.layer.4.attention.self.dropout      | Dropout           | 0
+85  | model.encoder.layer.4.attention.output            | BertSelfOutput    |
+592 K
+86  | model.encoder.layer.4.attention.output.dense      | Linear            |
+590 K
+87  | model.encoder.layer.4.attention.output.LayerNorm  | LayerNorm         | 1
+K
+88  | model.encoder.layer.4.attention.output.dropout    | Dropout           | 0
+89  | model.encoder.layer.4.intermediate                | BertIntermediate  | 2
+M
+90  | model.encoder.layer.4.intermediate.dense          | Linear            | 2
+M
+91  | model.encoder.layer.4.output                      | BertOutput        | 2
+M
+92  | model.encoder.layer.4.output.dense                | Linear            | 2
+M
+93  | model.encoder.layer.4.output.LayerNorm            | LayerNorm         | 1
+K
+94  | model.encoder.layer.4.output.dropout              | Dropout           | 0
+95  | model.encoder.layer.5                             | BertLayer         | 7
+M
+96  | model.encoder.layer.5.attention                   | BertAttention     | 2
+M
+97  | model.encoder.layer.5.attention.self              | BertSelfAttention | 1
+M
+98  | model.encoder.layer.5.attention.self.query        | Linear            |
+590 K
+99  | model.encoder.layer.5.attention.self.key          | Linear            |
+590 K
+100 | model.encoder.layer.5.attention.self.value        | Linear            |
+590 K
+101 | model.encoder.layer.5.attention.self.dropout      | Dropout           | 0
+102 | model.encoder.layer.5.attention.output            | BertSelfOutput    |
+592 K
+103 | model.encoder.layer.5.attention.output.dense      | Linear            |
+590 K
+104 | model.encoder.layer.5.attention.output.LayerNorm  | LayerNorm         | 1
+K
+105 | model.encoder.layer.5.attention.output.dropout    | Dropout           | 0
+106 | model.encoder.layer.5.intermediate                | BertIntermediate  | 2
+M
+107 | model.encoder.layer.5.intermediate.dense          | Linear            | 2
+M
+108 | model.encoder.layer.5.output                      | BertOutput        | 2
+M
+109 | model.encoder.layer.5.output.dense                | Linear            | 2
+M
+110 | model.encoder.layer.5.output.LayerNorm            | LayerNorm         | 1
+K
+111 | model.encoder.layer.5.output.dropout              | Dropout           | 0
+112 | model.encoder.layer.6                             | BertLayer         | 7
+M
+113 | model.encoder.layer.6.attention                   | BertAttention     | 2
+M
+114 | model.encoder.layer.6.attention.self              | BertSelfAttention | 1
+M
+115 | model.encoder.layer.6.attention.self.query        | Linear            |
+590 K
+116 | model.encoder.layer.6.attention.self.key          | Linear            |
+590 K
+117 | model.encoder.layer.6.attention.self.value        | Linear            |
+590 K
+118 | model.encoder.layer.6.attention.self.dropout      | Dropout           | 0
+119 | model.encoder.layer.6.attention.output            | BertSelfOutput    |
+592 K
+120 | model.encoder.layer.6.attention.output.dense      | Linear            |
+590 K
+121 | model.encoder.layer.6.attention.output.LayerNorm  | LayerNorm         | 1
+K
+122 | model.encoder.layer.6.attention.output.dropout    | Dropout           | 0
+123 | model.encoder.layer.6.intermediate                | BertIntermediate  | 2
+M
+124 | model.encoder.layer.6.intermediate.dense          | Linear            | 2
+M
+125 | model.encoder.layer.6.output                      | BertOutput        | 2
+M
+126 | model.encoder.layer.6.output.dense                | Linear            | 2
+M
+127 | model.encoder.layer.6.output.LayerNorm            | LayerNorm         | 1
+K
+128 | model.encoder.layer.6.output.dropout              | Dropout           | 0
+129 | model.encoder.layer.7                             | BertLayer         | 7
+M
+130 | model.encoder.layer.7.attention                   | BertAttention     | 2
+M
+131 | model.encoder.layer.7.attention.self              | BertSelfAttention | 1
+M
+132 | model.encoder.layer.7.attention.self.query        | Linear            |
+590 K
+133 | model.encoder.layer.7.attention.self.key          | Linear            |
+590 K
+134 | model.encoder.layer.7.attention.self.value        | Linear            |
+590 K
+135 | model.encoder.layer.7.attention.self.dropout      | Dropout           | 0
+136 | model.encoder.layer.7.attention.output            | BertSelfOutput    |
+592 K
+137 | model.encoder.layer.7.attention.output.dense      | Linear            |
+590 K
+138 | model.encoder.layer.7.attention.output.LayerNorm  | LayerNorm         | 1
+K
+139 | model.encoder.layer.7.attention.output.dropout    | Dropout           | 0
+140 | model.encoder.layer.7.intermediate                | BertIntermediate  | 2
+M
+141 | model.encoder.layer.7.intermediate.dense          | Linear            | 2
+M
+142 | model.encoder.layer.7.output                      | BertOutput        | 2
+M
+143 | model.encoder.layer.7.output.dense                | Linear            | 2
+M
+144 | model.encoder.layer.7.output.LayerNorm            | LayerNorm         | 1
+K
+145 | model.encoder.layer.7.output.dropout              | Dropout           | 0
+146 | model.encoder.layer.8                             | BertLayer         | 7
+M
+147 | model.encoder.layer.8.attention                   | BertAttention     | 2
+M
+148 | model.encoder.layer.8.attention.self              | BertSelfAttention | 1
+M
+149 | model.encoder.layer.8.attention.self.query        | Linear            |
+590 K
+150 | model.encoder.layer.8.attention.self.key          | Linear            |
+590 K
+151 | model.encoder.layer.8.attention.self.value        | Linear            |
+590 K
+152 | model.encoder.layer.8.attention.self.dropout      | Dropout           | 0
+153 | model.encoder.layer.8.attention.output            | BertSelfOutput    |
+592 K
+154 | model.encoder.layer.8.attention.output.dense      | Linear            |
+590 K
+155 | model.encoder.layer.8.attention.output.LayerNorm  | LayerNorm         | 1
+K
+156 | model.encoder.layer.8.attention.output.dropout    | Dropout           | 0
+157 | model.encoder.layer.8.intermediate                | BertIntermediate  | 2
+M
+158 | model.encoder.layer.8.intermediate.dense          | Linear            | 2
+M
+159 | model.encoder.layer.8.output                      | BertOutput        | 2
+M
+160 | model.encoder.layer.8.output.dense                | Linear            | 2
+M
+161 | model.encoder.layer.8.output.LayerNorm            | LayerNorm         | 1
+K
+162 | model.encoder.layer.8.output.dropout              | Dropout           | 0
+163 | model.encoder.layer.9                             | BertLayer         | 7
+M
+164 | model.encoder.layer.9.attention                   | BertAttention     | 2
+M
+165 | model.encoder.layer.9.attention.self              | BertSelfAttention | 1
+M
+166 | model.encoder.layer.9.attention.self.query        | Linear            |
+590 K
+167 | model.encoder.layer.9.attention.self.key          | Linear            |
+590 K
+168 | model.encoder.layer.9.attention.self.value        | Linear            |
+590 K
+169 | model.encoder.layer.9.attention.self.dropout      | Dropout           | 0
+170 | model.encoder.layer.9.attention.output            | BertSelfOutput    |
+592 K
+171 | model.encoder.layer.9.attention.output.dense      | Linear            |
+590 K
+172 | model.encoder.layer.9.attention.output.LayerNorm  | LayerNorm         | 1
+K
+173 | model.encoder.layer.9.attention.output.dropout    | Dropout           | 0
+174 | model.encoder.layer.9.intermediate                | BertIntermediate  | 2
+M
+175 | model.encoder.layer.9.intermediate.dense          | Linear            | 2
+M
+176 | model.encoder.layer.9.output                      | BertOutput        | 2
+M
+177 | model.encoder.layer.9.output.dense                | Linear            | 2
+M
+178 | model.encoder.layer.9.output.LayerNorm            | LayerNorm         | 1
+K
+179 | model.encoder.layer.9.output.dropout              | Dropout           | 0
+180 | model.encoder.layer.10                            | BertLayer         | 7
+M
+181 | model.encoder.layer.10.attention                  | BertAttention     | 2
+M
+182 | model.encoder.layer.10.attention.self             | BertSelfAttention | 1
+M
+183 | model.encoder.layer.10.attention.self.query       | Linear            |
+590 K
+184 | model.encoder.layer.10.attention.self.key         | Linear            |
+590 K
+185 | model.encoder.layer.10.attention.self.value       | Linear            |
+590 K
+186 | model.encoder.layer.10.attention.self.dropout     | Dropout           | 0
+187 | model.encoder.layer.10.attention.output           | BertSelfOutput    |
+592 K
+188 | model.encoder.layer.10.attention.output.dense     | Linear            |
+590 K
+189 | model.encoder.layer.10.attention.output.LayerNorm | LayerNorm         | 1
+K
+190 | model.encoder.layer.10.attention.output.dropout   | Dropout           | 0
+191 | model.encoder.layer.10.intermediate               | BertIntermediate  | 2
+M
+192 | model.encoder.layer.10.intermediate.dense         | Linear            | 2
+M
+193 | model.encoder.layer.10.output                     | BertOutput        | 2
+M
+194 | model.encoder.layer.10.output.dense               | Linear            | 2
+M
+195 | model.encoder.layer.10.output.LayerNorm           | LayerNorm         | 1
+K
+196 | model.encoder.layer.10.output.dropout             | Dropout           | 0
+197 | model.encoder.layer.11                            | BertLayer         | 7
+M
+198 | model.encoder.layer.11.attention                  | BertAttention     | 2
+M
+199 | model.encoder.layer.11.attention.self             | BertSelfAttention | 1
+M
+200 | model.encoder.layer.11.attention.self.query       | Linear            |
+590 K
+201 | model.encoder.layer.11.attention.self.key         | Linear            |
+590 K
+202 | model.encoder.layer.11.attention.self.value       | Linear            |
+590 K
+203 | model.encoder.layer.11.attention.self.dropout     | Dropout           | 0
+204 | model.encoder.layer.11.attention.output           | BertSelfOutput    |
+592 K
+205 | model.encoder.layer.11.attention.output.dense     | Linear            |
+590 K
+206 | model.encoder.layer.11.attention.output.LayerNorm | LayerNorm         | 1
+K
+207 | model.encoder.layer.11.attention.output.dropout   | Dropout           | 0
+208 | model.encoder.layer.11.intermediate               | BertIntermediate  | 2
+M
+209 | model.encoder.layer.11.intermediate.dense         | Linear            | 2
+M
+210 | model.encoder.layer.11.output                     | BertOutput        | 2
+M
+211 | model.encoder.layer.11.output.dense               | Linear            | 2
+M
+212 | model.encoder.layer.11.output.LayerNorm           | LayerNorm         | 1
+K
+213 | model.encoder.layer.11.output.dropout             | Dropout           | 0
+214 | model.pooler                                      | BertPooler        |
+590 K
+215 | model.pooler.dense                                | Linear            |
+590 K
+216 | model.pooler.activation                           | Tanh              | 0
+217 | classification\_layer                              | Linear            | 1
+K
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validation sanity check', layout=Layout(fle…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Training', layout=Layout(flex='2'), max=1, …
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Testing', layout=Layout(flex='2'), max=1, s…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+TEST RESULTS
+\{'avg\_test\_acc': tensor(0.8508, dtype=torch.float64)\}
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \hypertarget{number-of-parameters}{%
+\subsection*{4.5 Number of parameters}\label{number-of-parameters}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{nparam}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{k}{del} \PY{n}{model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{training}{%
+\section*{5. Training}\label{training}}
+
+    \hypertarget{start-tensorboard}{%
+\subsection*{5.1 Start TensorBoard}\label{start-tensorboard}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}}\PY{k}{tensorboard} \PYZhy{}\PYZhy{}logdir logs
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \hypertarget{training-loop}{%
+\subsection*{5.2 Training Loop}\label{training-loop}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} network instantiation}
+\PY{n}{model} \PY{o}{=} \PY{n}{BertFinetuner}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} logger configuration}
+\PY{n}{tensorboard\PYZus{}path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logs}\PY{l+s+s1}{\PYZsq{}}                       \PY{c+c1}{\PYZsh{} set directory name}
+\PY{n}{os}\PY{o}{.}\PY{n}{makedirs}\PY{p}{(}\PY{n}{tensorboard\PYZus{}path}\PY{p}{,} \PY{n}{exist\PYZus{}ok}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}    \PY{c+c1}{\PYZsh{} create path}
+\PY{n}{tensorboard\PYZus{}logger} \PY{o}{=} \PY{n}{TensorBoardLogger}\PY{p}{(}         \PY{c+c1}{\PYZsh{} save logs in experiment dir}
+    \PY{n}{tensorboard\PYZus{}path}\PY{p}{,} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} early stopping configuration}
+\PY{n}{early\PYZus{}stop} \PY{o}{=} \PY{n}{EarlyStopping}\PY{p}{(}
+    \PY{n}{monitor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}               \PY{c+c1}{\PYZsh{} variable to be monitored}
+    \PY{n}{patience} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{patience}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{c+c1}{\PYZsh{} patience}
+    \PY{n}{verbose} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}                        \PY{c+c1}{\PYZsh{} quietly}
+    \PY{n}{mode} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min}\PY{l+s+s1}{\PYZsq{}}                            \PY{c+c1}{\PYZsh{} loss should decrease}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} checkpoint configuration}
+\PY{n}{ckpt\PYZus{}path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+si}{\PYZob{}epoch\PYZcb{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+si}{\PYZob{}val\PYZus{}loss:.2f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}   
+\PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{n}{ModelCheckpoint}\PY{p}{(}
+    \PY{n}{prefix} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}    \PY{c+c1}{\PYZsh{} checkpoint name prefix}
+    \PY{n}{filepath} \PY{o}{=} \PY{n}{ckpt\PYZus{}path}\PY{p}{,}                           \PY{c+c1}{\PYZsh{} path to checkpoint}
+    \PY{n}{monitor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{mode} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} define trainer}
+\PY{n}{trainer\PYZus{}normal} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{max\PYZus{}epochs} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{32}\PY{p}{,}  
+    \PY{n}{logger} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logger}\PY{p}{,}  
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{n}{early\PYZus{}stop}\PY{p}{,}  
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{n}{checkpoint\PYZus{}callback}\PY{p}{,}  
+    \PY{n}{resume\PYZus{}from\PYZus{}checkpoint} \PY{o}{=} \PY{k+kc}{None}\PY{p}{,}              \PY{c+c1}{\PYZsh{} used to load from checkpoint (.ckpt)}
+    \PY{n}{progress\PYZus{}bar\PYZus{}refresh\PYZus{}rate} \PY{o}{=} \PY{l+m+mi}{50}              \PY{c+c1}{\PYZsh{} tqdm update rate (lower values can cause overhead)}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} print hyperparameters}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hyperparameters:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{hyperparameters}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{key}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{: }\PY{l+s+si}{\PYZob{}}\PY{n}{value}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:transformers.tokenization\_utils:loading file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+from cache at /root/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f000
+68293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1
+a0c124c32c9a084
+INFO:transformers.configuration\_utils:loading configuration file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+config.json from cache at /root/.cache/torch/transformers/4dad0251492946e18ac392
+90fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce23078
+9d7fa2a42ef516483e4ca884517
+INFO:transformers.configuration\_utils:Model config BertConfig \{
+  "\_num\_labels": 2,
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention\_probs\_dropout\_prob": 0.1,
+  "bad\_words\_ids": null,
+  "bos\_token\_id": null,
+  "decoder\_start\_token\_id": null,
+  "do\_sample": false,
+  "early\_stopping": false,
+  "eos\_token\_id": null,
+  "finetuning\_task": null,
+  "hidden\_act": "gelu",
+  "hidden\_dropout\_prob": 0.1,
+  "hidden\_size": 768,
+  "id2label": \{
+    "0": "LABEL\_0",
+    "1": "LABEL\_1"
+  \},
+  "initializer\_range": 0.02,
+  "intermediate\_size": 3072,
+  "is\_decoder": false,
+  "is\_encoder\_decoder": false,
+  "label2id": \{
+    "LABEL\_0": 0,
+    "LABEL\_1": 1
+  \},
+  "layer\_norm\_eps": 1e-12,
+  "length\_penalty": 1.0,
+  "max\_length": 20,
+  "max\_position\_embeddings": 512,
+  "min\_length": 0,
+  "model\_type": "bert",
+  "no\_repeat\_ngram\_size": 0,
+  "num\_attention\_heads": 12,
+  "num\_beams": 1,
+  "num\_hidden\_layers": 12,
+  "num\_return\_sequences": 1,
+  "output\_attentions": false,
+  "output\_hidden\_states": false,
+  "output\_past": true,
+  "pad\_token\_id": 0,
+  "prefix": null,
+  "pruned\_heads": \{\},
+  "repetition\_penalty": 1.0,
+  "task\_specific\_params": null,
+  "temperature": 1.0,
+  "top\_k": 50,
+  "top\_p": 1.0,
+  "torchscript": false,
+  "type\_vocab\_size": 2,
+  "use\_bfloat16": false,
+  "vocab\_size": 30522
+\}
+
+INFO:transformers.modeling\_utils:loading weights file
+https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-
+pytorch\_model.bin from cache at /root/.cache/torch/transformers/aa1ef1aede4482d0
+dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4f
+a650fed07220e2eeebc06ce58d0e9a157
+INFO:lightning:GPU available: True, used: True
+INFO:lightning:CUDA\_VISIBLE\_DEVICES: [0]
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Hyperparameters:
+
+experiment\_name: BERT\_v1
+max\_epochs: 10
+patience: 1
+dataset\_class: <class '\_\_main\_\_.IMDbDataset'>
+split\_train\_val: 0.8
+batch\_size: 8
+nworkers: 4
+tokenizer: BERT
+num\_classes: 2
+max\_length: 512
+loss\_func: CE
+opt\_name: Adam
+lr: 1e-05
+scheduling\_factor: 0.95
+manual\_seed: 42
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{trainer\PYZus{}normal}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:lightning:
+    | Name                                              | Type              |
+Params
+--------------------------------------------------------------------------------
+----
+0   | loss\_func                                         | CrossEntropyLoss  | 0
+1   | model                                             | BertModel         |
+109 M
+2   | model.embeddings                                  | BertEmbeddings    | 23
+M
+3   | model.embeddings.word\_embeddings                  | Embedding         | 23
+M
+4   | model.embeddings.position\_embeddings              | Embedding         |
+393 K
+5   | model.embeddings.token\_type\_embeddings            | Embedding         | 1
+K
+6   | model.embeddings.LayerNorm                        | LayerNorm         | 1
+K
+7   | model.embeddings.dropout                          | Dropout           | 0
+8   | model.encoder                                     | BertEncoder       | 85
+M
+9   | model.encoder.layer                               | ModuleList        | 85
+M
+10  | model.encoder.layer.0                             | BertLayer         | 7
+M
+11  | model.encoder.layer.0.attention                   | BertAttention     | 2
+M
+12  | model.encoder.layer.0.attention.self              | BertSelfAttention | 1
+M
+13  | model.encoder.layer.0.attention.self.query        | Linear            |
+590 K
+14  | model.encoder.layer.0.attention.self.key          | Linear            |
+590 K
+15  | model.encoder.layer.0.attention.self.value        | Linear            |
+590 K
+16  | model.encoder.layer.0.attention.self.dropout      | Dropout           | 0
+17  | model.encoder.layer.0.attention.output            | BertSelfOutput    |
+592 K
+18  | model.encoder.layer.0.attention.output.dense      | Linear            |
+590 K
+19  | model.encoder.layer.0.attention.output.LayerNorm  | LayerNorm         | 1
+K
+20  | model.encoder.layer.0.attention.output.dropout    | Dropout           | 0
+21  | model.encoder.layer.0.intermediate                | BertIntermediate  | 2
+M
+22  | model.encoder.layer.0.intermediate.dense          | Linear            | 2
+M
+23  | model.encoder.layer.0.output                      | BertOutput        | 2
+M
+24  | model.encoder.layer.0.output.dense                | Linear            | 2
+M
+25  | model.encoder.layer.0.output.LayerNorm            | LayerNorm         | 1
+K
+26  | model.encoder.layer.0.output.dropout              | Dropout           | 0
+27  | model.encoder.layer.1                             | BertLayer         | 7
+M
+28  | model.encoder.layer.1.attention                   | BertAttention     | 2
+M
+29  | model.encoder.layer.1.attention.self              | BertSelfAttention | 1
+M
+30  | model.encoder.layer.1.attention.self.query        | Linear            |
+590 K
+31  | model.encoder.layer.1.attention.self.key          | Linear            |
+590 K
+32  | model.encoder.layer.1.attention.self.value        | Linear            |
+590 K
+33  | model.encoder.layer.1.attention.self.dropout      | Dropout           | 0
+34  | model.encoder.layer.1.attention.output            | BertSelfOutput    |
+592 K
+35  | model.encoder.layer.1.attention.output.dense      | Linear            |
+590 K
+36  | model.encoder.layer.1.attention.output.LayerNorm  | LayerNorm         | 1
+K
+37  | model.encoder.layer.1.attention.output.dropout    | Dropout           | 0
+38  | model.encoder.layer.1.intermediate                | BertIntermediate  | 2
+M
+39  | model.encoder.layer.1.intermediate.dense          | Linear            | 2
+M
+40  | model.encoder.layer.1.output                      | BertOutput        | 2
+M
+41  | model.encoder.layer.1.output.dense                | Linear            | 2
+M
+42  | model.encoder.layer.1.output.LayerNorm            | LayerNorm         | 1
+K
+43  | model.encoder.layer.1.output.dropout              | Dropout           | 0
+44  | model.encoder.layer.2                             | BertLayer         | 7
+M
+45  | model.encoder.layer.2.attention                   | BertAttention     | 2
+M
+46  | model.encoder.layer.2.attention.self              | BertSelfAttention | 1
+M
+47  | model.encoder.layer.2.attention.self.query        | Linear            |
+590 K
+48  | model.encoder.layer.2.attention.self.key          | Linear            |
+590 K
+49  | model.encoder.layer.2.attention.self.value        | Linear            |
+590 K
+50  | model.encoder.layer.2.attention.self.dropout      | Dropout           | 0
+51  | model.encoder.layer.2.attention.output            | BertSelfOutput    |
+592 K
+52  | model.encoder.layer.2.attention.output.dense      | Linear            |
+590 K
+53  | model.encoder.layer.2.attention.output.LayerNorm  | LayerNorm         | 1
+K
+54  | model.encoder.layer.2.attention.output.dropout    | Dropout           | 0
+55  | model.encoder.layer.2.intermediate                | BertIntermediate  | 2
+M
+56  | model.encoder.layer.2.intermediate.dense          | Linear            | 2
+M
+57  | model.encoder.layer.2.output                      | BertOutput        | 2
+M
+58  | model.encoder.layer.2.output.dense                | Linear            | 2
+M
+59  | model.encoder.layer.2.output.LayerNorm            | LayerNorm         | 1
+K
+60  | model.encoder.layer.2.output.dropout              | Dropout           | 0
+61  | model.encoder.layer.3                             | BertLayer         | 7
+M
+62  | model.encoder.layer.3.attention                   | BertAttention     | 2
+M
+63  | model.encoder.layer.3.attention.self              | BertSelfAttention | 1
+M
+64  | model.encoder.layer.3.attention.self.query        | Linear            |
+590 K
+65  | model.encoder.layer.3.attention.self.key          | Linear            |
+590 K
+66  | model.encoder.layer.3.attention.self.value        | Linear            |
+590 K
+67  | model.encoder.layer.3.attention.self.dropout      | Dropout           | 0
+68  | model.encoder.layer.3.attention.output            | BertSelfOutput    |
+592 K
+69  | model.encoder.layer.3.attention.output.dense      | Linear            |
+590 K
+70  | model.encoder.layer.3.attention.output.LayerNorm  | LayerNorm         | 1
+K
+71  | model.encoder.layer.3.attention.output.dropout    | Dropout           | 0
+72  | model.encoder.layer.3.intermediate                | BertIntermediate  | 2
+M
+73  | model.encoder.layer.3.intermediate.dense          | Linear            | 2
+M
+74  | model.encoder.layer.3.output                      | BertOutput        | 2
+M
+75  | model.encoder.layer.3.output.dense                | Linear            | 2
+M
+76  | model.encoder.layer.3.output.LayerNorm            | LayerNorm         | 1
+K
+77  | model.encoder.layer.3.output.dropout              | Dropout           | 0
+78  | model.encoder.layer.4                             | BertLayer         | 7
+M
+79  | model.encoder.layer.4.attention                   | BertAttention     | 2
+M
+80  | model.encoder.layer.4.attention.self              | BertSelfAttention | 1
+M
+81  | model.encoder.layer.4.attention.self.query        | Linear            |
+590 K
+82  | model.encoder.layer.4.attention.self.key          | Linear            |
+590 K
+83  | model.encoder.layer.4.attention.self.value        | Linear            |
+590 K
+84  | model.encoder.layer.4.attention.self.dropout      | Dropout           | 0
+85  | model.encoder.layer.4.attention.output            | BertSelfOutput    |
+592 K
+86  | model.encoder.layer.4.attention.output.dense      | Linear            |
+590 K
+87  | model.encoder.layer.4.attention.output.LayerNorm  | LayerNorm         | 1
+K
+88  | model.encoder.layer.4.attention.output.dropout    | Dropout           | 0
+89  | model.encoder.layer.4.intermediate                | BertIntermediate  | 2
+M
+90  | model.encoder.layer.4.intermediate.dense          | Linear            | 2
+M
+91  | model.encoder.layer.4.output                      | BertOutput        | 2
+M
+92  | model.encoder.layer.4.output.dense                | Linear            | 2
+M
+93  | model.encoder.layer.4.output.LayerNorm            | LayerNorm         | 1
+K
+94  | model.encoder.layer.4.output.dropout              | Dropout           | 0
+95  | model.encoder.layer.5                             | BertLayer         | 7
+M
+96  | model.encoder.layer.5.attention                   | BertAttention     | 2
+M
+97  | model.encoder.layer.5.attention.self              | BertSelfAttention | 1
+M
+98  | model.encoder.layer.5.attention.self.query        | Linear            |
+590 K
+99  | model.encoder.layer.5.attention.self.key          | Linear            |
+590 K
+100 | model.encoder.layer.5.attention.self.value        | Linear            |
+590 K
+101 | model.encoder.layer.5.attention.self.dropout      | Dropout           | 0
+102 | model.encoder.layer.5.attention.output            | BertSelfOutput    |
+592 K
+103 | model.encoder.layer.5.attention.output.dense      | Linear            |
+590 K
+104 | model.encoder.layer.5.attention.output.LayerNorm  | LayerNorm         | 1
+K
+105 | model.encoder.layer.5.attention.output.dropout    | Dropout           | 0
+106 | model.encoder.layer.5.intermediate                | BertIntermediate  | 2
+M
+107 | model.encoder.layer.5.intermediate.dense          | Linear            | 2
+M
+108 | model.encoder.layer.5.output                      | BertOutput        | 2
+M
+109 | model.encoder.layer.5.output.dense                | Linear            | 2
+M
+110 | model.encoder.layer.5.output.LayerNorm            | LayerNorm         | 1
+K
+111 | model.encoder.layer.5.output.dropout              | Dropout           | 0
+112 | model.encoder.layer.6                             | BertLayer         | 7
+M
+113 | model.encoder.layer.6.attention                   | BertAttention     | 2
+M
+114 | model.encoder.layer.6.attention.self              | BertSelfAttention | 1
+M
+115 | model.encoder.layer.6.attention.self.query        | Linear            |
+590 K
+116 | model.encoder.layer.6.attention.self.key          | Linear            |
+590 K
+117 | model.encoder.layer.6.attention.self.value        | Linear            |
+590 K
+118 | model.encoder.layer.6.attention.self.dropout      | Dropout           | 0
+119 | model.encoder.layer.6.attention.output            | BertSelfOutput    |
+592 K
+120 | model.encoder.layer.6.attention.output.dense      | Linear            |
+590 K
+121 | model.encoder.layer.6.attention.output.LayerNorm  | LayerNorm         | 1
+K
+122 | model.encoder.layer.6.attention.output.dropout    | Dropout           | 0
+123 | model.encoder.layer.6.intermediate                | BertIntermediate  | 2
+M
+124 | model.encoder.layer.6.intermediate.dense          | Linear            | 2
+M
+125 | model.encoder.layer.6.output                      | BertOutput        | 2
+M
+126 | model.encoder.layer.6.output.dense                | Linear            | 2
+M
+127 | model.encoder.layer.6.output.LayerNorm            | LayerNorm         | 1
+K
+128 | model.encoder.layer.6.output.dropout              | Dropout           | 0
+129 | model.encoder.layer.7                             | BertLayer         | 7
+M
+130 | model.encoder.layer.7.attention                   | BertAttention     | 2
+M
+131 | model.encoder.layer.7.attention.self              | BertSelfAttention | 1
+M
+132 | model.encoder.layer.7.attention.self.query        | Linear            |
+590 K
+133 | model.encoder.layer.7.attention.self.key          | Linear            |
+590 K
+134 | model.encoder.layer.7.attention.self.value        | Linear            |
+590 K
+135 | model.encoder.layer.7.attention.self.dropout      | Dropout           | 0
+136 | model.encoder.layer.7.attention.output            | BertSelfOutput    |
+592 K
+137 | model.encoder.layer.7.attention.output.dense      | Linear            |
+590 K
+138 | model.encoder.layer.7.attention.output.LayerNorm  | LayerNorm         | 1
+K
+139 | model.encoder.layer.7.attention.output.dropout    | Dropout           | 0
+140 | model.encoder.layer.7.intermediate                | BertIntermediate  | 2
+M
+141 | model.encoder.layer.7.intermediate.dense          | Linear            | 2
+M
+142 | model.encoder.layer.7.output                      | BertOutput        | 2
+M
+143 | model.encoder.layer.7.output.dense                | Linear            | 2
+M
+144 | model.encoder.layer.7.output.LayerNorm            | LayerNorm         | 1
+K
+145 | model.encoder.layer.7.output.dropout              | Dropout           | 0
+146 | model.encoder.layer.8                             | BertLayer         | 7
+M
+147 | model.encoder.layer.8.attention                   | BertAttention     | 2
+M
+148 | model.encoder.layer.8.attention.self              | BertSelfAttention | 1
+M
+149 | model.encoder.layer.8.attention.self.query        | Linear            |
+590 K
+150 | model.encoder.layer.8.attention.self.key          | Linear            |
+590 K
+151 | model.encoder.layer.8.attention.self.value        | Linear            |
+590 K
+152 | model.encoder.layer.8.attention.self.dropout      | Dropout           | 0
+153 | model.encoder.layer.8.attention.output            | BertSelfOutput    |
+592 K
+154 | model.encoder.layer.8.attention.output.dense      | Linear            |
+590 K
+155 | model.encoder.layer.8.attention.output.LayerNorm  | LayerNorm         | 1
+K
+156 | model.encoder.layer.8.attention.output.dropout    | Dropout           | 0
+157 | model.encoder.layer.8.intermediate                | BertIntermediate  | 2
+M
+158 | model.encoder.layer.8.intermediate.dense          | Linear            | 2
+M
+159 | model.encoder.layer.8.output                      | BertOutput        | 2
+M
+160 | model.encoder.layer.8.output.dense                | Linear            | 2
+M
+161 | model.encoder.layer.8.output.LayerNorm            | LayerNorm         | 1
+K
+162 | model.encoder.layer.8.output.dropout              | Dropout           | 0
+163 | model.encoder.layer.9                             | BertLayer         | 7
+M
+164 | model.encoder.layer.9.attention                   | BertAttention     | 2
+M
+165 | model.encoder.layer.9.attention.self              | BertSelfAttention | 1
+M
+166 | model.encoder.layer.9.attention.self.query        | Linear            |
+590 K
+167 | model.encoder.layer.9.attention.self.key          | Linear            |
+590 K
+168 | model.encoder.layer.9.attention.self.value        | Linear            |
+590 K
+169 | model.encoder.layer.9.attention.self.dropout      | Dropout           | 0
+170 | model.encoder.layer.9.attention.output            | BertSelfOutput    |
+592 K
+171 | model.encoder.layer.9.attention.output.dense      | Linear            |
+590 K
+172 | model.encoder.layer.9.attention.output.LayerNorm  | LayerNorm         | 1
+K
+173 | model.encoder.layer.9.attention.output.dropout    | Dropout           | 0
+174 | model.encoder.layer.9.intermediate                | BertIntermediate  | 2
+M
+175 | model.encoder.layer.9.intermediate.dense          | Linear            | 2
+M
+176 | model.encoder.layer.9.output                      | BertOutput        | 2
+M
+177 | model.encoder.layer.9.output.dense                | Linear            | 2
+M
+178 | model.encoder.layer.9.output.LayerNorm            | LayerNorm         | 1
+K
+179 | model.encoder.layer.9.output.dropout              | Dropout           | 0
+180 | model.encoder.layer.10                            | BertLayer         | 7
+M
+181 | model.encoder.layer.10.attention                  | BertAttention     | 2
+M
+182 | model.encoder.layer.10.attention.self             | BertSelfAttention | 1
+M
+183 | model.encoder.layer.10.attention.self.query       | Linear            |
+590 K
+184 | model.encoder.layer.10.attention.self.key         | Linear            |
+590 K
+185 | model.encoder.layer.10.attention.self.value       | Linear            |
+590 K
+186 | model.encoder.layer.10.attention.self.dropout     | Dropout           | 0
+187 | model.encoder.layer.10.attention.output           | BertSelfOutput    |
+592 K
+188 | model.encoder.layer.10.attention.output.dense     | Linear            |
+590 K
+189 | model.encoder.layer.10.attention.output.LayerNorm | LayerNorm         | 1
+K
+190 | model.encoder.layer.10.attention.output.dropout   | Dropout           | 0
+191 | model.encoder.layer.10.intermediate               | BertIntermediate  | 2
+M
+192 | model.encoder.layer.10.intermediate.dense         | Linear            | 2
+M
+193 | model.encoder.layer.10.output                     | BertOutput        | 2
+M
+194 | model.encoder.layer.10.output.dense               | Linear            | 2
+M
+195 | model.encoder.layer.10.output.LayerNorm           | LayerNorm         | 1
+K
+196 | model.encoder.layer.10.output.dropout             | Dropout           | 0
+197 | model.encoder.layer.11                            | BertLayer         | 7
+M
+198 | model.encoder.layer.11.attention                  | BertAttention     | 2
+M
+199 | model.encoder.layer.11.attention.self             | BertSelfAttention | 1
+M
+200 | model.encoder.layer.11.attention.self.query       | Linear            |
+590 K
+201 | model.encoder.layer.11.attention.self.key         | Linear            |
+590 K
+202 | model.encoder.layer.11.attention.self.value       | Linear            |
+590 K
+203 | model.encoder.layer.11.attention.self.dropout     | Dropout           | 0
+204 | model.encoder.layer.11.attention.output           | BertSelfOutput    |
+592 K
+205 | model.encoder.layer.11.attention.output.dense     | Linear            |
+590 K
+206 | model.encoder.layer.11.attention.output.LayerNorm | LayerNorm         | 1
+K
+207 | model.encoder.layer.11.attention.output.dropout   | Dropout           | 0
+208 | model.encoder.layer.11.intermediate               | BertIntermediate  | 2
+M
+209 | model.encoder.layer.11.intermediate.dense         | Linear            | 2
+M
+210 | model.encoder.layer.11.output                     | BertOutput        | 2
+M
+211 | model.encoder.layer.11.output.dense               | Linear            | 2
+M
+212 | model.encoder.layer.11.output.LayerNorm           | LayerNorm         | 1
+K
+213 | model.encoder.layer.11.output.dropout             | Dropout           | 0
+214 | model.pooler                                      | BertPooler        |
+590 K
+215 | model.pooler.dense                                | Linear            |
+590 K
+216 | model.pooler.activation                           | Tanh              | 0
+217 | classification\_layer                              | Linear            | 1
+K
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validation sanity check', layout=Layout(fle…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Training', layout=Layout(flex='2'), max=1, …
+    \end{verbatim}
+
+    
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Validating', layout=Layout(flex='2'), max=1…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+    \end{Verbatim}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+1
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{evaluation}{%
+\section*{6. Evaluation}\label{evaluation}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{trainer\PYZus{}normal}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Testing', layout=Layout(flex='2'), max=1, s…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+--------------------------------------------------------------------------------
+TEST RESULTS
+\{'avg\_test\_acc': tensor(0.9340, dtype=torch.float64)\}
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \hypertarget{end-of-the-notebook}{%
+\subsection*{End of the notebook}\label{end-of-the-notebook}}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
