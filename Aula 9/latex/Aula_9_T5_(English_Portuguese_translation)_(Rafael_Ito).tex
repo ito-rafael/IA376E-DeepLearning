@@ -1,0 +1,2508 @@
+\documentclass[10pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Aula\_9\_T5\_(English\_Portuguese\_translation)\_(Rafael\_Ito)}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{english-to-portuguese-translation-using-t5}{%
+\section*{English to Portuguese translation using
+T5}\label{english-to-portuguese-translation-using-t5}}
+
+    Author: \textbf{Rafael Ito}\\
+e-mail: ito.rafael@gmail.com
+
+    \hypertarget{dataset-and-description}{%
+\section*{0. Dataset and Description}\label{dataset-and-description}}
+
+\textbf{Name:} ParaCrawl corpus\\
+\textbf{Description:} in this notebook we will train a T5 model to
+translate sentences from English to Portuguese. To achieve this, we will
+use the ParaCrawl dataset.
+
+    \hypertarget{libraries-and-packages}{%
+\section*{1. Libraries and packages}\label{libraries-and-packages}}
+
+    \hypertarget{check-device}{%
+\subsection*{1.1 Check device}\label{check-device}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{torch}
+\PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cpu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{if} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{device\PYZus{}model} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}name}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU model:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{device\PYZus{}model}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+GPU model: Tesla P100-PCIE-16GB
+    \end{Verbatim}
+
+    \hypertarget{install-packages}{%
+\subsection*{1.2 Install packages}\label{install-packages}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{!}pip install \PYZhy{}q \PY{err}{\PYZbs{}}
+    \PY{n}{numpy}       \PYZbs{}
+    \PY{n}{torch}       \PYZbs{}
+    \PY{n}{sklearn}     \PYZbs{}
+    \PY{n}{skorch}      \PYZbs{}
+    \PY{n}{matplotlib}  \PYZbs{}
+    \PY{n}{sacrebleu}   \PYZbs{}
+    \PY{n}{transformers}        \PYZbs{}
+    \PY{n}{pytorch}\PY{o}{\PYZhy{}}\PY{n}{lightning}   \PYZbs{}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+     |████████████████████████████████| 122kB 2.8MB/s
+     |████████████████████████████████| 61kB 5.6MB/s
+     |████████████████████████████████| 573kB 9.3MB/s
+     |████████████████████████████████| 235kB 13.1MB/s
+     |████████████████████████████████| 890kB 13.1MB/s
+     |████████████████████████████████| 1.0MB 20.6MB/s
+     |████████████████████████████████| 3.7MB 19.6MB/s
+  Building wheel for sacremoses (setup.py) {\ldots} done
+\textcolor{ansi-red}{ERROR: pytorch-lightning 0.7.5 has requirement future>=0.17.1, but you'll
+have future 0.16.0 which is incompatible.}
+\textcolor{ansi-red}{ERROR: pytorch-lightning 0.7.5 has requirement tqdm>=4.41.0, but you'll
+have tqdm 4.38.0 which is incompatible.}
+    \end{Verbatim}
+
+    Install apex lib (16-bit precision)
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} to use 16\PYZhy{}bit precision, apex lib should be installed}
+\PY{c+c1}{\PYZsh{} however, installing it with pip (\PYZsq{}! pip install \PYZhy{}q apex\PYZsq{}) crash the code}
+\PY{c+c1}{\PYZsh{} installing the /}
+\PY{o}{!} git clone \PYZhy{}q https://www.github.com/nvidia/apex
+\PY{o}{!} pip \PYZhy{}q install \PYZhy{}v \PYZhy{}\PYZhy{}no\PYZhy{}cache\PYZhy{}dir /content/apex/
+\PY{c+c1}{\PYZsh{}! pip install \PYZhy{}q \PYZhy{}v \PYZhy{}\PYZhy{}no\PYZhy{}cache\PYZhy{}dir \PYZhy{}\PYZhy{}global\PYZhy{}option=\PYZdq{}\PYZhy{}\PYZhy{}cpp\PYZus{}ext\PYZdq{} \PYZhy{}\PYZhy{}global\PYZhy{}option=\PYZdq{}\PYZhy{}\PYZhy{}cuda\PYZus{}ext\PYZdq{} /content/apex/}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/usr/local/lib/python3.6/dist-packages/pip/\_internal/commands/install.py:283:
+UserWarning: Disabling all use of wheels due to the use of --build-options /
+--global-options / --install-options.
+  cmdoptions.check\_install\_build\_global(options)
+Processing ./apex
+Skipping wheel build for apex, due to binaries being disabled for it.
+Installing collected packages: apex
+    Running setup.py install for apex {\ldots} done
+Successfully installed apex-0.1
+    \end{Verbatim}
+
+    \hypertarget{import-libraries}{%
+\subsection*{1.3 Import libraries}\label{import-libraries}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} general}
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\PY{k+kn}{import} \PY{n+nn}{os}
+\PY{k+kn}{import} \PY{n+nn}{pdb}
+\PY{k+kn}{import} \PY{n+nn}{random}
+\PY{k+kn}{import} \PY{n+nn}{gzip}
+\PY{k+kn}{import} \PY{n+nn}{itertools}
+\PY{k+kn}{import} \PY{n+nn}{collections}
+\PY{k+kn}{from} \PY{n+nn}{google}\PY{n+nn}{.}\PY{n+nn}{colab} \PY{k+kn}{import} \PY{n}{drive}
+\PY{k+kn}{from} \PY{n+nn}{argparse} \PY{k+kn}{import} \PY{n}{Namespace}
+\PY{k+kn}{from} \PY{n+nn}{typing} \PY{k+kn}{import} \PY{n}{Dict}\PY{p}{,} \PY{n}{List}\PY{p}{,} \PY{n}{Tuple}
+\PY{k+kn}{import} \PY{n+nn}{functools}\PY{o}{,} \PY{n+nn}{traceback}
+\PY{k+kn}{import} \PY{n+nn}{tensorboard}
+\PY{o}{\PYZpc{}}\PY{k}{load\PYZus{}ext} tensorboard
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} HW status}
+\PY{k+kn}{import} \PY{n+nn}{psutil}
+\PY{k+kn}{import} \PY{n+nn}{nvidia\PYZus{}smi}
+\PY{k+kn}{from} \PY{n+nn}{multiprocessing} \PY{k+kn}{import} \PY{n}{cpu\PYZus{}count}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlInit}\PY{p}{(}\PY{p}{)}
+\PY{n}{handle} \PY{o}{=} \PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlDeviceGetHandleByIndex}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} NLP}
+\PY{k+kn}{import} \PY{n+nn}{re}
+\PY{k+kn}{import} \PY{n+nn}{nltk}
+\PY{k+kn}{import} \PY{n+nn}{sacrebleu}
+\PY{k+kn}{from} \PY{n+nn}{transformers} \PY{k+kn}{import} \PY{n}{T5ForConditionalGeneration}\PY{p}{,} \PY{n}{T5Tokenizer}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} PyTorch}
+\PY{k+kn}{import} \PY{n+nn}{torch}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn} \PY{k+kn}{import} \PY{n}{CrossEntropyLoss}\PY{p}{,} \PY{n}{MSELoss}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn} \PY{k+kn}{import} \PY{n}{Linear}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{optim} \PY{k+kn}{import} \PY{n}{Adam}\PY{p}{,} \PY{n}{SGD}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{optim}\PY{n+nn}{.}\PY{n+nn}{lr\PYZus{}scheduler} \PY{k+kn}{import} \PY{n}{StepLR}
+\PY{k+kn}{from} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{utils}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k+kn}{import} \PY{n}{TensorDataset}\PY{p}{,} \PY{n}{Dataset}\PY{p}{,} \PY{n}{DataLoader}
+\PY{k+kn}{import} \PY{n+nn}{torch}\PY{n+nn}{.}\PY{n+nn}{nn}\PY{n+nn}{.}\PY{n+nn}{functional} \PY{k}{as} \PY{n+nn}{F}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} PyTorch Lightning}
+\PY{k+kn}{import} \PY{n+nn}{pytorch\PYZus{}lightning} \PY{k}{as} \PY{n+nn}{pl}
+\PY{k+kn}{from} \PY{n+nn}{pytorch\PYZus{}lightning}\PY{n+nn}{.}\PY{n+nn}{callbacks} \PY{k+kn}{import} \PY{n}{EarlyStopping}\PY{p}{,} \PY{n}{ModelCheckpoint}
+\PY{k+kn}{from} \PY{n+nn}{pytorch\PYZus{}lightning}\PY{n+nn}{.}\PY{n+nn}{loggers} \PY{k+kn}{import} \PY{n}{TensorBoardLogger}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} random seed generator}
+\PY{n}{seed} \PY{o}{=} \PY{l+m+mi}{42}
+\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+\PY{n}{torch}\PY{o}{.}\PY{n}{manual\PYZus{}seed}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+\PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{manual\PYZus{}seed}\PY{p}{(}\PY{n}{seed}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} Suppress some of the logging}
+\PY{c+c1}{\PYZsh{} commands got from Diedre\PYZsq{}s notebook}
+\PY{k+kn}{import} \PY{n+nn}{logging}
+\PY{n}{logging}\PY{o}{.}\PY{n}{getLogger}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{transformers.configuration\PYZus{}utils}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{setLevel}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{WARNING}\PY{p}{)}
+\PY{n}{logging}\PY{o}{.}\PY{n}{getLogger}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{transformers.modeling\PYZus{}utils}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{setLevel}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{WARNING}\PY{p}{)}
+\PY{n}{logging}\PY{o}{.}\PY{n}{getLogger}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{transformers.tokenization\PYZus{}utils}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{setLevel}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{WARNING}\PY{p}{)}
+\PY{n}{logging}\PY{o}{.}\PY{n}{getLogger}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{lightning}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{setLevel}\PY{p}{(}\PY{n}{logging}\PY{o}{.}\PY{n}{WARNING}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} package version}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Torch version:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pytorch Lightning version:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{pl}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Torch version: 1.5.0+cu101
+Pytorch Lightning version: 0.7.5
+    \end{Verbatim}
+
+    \hypertarget{device-info}{%
+\subsection*{1.4 Device info}\label{device-info}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{torch}
+\PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cpu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{if} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cuda}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n}{device\PYZus{}model} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}name}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n}{device\PYZus{}memory} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}properties}\PY{p}{(}\PY{n}{device}\PY{p}{)}\PY{o}{.}\PY{n}{total\PYZus{}memory} \PY{o}{/} \PY{l+m+mf}{1e9}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Device:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU model:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{device\PYZus{}model}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU memory: }\PY{l+s+si}{\PYZob{}0:.2f\PYZcb{}}\PY{l+s+s1}{ GB}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{device\PYZus{}memory}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPU cores:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{cpu\PYZus{}count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Device: cuda
+GPU model: Tesla P100-PCIE-16GB
+GPU memory: 17.07 GB
+\#-------------------
+CPU cores: 4
+    \end{Verbatim}
+
+    \hypertarget{mount-google-drive}{%
+\subsection*{1.5 Mount Google Drive}\label{mount-google-drive}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} mount Drive to save checkpoints and continue the training from last stop}
+\PY{n}{drive}\PY{o}{.}\PY{n}{mount}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/content/drive}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Go to this URL in a browser: https://accounts.google.com/o/oauth2/auth?client\_id
+=947318989803-6bn6qk8qdgf4n4g3pfee6491hc0brc4i.apps.googleusercontent.com\&redire
+ct\_uri=urn\%3aietf\%3awg\%3aoauth\%3a2.0\%3aoob\&response\_type=code\&scope=email\%20http
+s\%3a\%2f\%2fwww.googleapis.com\%2fauth\%2fdocs.test\%20https\%3a\%2f\%2fwww.googleapis.c
+om\%2fauth\%2fdrive\%20https\%3a\%2f\%2fwww.googleapis.com\%2fauth\%2fdrive.photos.reado
+nly\%20https\%3a\%2f\%2fwww.googleapis.com\%2fauth\%2fpeopleapi.readonly
+
+Enter your authorization code:
+··········
+Mounted at /content/drive
+    \end{Verbatim}
+
+    \hypertarget{constants-definition}{%
+\subsection*{1.6 Constants definition}\label{constants-definition}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} initial config}
+\PY{n}{model\PYZus{}name} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{t5\PYZhy{}small}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{l+m+mi}{128}
+\PY{n}{accumulate\PYZus{}grad\PYZus{}batches} \PY{o}{=} \PY{l+m+mi}{2}
+\PY{n}{source\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{l+m+mi}{32}
+\PY{n}{target\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{l+m+mi}{32}
+\PY{n}{learning\PYZus{}rate} \PY{o}{=} \PY{l+m+mf}{5e\PYZhy{}3}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{custom-functions-and-classes}{%
+\section*{2. Custom functions and
+classes}\label{custom-functions-and-classes}}
+
+    \hypertarget{functions}{%
+\subsection*{2.1 Functions}\label{functions}}
+
+    \hypertarget{network-parameters}{%
+\subsubsection*{2.1.1 Network parameters}\label{network-parameters}}
+
+    Function that calculates the number of parameters of a network
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{description:}
+\PY{l+s+sd}{    \PYZhy{} given a model, this function returns its number of parameters (weight, bias)}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{positional args:}
+\PY{l+s+sd}{    \PYZhy{} model [torch.nn.Module]: instance of the network}
+\PY{l+s+sd}{optional args:}
+\PY{l+s+sd}{    \PYZhy{} verbose (default=False) [bool]: if True, print a report with the parameters of each layer}
+\PY{l+s+sd}{    \PYZhy{} all\PYZus{}parameters (default=False) [bool]: }
+\PY{l+s+sd}{        if True, return number of all parameters, if False, return only trainable parameters}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{return:}
+\PY{l+s+sd}{    \PYZhy{} [int] total parameters of the network}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}\PY{p}{;}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{nparam}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,} \PY{n}{all\PYZus{}parameters}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if}\PY{p}{(}\PY{n}{verbose}\PY{p}{)}\PY{p}{:}
+        \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{n}{total} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{param} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{named\PYZus{}parameters}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{p}{(}\PY{n}{param}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{)}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{}print(\PYZsq{}layer \PYZsq{}, i, \PYZsq{} name: \PYZsq{}, name)}
+                \PY{n}{j} \PY{o}{=} \PY{l+m+mi}{1}
+                \PY{k}{for} \PY{n}{dim} \PY{o+ow}{in} \PY{n}{param}\PY{o}{.}\PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{:}
+                    \PY{n}{j} \PY{o}{=} \PY{n}{j} \PY{o}{*} \PY{n}{dim}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{layer }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{i}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{name}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{; parameters: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{j}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+                \PY{n}{total} \PY{o}{+}\PY{o}{=} \PY{n}{j}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{total parameters = }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{total}\PY{p}{)}
+        \PY{k}{return}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{if} \PY{p}{(}\PY{n}{all\PYZus{}parameters}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{numel}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{numel}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n}{p}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{memory-leakage-on-exception}{%
+\subsubsection*{2.1.2 Memory Leakage on
+Exception}\label{memory-leakage-on-exception}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{source:}
+\PY{l+s+sd}{https://docs.fast.ai/troubleshoot.html\PYZsh{}memory\PYZhy{}leakage\PYZhy{}on\PYZhy{}exception}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{Decorator used to reclaim GPU RAM (check the source website)}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'\textbackslash{}nsource:\textbackslash{}nhttps://docs.fast.ai/troubleshoot.html\#memory-leakage-on-
+exception\textbackslash{}n\#-------------------\textbackslash{}nDecorator used to reclaim GPU RAM (check the
+source website)\textbackslash{}n'
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} decorator from Paulo\PYZsq{}s notebook}
+\PY{k}{def} \PY{n+nf}{gpu\PYZus{}mem\PYZus{}restore}\PY{p}{(}\PY{n}{func}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Reclaim GPU RAM if CUDA out of memory happened, or execution was interrupted}\PY{l+s+s2}{\PYZdq{}}
+    \PY{n+nd}{@functools}\PY{o}{.}\PY{n}{wraps}\PY{p}{(}\PY{n}{func}\PY{p}{)}
+    \PY{k}{def} \PY{n+nf}{wrapper}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}\PY{p}{:}
+        \PY{k}{try}\PY{p}{:}
+            \PY{k}{return} \PY{n}{func}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{kwargs}\PY{p}{)}
+        \PY{k}{except}\PY{p}{:}
+            \PY{n+nb}{type}\PY{p}{,} \PY{n}{val}\PY{p}{,} \PY{n}{tb} \PY{o}{=} \PY{n}{sys}\PY{o}{.}\PY{n}{exc\PYZus{}info}\PY{p}{(}\PY{p}{)}
+            \PY{n}{traceback}\PY{o}{.}\PY{n}{clear\PYZus{}frames}\PY{p}{(}\PY{n}{tb}\PY{p}{)}
+            \PY{k}{raise} \PY{n+nb}{type}\PY{p}{(}\PY{n}{val}\PY{p}{)}\PY{o}{.}\PY{n}{with\PYZus{}traceback}\PY{p}{(}\PY{n}{tb}\PY{p}{)} \PY{k+kn}{from} \PY{n+nb+bp}{None}
+    \PY{k}{return} \PY{n}{wrapper}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{hardware-status}{%
+\subsubsection*{2.1.3 Hardware status}\label{hardware-status}}
+
+    This function can be used with tqdm to monitor CPU \& GPU in status bar
+
+function based on Diedre's notebook.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} \PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{c+c1}{\PYZsh{} function to monitor GPU usage }
+\PY{c+c1}{\PYZsh{} (which should be near 100\PYZpc{} during the training loop)}
+\PY{c+c1}{\PYZsh{} \PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{c+c1}{\PYZsh{} def gpu\PYZus{}usage():}
+\PY{c+c1}{\PYZsh{}     global handle}
+\PY{c+c1}{\PYZsh{}     return str(nvidia\PYZus{}smi.nvmlDeviceGetUtilizationRates(handle).gpu) + \PYZsq{}\PYZpc{}\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{hardware\PYZus{}status}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{    function that monitors CPU \PYZam{} GPU and returns a }
+\PY{l+s+sd}{    dictionary with some of their status}
+\PY{l+s+sd}{    \PYZsq{}\PYZsq{}\PYZsq{}}
+    \PY{n}{res} \PY{o}{=} \PY{n}{nvidia\PYZus{}smi}\PY{o}{.}\PY{n}{nvmlDeviceGetUtilizationRates}\PY{p}{(}\PY{n}{handle}\PY{p}{)}
+    \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{str}\PY{p}{(}\PY{n}{psutil}\PY{o}{.}\PY{n}{cpu\PYZus{}percent}\PY{p}{(}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mem}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{str}\PY{p}{(}\PY{n}{psutil}\PY{o}{.}\PY{n}{virtual\PYZus{}memory}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{percent}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{str}\PY{p}{(}\PY{n}{res}\PY{o}{.}\PY{n}{gpu}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}mem}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n+nb}{str}\PY{p}{(}\PY{n}{res}\PY{o}{.}\PY{n}{memory}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{function-to-load-texts}{%
+\subsubsection*{2.1.4 Function to load
+texts}\label{function-to-load-texts}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{function that reads .txt files and return them as a list}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{parameters:}
+\PY{l+s+sd}{    path: directory where the .txt files are}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{c+c1}{\PYZsh{} function that reads .txt files and return them as a list}
+\PY{k}{def} \PY{n+nf}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{n}{path}\PY{p}{)}\PY{p}{:}
+    \PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{path}\PY{p}{,} \PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{n}{text\PYZus{}pairs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{line}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{text\PYZus{}pairs}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{function-to-get-optimizer}{%
+\subsubsection*{2.1.5 Function to get
+optimizer}\label{function-to-get-optimizer}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{function that returns the optimizer associated to a string}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{parameters:}
+\PY{l+s+sd}{    opt:}
+\PY{l+s+sd}{    \PYZhy{} \PYZsq{}Adam\PYZsq{}: returns the Adam optimizer}
+\PY{l+s+sd}{    \PYZhy{} \PYZsq{}SGD\PYZsq{}:  returns the Stochastic Gradient Descent optimizer}
+\PY{l+s+sd}{    \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{    lr: learning rate}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{def} \PY{n+nf}{get\PYZus{}optimizer}\PY{p}{(}\PY{n}{opt}\PY{p}{,} \PY{n}{lr}\PY{p}{,} \PY{n}{model}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{p}{(}\PY{n}{opt} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{Adam}\PY{p}{(} \PY{p}{[}\PY{n}{p} \PY{k}{for} \PY{n}{p} \PY{o+ow}{in} \PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{n}{p}\PY{o}{.}\PY{n}{requires\PYZus{}grad}\PY{p}{]}\PY{p}{,}
+            \PY{n}{lr}\PY{o}{=}\PY{n}{lr}\PY{p}{,} \PY{n}{eps}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}08}\PY{p}{)}
+    \PY{k}{elif} \PY{p}{(}\PY{n}{opt} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SGD}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{SGD}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{parameters}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{lr}\PY{o}{=}\PY{n}{lr}\PY{p}{)}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unsupported optimizer: }\PY{l+s+si}{\PYZob{}}\PY{n}{opt}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{function-to-get-loss-function}{%
+\subsubsection*{2.1.6 Function to get loss
+function}\label{function-to-get-loss-function}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{function that returns the loss function associated to a string}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{parameters:}
+\PY{l+s+sd}{    loss\PYZus{}func:}
+\PY{l+s+sd}{    \PYZhy{} \PYZsq{}CE\PYZsq{}:   returns the Cross Entropy loss function}
+\PY{l+s+sd}{    \PYZhy{} \PYZsq{}MSE\PYZsq{}:  returns the Mean Squared Error loss function}
+\PY{l+s+sd}{    \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{def} \PY{n+nf}{get\PYZus{}loss\PYZus{}func}\PY{p}{(}\PY{n}{loss\PYZus{}func}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{p}{(}\PY{n}{loss\PYZus{}func} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{CrossEntropyLoss}\PY{p}{(}\PY{p}{)}
+    \PY{k}{elif} \PY{p}{(}\PY{n}{loss\PYZus{}func} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{MSELoss}\PY{p}{(}\PY{p}{)}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unsupported loss function: }\PY{l+s+si}{\PYZob{}}\PY{n}{loss\PYZus{}func}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{function-to-get-tokenizer}{%
+\subsubsection*{2.1.7 Function to get
+tokenizer}\label{function-to-get-tokenizer}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{function that returns the tokenizer associated to a string}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{parameters:}
+\PY{l+s+sd}{    tokenizer:}
+\PY{l+s+sd}{    \PYZhy{} \PYZsq{}BERT\PYZsq{}: returns the BERT tokenizer}
+\PY{l+s+sd}{    \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{def} \PY{n+nf}{get\PYZus{}tokenizer}\PY{p}{(}\PY{n}{tokenizer}\PY{p}{,} \PY{n}{model\PYZus{}name}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{p}{(}\PY{n}{tokenizer} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{BERT}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{BertTokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}base\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{elif} \PY{p}{(}\PY{n}{tokenizer} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{T5Tokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{use\PYZus{}bfloat16}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unsupported tokenizer: }\PY{l+s+si}{\PYZob{}}\PY{n}{tokenizer}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{function-to-get-model}{%
+\subsubsection*{2.1.8 Function to get
+model}\label{function-to-get-model}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{function that returns the the network model associated to a string}
+\PY{l+s+sd}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{l+s+sd}{parameters:}
+\PY{l+s+sd}{    model\PYZus{}name:}
+\PY{l+s+sd}{    \PYZhy{} BERT models:}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}bert\PYZhy{}base\PYZhy{}uncased\PYZsq{} (110 M params)}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}bert\PYZhy{}large\PYZhy{}uncased\PYZsq{} (340 M params)}
+\PY{l+s+sd}{    \PYZhy{} T5 models:}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}t5\PYZhy{}small\PYZsq{} (60 M params)}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}t5\PYZhy{}base\PYZsq{}  (220 M params)}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}t5\PYZhy{}large\PYZsq{} (770 M params)}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}t5\PYZhy{}3B\PYZsq{}    (2.8 B params)}
+\PY{l+s+sd}{        \PYZhy{} \PYZsq{}t5\PYZhy{}11B\PYZsq{}   (11 B params)}
+\PY{l+s+sd}{    \PYZhy{} otherwise raise an error}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{def} \PY{n+nf}{get\PYZus{}model}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{p}{(}\PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}base\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or} 
+        \PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bert\PYZhy{}large\PYZhy{}uncased}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{BertTokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{)}
+    \PY{k}{elif} \PY{p}{(}\PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t5\PYZhy{}small}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or} 
+            \PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t5\PYZhy{}base}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or}
+            \PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t5\PYZhy{}large}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or} 
+            \PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t5\PYZhy{}3B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o+ow}{or}
+            \PY{p}{(}\PY{n}{model\PYZus{}name} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{t5\PYZhy{}11B}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{T5ForConditionalGeneration}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{use\PYZus{}bfloat16}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+    \PY{k}{else}\PY{p}{:}
+        \PY{k}{raise} \PY{n+ne}{ValueError}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Unsupported model: }\PY{l+s+si}{\PYZob{}}\PY{n}{model\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{classes}{%
+\subsection*{2.2 Classes}\label{classes}}
+
+    \hypertarget{dataset-class}{%
+\subsection*{2.2.1 Dataset Class}\label{dataset-class}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{} }
+\PY{l+s+sd}{max\PYZus{}length is added by 5 because of the prefix: }
+\PY{l+s+sd}{[\PYZdq{}translate\PYZdq{}, \PYZdq{}English\PYZdq{}, \PYZdq{}to\PYZdq{}, \PYZdq{}Portuguese\PYZdq{}, \PYZdq{}:\PYZdq{}] }
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{class} \PY{n+nc}{ParaCrawlDS}\PY{p}{(}\PY{n}{Dataset}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{text\PYZus{}pairs}\PY{p}{:} \PY{n}{List}\PY{p}{[}\PY{n}{Tuple}\PY{p}{[}\PY{n+nb}{str}\PY{p}{]}\PY{p}{]}\PY{p}{,} \PY{n}{tokenizer}\PY{p}{,}
+                 \PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{:} \PY{n+nb}{int} \PY{o}{=} \PY{l+m+mi}{32}\PY{p}{,} \PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{:} \PY{n+nb}{int} \PY{o}{=} \PY{l+m+mi}{32}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer} \PY{o}{=} \PY{n}{tokenizer}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{n}{text\PYZus{}pairs}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{source\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n}{source\PYZus{}max\PYZus{}length}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n}{target\PYZus{}max\PYZus{}length}
+        
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}len\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{text\PYZus{}pairs}\PY{p}{)}
+    
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}getitem\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{idx}\PY{p}{)}\PY{p}{:}
+        \PY{n}{source}\PY{p}{,} \PY{n}{target} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{text\PYZus{}pairs}\PY{p}{[}\PY{n}{idx}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} encode source sequence}
+        \PY{n}{source\PYZus{}encode} \PY{o}{=} \PY{n}{tokenizer}\PY{o}{.}\PY{n}{encode\PYZus{}plus}\PY{p}{(}
+            \PY{n}{text}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{translate English to Portuguese: }\PY{l+s+si}{\PYZob{}}\PY{n}{source}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZlt{}/s\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{,}
+            \PY{n}{pad\PYZus{}to\PYZus{}max\PYZus{}length}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+            \PY{n}{return\PYZus{}token\PYZus{}type\PYZus{}ids}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{return\PYZus{}attention\PYZus{}mask}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+            \PY{n}{return\PYZus{}tensors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+        \PY{p}{)}
+        \PY{c+c1}{\PYZsh{} get mask and tokens\PYZsq{} ids of encoded source sequence}
+        \PY{n}{source\PYZus{}mask} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{source\PYZus{}encode}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{attention\PYZus{}mask}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{source\PYZus{}token\PYZus{}ids} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{source\PYZus{}encode}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}ids}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} encode target sequence}
+        \PY{n}{target\PYZus{}encode} \PY{o}{=} \PY{n}{tokenizer}\PY{o}{.}\PY{n}{encode\PYZus{}plus}\PY{p}{(}
+            \PY{n}{text}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{target}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZlt{}/s\PYZgt{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+            \PY{n}{max\PYZus{}length}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{,}
+            \PY{n}{pad\PYZus{}to\PYZus{}max\PYZus{}length}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+            \PY{n}{return\PYZus{}token\PYZus{}type\PYZus{}ids}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{return\PYZus{}attention\PYZus{}mask}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}
+            \PY{n}{return\PYZus{}tensors}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+        \PY{p}{)}
+        \PY{c+c1}{\PYZsh{} get mask and tokens\PYZsq{} ids of encoded target sequence}
+        \PY{n}{target\PYZus{}mask} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{target\PYZus{}encode}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{attention\PYZus{}mask}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{n}{target\PYZus{}token\PYZus{}ids} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{squeeze}\PY{p}{(}\PY{n}{target\PYZus{}encode}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}ids}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{dim}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{(}\PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{,} 
+            \PY{n}{target\PYZus{}mask}\PY{p}{,} \PY{n}{source}\PY{p}{,} \PY{n}{target}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{dataset-pre-processing}{%
+\section*{3. Dataset Pre-processing}\label{dataset-pre-processing}}
+
+    \hypertarget{download-dataset}{%
+\subsection*{3.1 Download dataset}\label{download-dataset}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} download dataset (1M train, 20k test)}
+\PY{o}{!} wget \PYZhy{}q \PYZhy{}nc https://storage.googleapis.com/neuralresearcher\PYZus{}data/unicamp/ia376e\PYZus{}2020s1/paracrawl\PYZus{}enpt\PYZus{}train.tsv.gz
+\PY{o}{!} wget \PYZhy{}q \PYZhy{}nc https://storage.googleapis.com/neuralresearcher\PYZus{}data/unicamp/ia376e\PYZus{}2020s1/paracrawl\PYZus{}enpt\PYZus{}test.tsv.gz
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{loading-the-dataset}{%
+\subsection*{3.2 Loading the dataset}\label{loading-the-dataset}}
+
+    Function to load dataset
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def} \PY{n+nf}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{n}{path}\PY{p}{)}\PY{p}{:}
+    \PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+    \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{path}\PY{p}{,} \PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+        \PY{n}{text\PYZus{}pairs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{line}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+    \PY{k}{return} \PY{n}{text\PYZus{}pairs}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Load dataset
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paracrawl\PYZus{}enpt\PYZus{}train.tsv.gz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n}{x\PYZus{}test} \PY{o}{=} \PY{n}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paracrawl\PYZus{}enpt\PYZus{}test.tsv.gz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{splitting-the-dataset}{%
+\subsection*{3.3 Splitting the dataset}\label{splitting-the-dataset}}
+
+    Training/Development split
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} shuffle data before spliting}
+\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{)}
+\PY{c+c1}{\PYZsh{} create validation set with 5k pairs}
+\PY{n}{x\PYZus{}val} \PY{o}{=} \PY{n}{x\PYZus{}train}\PY{p}{[}\PY{l+m+mi}{100000}\PY{p}{:}\PY{l+m+mi}{105000}\PY{p}{]}
+\PY{c+c1}{\PYZsh{} truncate the first 100k pairs for training}
+\PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{x\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{100000}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Print a few pair samples
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{set\PYZus{}name}\PY{p}{,} \PY{n}{x} \PY{o+ow}{in} \PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{training}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x\PYZus{}train}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{validation}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x\PYZus{}val}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x\PYZus{}test}\PY{p}{)}\PY{p}{]}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+si}{\PYZob{}}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ samples from }\PY{l+s+si}{\PYZob{}}\PY{n}{set\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ set}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{First 3 samples of }\PY{l+s+si}{\PYZob{}}\PY{n}{set\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ set:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{p}{(}\PY{n}{source}\PY{p}{,} \PY{n}{target}\PY{p}{)} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{x}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{: source: }\PY{l+s+si}{\PYZob{}}\PY{n}{source}\PY{l+s+si}{\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{   target: }\PY{l+s+si}{\PYZob{}}\PY{n}{target}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+100000 samples from training set
+First 3 samples of training set:
+0: source: You may get 1Z0-151 exam dumps from different web sites or books, but
+logic is the key.
+   target: Você pode obter 1Z0-151 lixeiras exame de diferentes sites ou livros,
+mas a lógica é a chave.
+1: source: In this case, and in the other perpetrators situation, the Zeus
+Trojan was used to help hack into the accounts.
+   target: Nesse caso, e nos casos de outros criminosos, o Trojan Zeus foi usado
+para ajudar a invadir as contas.
+2: source: Rehabilitation centers in Mexico - GuiaMedicaSalud.com
+   target: Psicoterapia em México - GuiaMedicaSalud.com
+
+5000 samples from validation set
+First 3 samples of validation set:
+0: source: When I first started, I found very little.
+   target: Quando eu comecei, eu já não tinha encontrado muita coisa.
+1: source: Automatic doors in Boye
+   target: Portas automáticas em Guangxi
+2: source: fleet of 21 aircraft on order, AJA is positioning to be a global
+leader in the rapidly growing VIP
+   target: Com uma frota de 21 aeronaves encomendadas, a AJA posiciona-se para
+ser líder global no mercado de vôos fretados VIP, em rápido crescimento no
+
+20000 samples from test set
+First 3 samples of test set:
+0: source: In this way, the civil life of a nation matures, making it possible
+for all citizens to enjoy the fruits of genuine tolerance and mutual respect.
+   target: Deste modo, a vida civil de uma nação amadurece, fazendo com que
+todos os cidadãos gozem dos frutos da tolerância genuína e do respeito mútuo.
+1: source: 1999 XIII. Winnipeg, Canada July 23 to August 8
+   target: 1999 XIII. Winnipeg, Canadá 23 de julho a 8 de agosto
+2: source: In the mystery of Christmas, Christ's light shines on the earth,
+spreading, as it were, in concentric circles.
+   target: No mistério do Natal, a luz de Cristo irradia-se sobre a terra,
+difundindo-se como círculos concêntricos.
+    \end{Verbatim}
+
+    \hypertarget{testing-the-dataloader}{%
+\subsection*{3.4 Testing the Dataloader}\label{testing-the-dataloader}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{tokenizer} \PY{o}{=} \PY{n}{T5Tokenizer}\PY{o}{.}\PY{n}{from\PYZus{}pretrained}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{69}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{I like pizza}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eu gosto de pizza}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+\PY{n}{dataset\PYZus{}debug} \PY{o}{=} \PY{n}{ParaCrawlDS}\PY{p}{(}
+    \PY{n}{text\PYZus{}pairs}\PY{o}{=}\PY{n}{text\PYZus{}pairs}\PY{p}{,}
+    \PY{n}{tokenizer}\PY{o}{=}\PY{n}{tokenizer}\PY{p}{,}
+    \PY{n}{source\PYZus{}max\PYZus{}length}\PY{o}{=}\PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{,}
+    \PY{n}{target\PYZus{}max\PYZus{}length}\PY{o}{=}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{)}
+
+\PY{n}{dataloader\PYZus{}debug} \PY{o}{=} \PY{n}{DataLoader}\PY{p}{(}\PY{n}{dataset\PYZus{}debug}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} 
+                              \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+
+\PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n+nb}{next}\PY{p}{(}\PY{n+nb}{iter}\PY{p}{(}\PY{n}{dataloader\PYZus{}debug}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{source\PYZus{}token\PYZus{}ids:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{source\PYZus{}mask:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target\PYZus{}token\PYZus{}ids:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target\PYZus{}mask:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{source\PYZus{}token\PYZus{}ids.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{source\PYZus{}mask.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target\PYZus{}token\PYZus{}ids.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target\PYZus{}mask.shape:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+source\_token\_ids:
+ tensor([[13959,  1566,    12, 21076,    10,    27,   114,  6871,     1,     0,
+             0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+             0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+             0,     0]])
+source\_mask:
+ tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0,
+         0, 0, 0, 0, 0, 0, 0, 0]])
+target\_token\_ids:
+ tensor([[   3,   15,   76,  281,    7,  235,   20, 6871,    1,    0,    0,
+0,
+            0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+            0,    0,    0,    0,    0,    0,    0,    0]])
+target\_mask:
+ tensor([[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+0,
+         0, 0, 0, 0, 0, 0, 0, 0]])
+\#-------------------
+source\_token\_ids.shape: torch.Size([1, 32])
+source\_mask.shape: torch.Size([1, 32])
+target\_token\_ids.shape: torch.Size([1, 32])
+target\_mask.shape: torch.Size([1, 32])
+    \end{Verbatim}
+
+    \hypertarget{network-model}{%
+\section*{4. Network Model}\label{network-model}}
+
+    \hypertarget{hiperparameters}{%
+\subsection*{4.1 Hiperparameters}\label{hiperparameters}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{hyperparameters} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{c+c1}{\PYZsh{} description}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T5\PYZus{}v1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} training / early stopping}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{patience}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} dataset}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dataset\PYZus{}class}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{ParaCrawlDS}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{training\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{100\PYZus{}000}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZsq{}training\PYZus{}size\PYZsq{}: 1\PYZus{}000,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{split\PYZus{}train\PYZus{}val}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.98}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} dataloader}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{64}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accumulate\PYZus{}grad\PYZus{}batches}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{1}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{nworkers}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} network architecture}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tokenizer}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{T5}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{t5\PYZhy{}small}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{source\PYZus{}max\PYZus{}length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{105}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{target\PYZus{}max\PYZus{}length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{100}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} optimizer}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss\PYZus{}func}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{opt\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lr}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{5e\PYZhy{}3}\PY{p}{,}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{scheduling\PYZus{}factor}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mf}{0.95}\PY{p}{,}
+    \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+    \PY{c+c1}{\PYZsh{} others}
+    \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{manual\PYZus{}seed}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{42}\PY{p}{,}  \PY{c+c1}{\PYZsh{} RNG seed}
+\PY{p}{\PYZcb{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{network-model-definition}{%
+\subsection*{4.2 Network model
+definition}\label{network-model-definition}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{l+s+sd}{LightnigModule based on the reference notebook from Diedre.}
+\PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\PY{k}{class} \PY{n+nc}{T5EnPtTranslator}\PY{p}{(}\PY{n}{pl}\PY{o}{.}\PY{n}{LightningModule}\PY{p}{)}\PY{p}{:}
+    \PY{k}{def} \PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{hparams}\PY{p}{,} \PY{n}{dl\PYZus{}shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{super}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams} \PY{o}{=} \PY{n}{hparams}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dl\PYZus{}shuffle} \PY{o}{=} \PY{n}{dl\PYZus{}shuffle}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{dataset\PYZus{}class}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model} \PY{o}{=} \PY{n}{get\PYZus{}model}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{model\PYZus{}name}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer} \PY{o}{=} \PY{n}{get\PYZus{}tokenizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{model\PYZus{}name}\PY{p}{)}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{loss\PYZus{}func} \PY{o}{=} \PY{n}{get\PYZus{}loss\PYZus{}func}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{loss\PYZus{}func}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{forward}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}\PY{p}{:}
+        \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{training}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} All labels set to \PYZhy{}100 are ignored (masked), the loss is only computed for labels in [0, ..., config.vocab\PYZus{}size]}
+            \PY{c+c1}{\PYZsh{} https://huggingface.co/transformers/model\PYZus{}doc/t5.html\PYZsh{}t5forconditionalgeneration}
+            \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{[}\PY{n}{target\PYZus{}token\PYZus{}ids} \PY{o}{==} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{pad\PYZus{}token\PYZus{}id}\PY{p}{]} \PY{o}{=} \PY{o}{\PYZhy{}}\PY{l+m+mi}{100}
+            \PY{n}{outputs} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{p}{(}
+                \PY{n}{input\PYZus{}ids} \PY{o}{=} \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,}
+                \PY{n}{attention\PYZus{}mask} \PY{o}{=} \PY{n}{source\PYZus{}mask}\PY{p}{,} 
+                \PY{n}{lm\PYZus{}labels} \PY{o}{=} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}
+            \PY{n}{loss} \PY{o}{=} \PY{n}{outputs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{k}{return} \PY{n}{loss}
+        \PY{k}{else}\PY{p}{:}
+            \PY{n}{predicted\PYZus{}token\PYZus{}ids} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{o}{.}\PY{n}{generate}\PY{p}{(}
+                \PY{n}{input\PYZus{}ids} \PY{o}{=} \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,}
+                \PY{n}{max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{,}
+                \PY{n}{do\PYZus{}sample} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,} \PY{c+c1}{\PYZsh{} use greedy decoding}
+            \PY{p}{)}
+            \PY{k}{return} \PY{n}{predicted\PYZus{}token\PYZus{}ids}
+
+    \PY{k}{def} \PY{n+nf}{training\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate loss}
+        \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{p}{,} \PY{n}{\PYZus{}}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{batch}
+        \PY{n}{loss} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}train\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} log batch training loss in TensorBoard}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{loss}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{hardware\PYZus{}status}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{training\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate epoch loss based on mini\PYZhy{}batch average loss}
+        \PY{n}{avg\PYZus{}loss} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} log training epoch loss in TensorBoard}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch\PYZus{}train\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}loss}\PY{p}{\PYZcb{}}
+        \PY{c+c1}{\PYZsh{} send \PYZsq{}log\PYZsq{} key to the logger (TensorBoard)}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{validation\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate BLEU}
+        \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{p}{,} \PY{n}{source\PYZus{}original}\PY{p}{,} \PY{n}{target\PYZus{}original} \PY{o}{=} \PY{n}{batch}
+        \PY{n}{predicted} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}
+        \PY{n}{translated} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{n}{token}\PY{p}{)} \PY{k}{for} \PY{n}{token} \PY{o+ow}{in} \PY{n}{predicted}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{bleu} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{tensor}\PY{p}{(}\PY{n}{sacrebleu}\PY{o}{.}\PY{n}{corpus\PYZus{}bleu}\PY{p}{(}\PY{n}{translated}\PY{p}{,} \PY{p}{[}\PY{n}{target\PYZus{}original}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}print(source\PYZus{}original, target\PYZus{}original, translated, bleu, sep=\PYZsq{}\PYZbs{}n\PYZsq{})}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{batch\PYZus{}valid\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{bleu}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} log batch validation loss in TensorBoard}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{bleu}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{hardware\PYZus{}status}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{validation\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} calculate validation epoch loss and accuracy}
+        \PY{n}{avg\PYZus{}bleu} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{step\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}bleu}\PY{p}{\PYZcb{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logs}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}bleu}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}step}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{batch}\PY{p}{,} \PY{n}{batch\PYZus{}nb}\PY{p}{)}\PY{p}{:}
+        \PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{target\PYZus{}mask}\PY{p}{,} \PY{n}{source\PYZus{}original}\PY{p}{,} \PY{n}{target\PYZus{}original} \PY{o}{=} \PY{n}{batch}
+        \PY{n}{predicted} \PY{o}{=} \PY{n+nb+bp}{self}\PY{p}{(}\PY{n}{source\PYZus{}token\PYZus{}ids}\PY{p}{,} \PY{n}{source\PYZus{}mask}\PY{p}{,} \PY{n}{target\PYZus{}token\PYZus{}ids}\PY{p}{)}
+        \PY{n}{translated} \PY{o}{=} \PY{p}{[}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{o}{.}\PY{n}{decode}\PY{p}{(}\PY{n}{token}\PY{p}{)} \PY{k}{for} \PY{n}{token} \PY{o+ow}{in} \PY{n}{predicted}\PY{p}{]}
+        \PY{n}{bleu} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{tensor}\PY{p}{(}\PY{n}{sacrebleu}\PY{o}{.}\PY{n}{corpus\PYZus{}bleu}\PY{p}{(}\PY{n}{translated}\PY{p}{,} \PY{p}{[}\PY{n}{target\PYZus{}original}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{score}\PY{p}{)}
+        \PY{k}{if} \PY{p}{(}\PY{n}{batch\PYZus{}nb} \PY{o}{\PYZpc{}} \PY{l+m+mi}{100} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{source\PYZus{}original}\PY{p}{,} \PY{n}{target\PYZus{}original}\PY{p}{,} \PY{n}{translated}\PY{p}{,} \PY{n}{bleu}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{bleu}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{hardware\PYZus{}status}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}epoch\PYZus{}end}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{outputs}\PY{p}{)}\PY{p}{:}
+        \PY{n}{avg\PYZus{}test\PYZus{}bleu} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{stack}\PY{p}{(}\PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{outputs}\PY{p}{]}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{tensorboard\PYZus{}logs} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}test\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}test\PYZus{}bleu}\PY{p}{\PYZcb{}}
+        \PY{n}{tqdm\PYZus{}dict} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logs}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{k}{return} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}test\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{avg\PYZus{}test\PYZus{}bleu}\PY{p}{,} 
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{log}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tensorboard\PYZus{}logs}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{progress\PYZus{}bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{n}{tqdm\PYZus{}dict}\PY{p}{\PYZcb{}}
+
+    \PY{k}{def} \PY{n+nf}{prepare\PYZus{}data}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} load training/test sets}
+        \PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paracrawl\PYZus{}enpt\PYZus{}train.tsv.gz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{x\PYZus{}test} \PY{o}{=} \PY{n}{load\PYZus{}text\PYZus{}pairs}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{paracrawl\PYZus{}enpt\PYZus{}test.tsv.gz}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} shuffle data before spliting}
+        \PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{x\PYZus{}train}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} split}
+        \PY{n}{split} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{split\PYZus{}train\PYZus{}val} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{training\PYZus{}size}\PY{p}{)}
+        \PY{n}{x\PYZus{}valid} \PY{o}{=} \PY{n}{x\PYZus{}train}\PY{p}{[}\PY{n}{split}\PY{p}{:}\PY{p}{]}     \PY{c+c1}{\PYZsh{} create validation set}
+        \PY{n}{x\PYZus{}train} \PY{o}{=} \PY{n}{x\PYZus{}train}\PY{p}{[}\PY{p}{:}\PY{n}{split}\PY{p}{]}   \PY{c+c1}{\PYZsh{} truncate training set}
+        \PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} create training set}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}train} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}
+            \PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{n}{x\PYZus{}train}\PY{p}{,} 
+            \PY{n}{tokenizer} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} 
+            \PY{n}{source\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{,}
+            \PY{n}{target\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} create development set}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}valid} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}
+            \PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{n}{x\PYZus{}valid}\PY{p}{,} 
+            \PY{n}{tokenizer} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} 
+            \PY{n}{source\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{,}
+            \PY{n}{target\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} create test set}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}test} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{DatasetClass}\PY{p}{(}
+            \PY{n}{text\PYZus{}pairs} \PY{o}{=} \PY{n}{x\PYZus{}test}\PY{p}{,} 
+            \PY{n}{tokenizer} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{tokenizer}\PY{p}{,} 
+            \PY{n}{source\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{source\PYZus{}max\PYZus{}length}\PY{p}{,}
+            \PY{n}{target\PYZus{}max\PYZus{}length} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{target\PYZus{}max\PYZus{}length}\PY{p}{)}
+
+    \PY{n+nd}{@gpu\PYZus{}mem\PYZus{}restore}
+    \PY{k}{def} \PY{n+nf}{train\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}train}\PY{p}{,} 
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{dl\PYZus{}shuffle}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+
+    \PY{n+nd}{@gpu\PYZus{}mem\PYZus{}restore}
+    \PY{k}{def} \PY{n+nf}{val\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}                
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}valid}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+        
+    \PY{n+nd}{@gpu\PYZus{}mem\PYZus{}restore}
+    \PY{k}{def} \PY{n+nf}{test\PYZus{}dataloader}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n}{DataLoader}\PY{p}{(}
+            \PY{n}{dataset} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{ds\PYZus{}test}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{batch\PYZus{}size}\PY{p}{,}
+            \PY{n}{drop\PYZus{}last} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{shuffle} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}
+            \PY{n}{num\PYZus{}workers}\PY{o}{=}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{nworkers}\PY{p}{)}
+
+    \PY{k}{def} \PY{n+nf}{configure\PYZus{}optimizers}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n}{optimizer} \PY{o}{=} \PY{n}{get\PYZus{}optimizer}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{opt\PYZus{}name}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{lr}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{model}\PY{p}{)}
+        \PY{n}{scheduler} \PY{o}{=} \PY{n}{StepLR}\PY{p}{(}\PY{n}{optimizer}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{hparams}\PY{o}{.}\PY{n}{scheduling\PYZus{}factor}\PY{p}{)}
+        \PY{k}{return} \PY{p}{[}\PY{n}{optimizer}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{scheduler}\PY{p}{]}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{fast-dev-run-unit-test}{%
+\subsection*{4.3 Fast dev run (unit test)}\label{fast-dev-run-unit-test}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} the dictionary of hyperparameters must be converted to a Namespace}
+\PY{c+c1}{\PYZsh{} this way, it is possible to save it alongside with the checkpoint and logger}
+\PY{n}{model} \PY{o}{=} \PY{n}{T5EnPtTranslator}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{fast\PYZus{}dev\PYZus{}run} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,}            \PY{c+c1}{\PYZsh{} perform unit test}
+    \PY{n}{profiler} \PY{o}{=} \PY{k+kc}{True}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} run profiler}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}                       \PY{c+c1}{\PYZsh{} GPUs}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{16}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{amp\PYZus{}level} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}               \PY{c+c1}{\PYZsh{} enable 16\PYZhy{}bit}
+    \PY{n}{logger} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}                 \PY{c+c1}{\PYZsh{} do not use logging (TensorBoard)}
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}    \PY{c+c1}{\PYZsh{} do not stop early}
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}    \PY{c+c1}{\PYZsh{} do not save checkpoints}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{device}\PY{p}{)}\PY{p}{;}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{n}{trainer\PYZus{}unit\PYZus{}test}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{k}{del} \PY{n}{model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{batch-overfitting}{%
+\subsection*{4.4 Batch overfitting}\label{batch-overfitting}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} network instantiation}
+\PY{c+c1}{\PYZsh{} !!! important !!! set dataloader shuffle parameter to False}
+\PY{n}{model} \PY{o}{=} \PY{n}{T5EnPtTranslator}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{,} \PY{n}{dl\PYZus{}shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{max\PYZus{}epochs} \PY{o}{=} \PY{l+m+mi}{10}\PY{p}{,}              \PY{c+c1}{\PYZsh{} run for 10 epochs}
+    \PY{n}{profiler} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}              \PY{c+c1}{\PYZsh{} do not run profiler}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}                     \PY{c+c1}{\PYZsh{} GPUs}
+\PY{c+c1}{\PYZsh{}    precision = 32,               \PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{16}\PY{p}{,}               \PY{c+c1}{\PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{amp\PYZus{}level} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}             \PY{c+c1}{\PYZsh{} set mixed precision opt\PYZus{}level}
+    \PY{n}{logger} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}               \PY{c+c1}{\PYZsh{} do not use logging (TensorBoard)}
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}  \PY{c+c1}{\PYZsh{} do not stop early}
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}  \PY{c+c1}{\PYZsh{} do not save checkpoint}
+    \PY{n}{overfit\PYZus{}pct} \PY{o}{=} \PY{l+m+mf}{0.001}\PY{p}{,}           \PY{c+c1}{\PYZsh{} ratio of data to overfit}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model}\PY{o}{.}\PY{n}{to}\PY{p}{(}\PY{n}{device}\PY{p}{)}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{n}{trainer\PYZus{}batch\PYZus{}overfit}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}del model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{number-of-parameters}{%
+\subsection*{4.5 Number of parameters}\label{number-of-parameters}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{120}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{params} \PY{o}{=} \PY{n}{nparam}\PY{p}{(}\PY{n}{model}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{trainable parameters = }\PY{l+s+si}{\PYZob{}}\PY{n}{params}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{del} \PY{n}{model}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+trainable parameters = 60506880
+    \end{Verbatim}
+
+    \hypertarget{training}{%
+\section*{5. Training}\label{training}}
+
+    \hypertarget{training-loop}{%
+\subsection*{5.1 Training Loop}\label{training-loop}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{121}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} network instantiation}
+\PY{n}{model} \PY{o}{=} \PY{n}{T5EnPtTranslator}\PY{p}{(}\PY{n}{hparams}\PY{o}{=}\PY{n}{Namespace}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{hyperparameters}\PY{p}{)}\PY{p}{)}
+\PY{n}{model}\PY{o}{.}\PY{n}{load\PYZus{}state\PYZus{}dict}\PY{p}{(}\PY{n}{torch}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/content/logs/model/parameters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} logger configuration}
+\PY{n}{tensorboard\PYZus{}path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logs}\PY{l+s+s1}{\PYZsq{}}                       \PY{c+c1}{\PYZsh{} set directory name}
+\PY{n}{os}\PY{o}{.}\PY{n}{makedirs}\PY{p}{(}\PY{n}{tensorboard\PYZus{}path}\PY{p}{,} \PY{n}{exist\PYZus{}ok}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}    \PY{c+c1}{\PYZsh{} create path}
+\PY{n}{tensorboard\PYZus{}logger} \PY{o}{=} \PY{n}{TensorBoardLogger}\PY{p}{(}         \PY{c+c1}{\PYZsh{} save logs in experiment dir}
+    \PY{n}{tensorboard\PYZus{}path}\PY{p}{,} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} early stopping configuration}
+\PY{n}{early\PYZus{}stop} \PY{o}{=} \PY{n}{EarlyStopping}\PY{p}{(}
+    \PY{n}{monitor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}               \PY{c+c1}{\PYZsh{} variable to be monitored}
+    \PY{n}{patience} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{patience}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{c+c1}{\PYZsh{} patience}
+    \PY{n}{verbose} \PY{o}{=} \PY{k+kc}{False}\PY{p}{,}                        \PY{c+c1}{\PYZsh{} quietly}
+    \PY{n}{mode} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max}\PY{l+s+s1}{\PYZsq{}}                            \PY{c+c1}{\PYZsh{} loss should decrease}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} checkpoint configuration}
+\PY{n}{ckpt\PYZus{}path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{logs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+si}{\PYZob{}epoch\PYZcb{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+si}{\PYZob{}val\PYZus{}bleu:.2f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}   
+\PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{n}{ModelCheckpoint}\PY{p}{(}
+    \PY{n}{prefix} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{experiment\PYZus{}name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}    \PY{c+c1}{\PYZsh{} checkpoint name prefix}
+    \PY{n}{filepath} \PY{o}{=} \PY{n}{ckpt\PYZus{}path}\PY{p}{,}                           \PY{c+c1}{\PYZsh{} path to checkpoint}
+    \PY{n}{monitor} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{avg\PYZus{}val\PYZus{}bleu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+    \PY{n}{mode} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max}\PY{l+s+s1}{\PYZsq{}}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} define trainer}
+\PY{n}{trainer} \PY{o}{=} \PY{n}{pl}\PY{o}{.}\PY{n}{Trainer}\PY{p}{(}
+    \PY{n}{max\PYZus{}epochs} \PY{o}{=} \PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{max\PYZus{}epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{accumulate\PYZus{}grad\PYZus{}batches}\PY{o}{=}\PY{n}{hyperparameters}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{accumulate\PYZus{}grad\PYZus{}batches}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{gpus} \PY{o}{=} \PY{l+m+mi}{1}\PY{p}{,}
+\PY{c+c1}{\PYZsh{}    precision = 32,               \PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{precision} \PY{o}{=} \PY{l+m+mi}{16}\PY{p}{,}               \PY{c+c1}{\PYZsh{} choose precision (32/16 bits)}
+    \PY{n}{amp\PYZus{}level} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{O1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}             \PY{c+c1}{\PYZsh{} set mixed precision opt\PYZus{}level}
+    \PY{n}{logger} \PY{o}{=} \PY{n}{tensorboard\PYZus{}logger}\PY{p}{,}  
+    \PY{n}{early\PYZus{}stop\PYZus{}callback} \PY{o}{=} \PY{n}{early\PYZus{}stop}\PY{p}{,}  
+    \PY{n}{checkpoint\PYZus{}callback} \PY{o}{=} \PY{n}{checkpoint\PYZus{}callback}\PY{p}{,}  
+    \PY{n}{resume\PYZus{}from\PYZus{}checkpoint} \PY{o}{=} \PY{k+kc}{None}\PY{p}{,}              \PY{c+c1}{\PYZsh{} used to load from checkpoint (.ckpt)}
+    \PY{n}{progress\PYZus{}bar\PYZus{}refresh\PYZus{}rate} \PY{o}{=} \PY{l+m+mi}{50}              \PY{c+c1}{\PYZsh{} tqdm update rate (lower values can cause overhead)}
+\PY{p}{)}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} print hyperparameters}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hyperparameters:}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\PY{k}{for} \PY{n}{key}\PY{p}{,} \PY{n}{value} \PY{o+ow}{in} \PY{n}{hyperparameters}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{key}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{: }\PY{l+s+si}{\PYZob{}}\PY{n}{value}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Hyperparameters:
+
+experiment\_name: T5\_v1
+max\_epochs: 1
+patience: 1
+dataset\_class: <class '\_\_main\_\_.ParaCrawlDS'>
+training\_size: 100000
+split\_train\_val: 0.98
+batch\_size: 64
+accumulate\_grad\_batches: 1
+nworkers: 4
+tokenizer: T5
+model\_name: t5-small
+source\_max\_length: 105
+target\_max\_length: 100
+loss\_func: CE
+opt\_name: Adam
+lr: 0.005
+scheduling\_factor: 0.95
+manual\_seed: 42
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{124}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{trainer}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Selected optimization level O1:  Insert automatic casts around Pytorch functions
+and Tensor methods.
+
+Defaults for this optimization level are:
+enabled                : True
+opt\_level              : O1
+cast\_model\_type        : None
+patch\_torch\_functions  : True
+keep\_batchnorm\_fp32    : None
+master\_weights         : None
+loss\_scale             : dynamic
+Processing user overrides (additional kwargs that are not None){\ldots}
+After processing overrides, optimization options are:
+enabled                : True
+opt\_level              : O1
+cast\_model\_type        : None
+patch\_torch\_functions  : True
+keep\_batchnorm\_fp32    : None
+master\_weights         : None
+loss\_scale             : dynamic
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Testing', layout=Layout(flex='2'), max=1, s…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+('In this way, the civil life of a nation matures, making it possible for all
+citizens to enjoy the fruits of genuine tolerance and mutual respect.', '1999
+XIII. Winnipeg, Canada July 23 to August 8', "In the mystery of Christmas,
+Christ's light shines on the earth, spreading, as it were, in concentric
+circles.", 'making it viable to drill two new boreholes in the west of that
+peninsula.', 'His eyes were shining and his voice was cheerful.', 'Injuries,
+accidents, bereavement, abuse, separation, shock, rape, bullying, harassment,
+stress, depression, anxiety, eating.', 'Whiteness HP Maxx is a 35\% hydrogen
+peroxide whitening gel for the whitening of vital and non-vital teeth.', 'Lines:
+with indication of Line Number, From and To ends, insulation, the P\&ID where
+they are drawn.', 'The cruises depart from Manaus, capital of the State of
+Amazonas, a city in the jungle that prospered during the rubber boom last
+century and where you will find a smaller copy of the Opera House in Paris,
+France. There is a choice of a three or four days cruises, both of which include
+the “Meeting of the Waters”, where the Rio Negro and the Amazon River
+converge.', 'By bringing 9/11 out into the open they ensured that it was given
+worldwide attention, and that the truth would be sought and the perpetrators
+identified and held to account.', '“Like Williams, Cosworth is an independent
+company whose owners share our passion for racing and engineering.', 'However,
+this can be avoided if infiltration is subepithelial.', 'Publication Type
+English: Bibliography', "Program Modification: Sometimes, not only virus
+Worm:Win32/Dedler.F or malware SWiJ SideWinder but also common softwares
+possessing the ability to modify the inner functions of FXUCU001.DLL, which
+means other programs can't find this DLL file again.", 'In some cases QuickTime
+media player halts smooth running of the MOV video due to some corruption
+issues.', 'He is currently Professor of Political Science at the University
+Pompeu Fabra in Barcelona.', 'Cosmetic additives must not penetrate.', 'Comments
+for Highway condom test', 'How do I obtain an extension of my student
+authorization?', 'Enough of US intervention in Latin !.', 'Nabertherm with 450
+employees worldwide have been developing and producing industrial furnaces for
+many different applications for over 60 years. As a manufacturer, Nabertherm
+offers the widest and deepest range of furnaces worldwide.', "We call these
+chemicals 'elements'.", 'Expert Review – coordination of teams of selected
+experts for the independent evaluation of complex environmental studies.',
+'Thereto there is a luggage storage room provided in the hostel.', 'This is a
+update module, must works together with Micronas OBD TOOL (CDC32XX) cable,
+cannot works alone.', '116 So exalted be Allah, the True King; no god is there
+but He, the Lord of the honorable dominion.', 'Technological education in
+Arequipa', 'Andinia.com - Outdoor Dictionary: Messan', 'VEMAG is the only
+manufacturer of vacuum fillers that complies with USDA requirements ex works.',
+'Institutes in Pereira (Risaralda, Colombia) Colleges and schools in Risaralda',
+'Mining equipment and supplies in Yugo-Zapadny okrug, Moscow', '• Correct
+provision of the service', 'When we speak the same language it is because we
+have the same mother. And this gives us hope.', 'Several kinds of accommodations
+available for your lodging in Carvoeiro: apartments, luxury or cheap Carvoeiro
+hotels, and also bed \& breakfast.', 'Prophecies concerning this are recorded in
+the 38th and 39th chapters of Ezekiel. Verse 8 of chapter 38 is addressed to
+Israel, and reads, “After many days thou shalt be visited: in the latter years
+thou shalt come into the land that is brought back from the sword, and is
+gathered out of many people, against the mountains of Israel, which have been
+always waste: but it is brought forth out of the nations, and they shall dwell
+safely all of them.”', 'The House immediately became place of cult and around to
+it developed the medieval Loreto: the impressive wall projected by Antonio da
+Sangallo il Giovane were erected in 1518 and reinforced with four bastions in
+1600.', 'There was no other power by which they could be delivered.', 'Quality
+is a must for us and we are always looking for ways/tools to help us to delivery
+the best.', 'The form had become focused and funny. I laughed:', 'Although it is
+not completely certain, many Brazilian chefs agree that the picanha cut
+originated in Rio Grande do Sul, the southernmost state of Brazil, famous for
+its churrasco.', 'The condition of complete acceptance in each hour in the
+matching process of the first block of the sale bid means that only the first
+block will be programmed in a specific hour if it is not matched completely, and
+all the blocks in that hour will be withdrawn and not the bid presented for the
+other hours.', 'Now David the son of Jesse reigned over all Israel.', 'The
+brain’s reasoning and thoughts in the decision-making process.', 'In other
+evangelic fragments the same Jesus refers to the lack of faith of his
+followers.', '3 Jesus knowing that the Father had given all things into his
+hands, and that he was come from God, and went to God;', "How to play Peppy' s
+Thandie Newton Dress Up:", 'Manufacture of leather goods{\ldots}', 'The values of
+the parameter vary from 0 to 200\%.', 'Software Downloads Associated with File
+Extension RB:', 'Contracting States may refuse to recognise a divorce or legal
+separation if it is incompatible with a previous decision determining the
+matrimonial status of the spouses and that decision either was rendered in the
+State in which recognition is sought, or is recognised, or fulfils the
+conditions required for recognition, in that State.', "With a top location at
+the Grand Place and the historical center of Brussels, the Ibis Brussels Off
+Grand'Place offers a direct access towards the international airport by the
+railway station.", 'Energetic mapping uncovers all geology disturbances
+underground, disturbances which were used to benefit the locations and greatly
+increase their energy level.', 'Malaria What You Can Do', 'THE PLEASURE OF
+HOMOSEXUAL SECOND Saint Thomas Aquinas OR SECOND THE DOMINICAN ADRIANO OLIVA? .
+We hope that the Holy Father, with the help of the Holy Spirit, has the power to
+unite the Catholic world, today […]', 'That evening Joseph, Mary, and Jesus
+walked a mile and a half to the site of the ancient Jericho, where Joshua, for
+whom Jesus was named, had performed his renowned exploits, according to Jewish
+tradition.', 'The main objective of the mission will be to bring a Russian
+module Rassvet Mini-Research Module. This will be the last trip of the Shuttle
+Atlantis, and [{\ldots}]', 'I paints them with epoxi so that they were not wet with
+the condensation of the tent.', 'Waste recycling in Santa Clara (Villa Clara,
+Cuba) - Amarillascuba.net', 'Our experience with separation processes in
+refineries {\ldots}', '(4) Our General Conditions of Purchase shall also apply for
+any future business relations with the supplier.', 'In km 31, the intense greens
+of the streams sink to the coloring and it begins to cross the south limit of
+the Mountain range of the Wind, with a mountain formation of address north-
+south, has their north end for the volcano Domuyo.', 'Single-use drapes made up
+of fabrics of heading 5603, of a kind used during surgical procedures 6307 90
+92', '6 days ago 10:01 XCafe blowjob, whore, dogging, homemade, facial, German,
+milf', 'Exceptionally, 120 priests played trumpets at the consecration of
+Solomon’s Temple.')
+('Deste modo, a vida civil de uma nação amadurece, fazendo com que todos os
+cidadãos gozem dos frutos da tolerância genuína e do respeito mútuo.', '1999
+XIII. Winnipeg, Canadá 23 de julho a 8 de agosto', 'No mistério do Natal, a luz
+de Cristo irradia-se sobre a terra, difundindo-se como círculos concêntricos.',
+'e tem o objetivo de viabilizar a perfuração de dois novos furos no ocidente da
+citada península.', 'Seus olhos brilhavam e sua voz era alegre.', 'Lesões,
+acidentes, luto, abuso, separação, choque, violação, assédio moral, assédio,
+stress, depressão, ansiedade, comer.', 'Whiteness HP Maxx é um clareador à base
+de peróxido de hidrogênio a 35\% para clareamento de dentes vitais e não
+vitais.', 'Linhas: com indicação do número de linha, as extremidades, o
+isolamento, o P\&ID onde estão desenhadas.', 'O Desafio parte de Manaus, capital
+do estado do Amazonas, uma cidade próspera pelo auge da borracha no séc.XIX, e
+onde se encontra uma cópia em menores proporções da Casa de Ópera de Paris, na
+França. Existe a possibilidade de 3 ou 4 dias de cruzeiro, dos que só incluem o
+encontro com as águas , onde o Rio Solimões e Negro se unem sem mesclar suas
+águas.', 'Ao trazer o assunto sobre o 9/11 para a ribalta asseguram que seja
+dada atenção mundial, e que a verdade seja pesquisada e tida em conta.', '“Como
+a Williams, Cosworth é uma empresa independente cujos donos partilham a nossa
+paixão pelas corridas e engenharia.', 'Contudo, isto pode ser evitado com uma
+infiltração subepitelial.', 'Tipo de Publicação Inglês: Bibliography',
+'Modificação do Programa: Às vezes, o vírus Virus:DOS/Clonewar\_252.C, malware
+History Killer Pro e softwares comuns têm a capacidade de modificar as funções
+de FXUCU001.DLL. Esta situação faria outros programas não podem encontrar este
+arquivo DLL.', 'Em alguns casos, media player QuickTime interrompe o bom
+funcionamento do vídeo MOV, devido a alguns problemas de corrupção.',
+'Atualmente é professor de Ciência Política na Universidade Pompeu Fabra em
+Barcelona.', 'Aditivos cosméticos não devem penetrar.', 'Comentários para o
+teste do preservativo da estrada', 'Como eu obtenho a extensão de minha
+Permissão de Estudos?', 'Chega de intervenção dos EUA na América Latina!.', 'A
+Nabertherm desenvolve e produz com os seus 450 colaboradores a nível mundial,
+desde há mais de 60 anos, fornos industriais para as mais diferentes áreas de
+aplicação.', "Chamamos a essas substâncias de 'elementos'.", 'Revisão
+Independente por Peritos (Independent Peer Review)- coordenação de equipas de
+especialistas para a avaliação independente de estudos ambientais complexos.',
+'Da mesma existe uma sala de bagagem prevista no albergue.', 'Este é um módulo
+de atualização, deve trabalha em conjunto com cabo Micronas OBD TOOL (CDC32XX),
+não trabalha sozinha.', "116 Exaltado seja Deus, Verdadeiro, Soberano! Não há
+mais divindade além d'Ele, Senhor do honorável Trono!", 'Educação tecnológica em
+Peru', 'Andinia.com - Dicionário ao ar livre: Messan', 'A VEMAG é a única
+fabricante de preenchedoras a vácuo que está em conformidade com as exigências
+do USDA ex works.', 'Escolas pré-universitário em Pereira (Risaralda,
+Colômbia)', 'Mineração: equipamentos e suprimentos em Yugo-Zapadny okrug,
+Moscú', '• A correcta prestação do serviço', 'Quando se fala a mesma língua é
+porque se tem a mesma mãe, e isto dá-nos esperança.', 'Vários tipos de
+acomodações disponíveis para o seu alojamento em Carvoeiro: apartamentos de luxo
+ou hotéis baratos Carvoeiro, e também bed \& breakfast.', 'As profecias sobre
+este assunto estão registradas nos capítulos 38 e 39 de Ezequiel. O versículo 8
+do capítulo 38 é dirigida a Israel, e diz: “ Depois de muitos dias serás
+visitado. No fim dos anos virás à terra que se recuperou da espada, e que foi
+congregada dentre muitos povos, junto aos montes de Israel, que sempre se faziam
+desertos; mas aquela terra foi tirada dentre as nações, e todas elas habitarão
+seguramente.”', 'A Casa torna-se imediatamente lugar de culto e ao redor desta
+se desenvolvem todas as habitações da Loreto medieval: as imponentes muralhas
+projetadas por Antonio da Sangallo il Giovane foram erguidas em 1518 e
+reforçadas com quatro bastiões, 1600.', 'Nenhum outro poder havia pelo qual
+pudesse ser libertado.', 'A qualidade é primordial para nós e estamos sempre à
+procura de maneiras/ferramentas para nos ajudar a entregar o melhor.', 'A forma
+tinha-se tornado o foco e engraçado. Eu ri:', 'Apesar de não estar comprovado,
+muitos cozinheiros brasileiros concordam que a picanha foi originada doRio
+Grande do Sul, um estado famoso pelos seus churrascos.', 'A condição de
+aceitação completa em cada hora na concertação do primeiro lanço da oferta de
+venda, implica que só será programada, numa hora determinada, o primeiro lanço
+em caso de ser concertado na sua totalidade, sendo retiradas todos os lanços
+para a referida hora, não sendo retirada a oferta realizada para as restantes
+horas.', 'Assim Davi, filho de Jessé, reinou sobre todo o Israel.', 'As
+reflexões e pensamentos do cérebro no processo de tomada de decisões da
+vontade.', 'Em outros fragmentos evangélicos, Jesus Cristo mesmo lamenta a falta
+de fé de seus seguidores.', '3 Jesus, sabendo que o Pai tinha depositado nas
+suas mãos todas as coisas, e que havia saído de Deus e ia para Deus,', 'Como
+jogar Peppy s vestir-se Thandie Newton:', 'Fabricação de artigos de couro{\ldots}',
+'Os valores do parâmetro varia de 0 a 200\%.', 'Downloads de Software Associados
+à Extensão de Ficheiro RB:', 'Qualquer Estado contratante pode recusar o
+reconhecimento de um divórcio ou de uma separação de pessoas se eles forem
+incompatíveis com uma decisão anterior cujo objectivo principal fosse o estado
+matrimonial dos cônjuges, quer proferida no Estado em que o reconhecimento foi
+invocado quer reconhecida ou reunindo as condições de reconhecimento neste
+Estado.', "Com uma excelente localização na Grand Place e no centro histórico de
+Bruxelas, o ibis Brussels Off Grand'Place oferece acesso direto ao aeroporto
+internacional pela estação ferroviária.", 'O mapeamento energético demonstra
+todas as perturbações geológicas subterrâneas, perturbações essas que eram
+usadas para beneficiar os locais e elevar grandemente o seu nível energético.',
+'Malária O que você pode fazer', 'O PRAZER DE HOMOSSEXUAL SEGUNDA Santo Tomás de
+Aquino ou o segundo o dominicano ADRIANO OLIVA? . Esperamos que o Santo Padre,
+com a ajuda do Espírito Santo, tem o poder de unir o mundo católico, hoje […]',
+'Naquela noite José, Maria e Jesus caminharam, por cerca de três quilômetros,
+até o local antigo de Jericó, onde Joshua, cujo nome foi dado a Jesus, tinha
+realizado as suas renomadas façanhas, de acordo com a tradição judaica.', 'O
+principal objetivo da missão terá um módulo russo RASSVET Mini-Módulo de
+Investigação. Esta será a última viagem do ônibus espacial Atlantis, e [{\ldots}]',
+'Pintei com epoxi para não se molharem com a condensação do barraco.',
+'Saneamento ambiental em Cifuentes (Villa Clara, Cuba) - Amarillascuba.net',
+'Nossa experiência com processos de separação em refinarias {\ldots}', '(4) Os nossos
+termos e condições de compra ainda terão vigor em todos os negócios futuros com
+o fornecedor.ier.', 'Em km 31, os intensos verdes dos fluxos afundam à coloração
+e começa a cruzar o limite sul da gama Montesa do Vento, com uma formação
+montesa de endereço norte-sul, tem o norte terminar para o vulcão Domuyo.',
+'Lençóis descartáveis confecionados com matérias da posição5603, do tipo
+utilizado durante as intervenções cirúrgicas 6307 90 92', 'Há 6 dias 10:01 XCafe
+sexo oral, putas, posição de cachorro, caseiras, ejaculação na cara, alemão,
+milf', 'Excepcionalmente, 120 sacerdotes tocaram trombetas na consagração do
+Templo de Salomão.')
+['Desta forma, a vida civil de uma naç ⁇ o se avança, tornando-o poss ⁇ vel para
+todos os cidad ⁇ os desfrutar dos frutos de tolerância verdadeira e respeito
+mutual.', '1999 XIII. Winnipeg, Canadá 23 a 8 de agosto', 'No mistério do Natal,
+a luz de Cristo brilha na terra, esporrendo-se, como era, em c ⁇ rculos
+concêncios.', 'fazendo viável fazer o ocidental dois novos fechados no ocidente
+daquela pen ⁇ nsula.', 'Os seus olhos estavam brilhantes e a sua voz foi
+linda.', 'Inferiç ⁇ es, acidentes, abuso, abuso, separaç ⁇ o, choque,
+rapaçamento, abuso, abuso, abuso, abuso, abuso, abuso, apress ⁇ o, apress ⁇ o, a
+ansiedade, abuso, alimentaç ⁇ o', 'A branque HP Maxx é um gel de clareamento de
+hidrogénio de 35\% para o clareamento de dentes vitales e n ⁇ o-vitais.',
+'Linhas: com indicaç ⁇ o do n ⁇ mero de linha, De e a fim, isolamento, o P\&ID
+onde eles s ⁇ o trazidas.', 'As crucificades sa ⁇ am de Manaus, capital do
+Estado de Amazonas, uma cidade na jungle que prosperou durante o bólvulo em
+século passado e onde você encontrará uma cópia menor da Opera House em Paris,
+França. Há um', 'Ao trazer os 9/11 aos abertos eles garantiram que era dada
+atenç ⁇ o mundial, e que a verdade seria buscada e os atentantes identificou e
+os ataqueiados.', '“Like Williams, Cosworth é uma empresa independente, cujos
+proprietários compartilham nossa paix ⁇ o pela corrida e engenharia.', 'No
+entanto, isto pode ser evitado se a infiltraç ⁇ o é subepithelial.', 'Tipo de
+Publicaç ⁇ o Português: Bibliografia', 'Modificaç ⁇ o do Programa:  ⁇ s vezes, v
+⁇ rus Worm:Win32/Dedler.F ou malware SWiJ SideWinder, mas também softwares
+comuns têm a capacidade de modificar as funç ⁇ es internas de FXUCU001.DLL, o
+que significa que outros programas n ⁇ o po', 'Em alguns casos o jogador de m ⁇
+dia QuickTime acabou o funcionamento liso do v ⁇ deo MOV devido a alguns
+problemas de corrupç ⁇ o.', 'Ele é professor de Ciência Pol ⁇ tica da
+Universidade Pompeu Fabra em Barcelona.', 'Aditivos cosméticos n ⁇ o devem
+perder.', 'Comentários para teste de preservativo de Estrada', 'Como eu obter
+uma extens ⁇ o da minha autorizaç ⁇ o estudante?', 'A  ⁇ ndia da intervenç ⁇ o
+dos EUA em l ⁇ ngua!', 'Nabertherm com 450 funcionários em todo o mundo est ⁇ o
+desenvolvidos e produzindo fornos industriais para muitos aplicaç ⁇ es
+diferentes para mais de 60 anos. Como fabricante, Nabertherm oferece a maior
+gama de fornos mundanos.', "Nós chamamos essas qu ⁇ micas 'elementos'.",
+'Avaliaç ⁇ o especializada – coordenaç ⁇ o de equipes de especialistas
+selecionados para a avaliaç ⁇ o independente de estudos ambientais complexos.',
+'Existe uma sala de armazenamento de bagagem fornecida no hostel.', 'Este é um
+módulo de atualizaç ⁇ o, deve trabalhar junto com cabo Micronas OBD TOOL
+(CDC32XX), n ⁇ o pode funcionar sozinho.', '116 Ent ⁇ o seja a Deus, o
+verdadeiro Rei; n ⁇ o é lá, mas Ele, o Senhor do dominion honrável.', 'Educaç ⁇
+o tecnológica em Arequipa', 'Andinia.com - Dicionário ao ar livre: Messan',
+'VEMAG é o  ⁇ nico fabricante de reservadores de pó de pó que cumprir com os
+requisitos da USDA ex trabalhos.', 'Institutos em Pereira (Risaralda, Colômbia)
+Faculdades e escolas em Risaralda', 'Mineraç ⁇ o: equipamentos e suprimentos em
+Yugo-Zapadny okrug, Moscou', '• Previs ⁇ o correta do serviço', 'Quando falamos
+a mesma linguagem é porque temos a mesma m ⁇ e. E isto nos dá esperança.',
+'Vários tipos de acomodaç ⁇ es dispon ⁇ veis para seu alojamento em Carvoeiro:
+apartamentos de luxo ou hotéis carvoeiro baratos, e também cama \& breakfast.',
+'As profecias sobre este s ⁇ o gravadas nos dias 38 e 39o capitulo de Ezequil.
+Verso 8 do capitulo 38 é abordado a Israel, e li: “Depois de muitos dias será
+visitado; nos  ⁇ ltimos anos vir ⁇ o na terra que ', 'A Casa imediatamente se
+tornou lugar de cult e em torno dele desenvolveu o médio Loreto: a parede incr ⁇
+vel projetada por Antonio da Sangallo il Giovane foram erradas em 1518 e
+reforçada com quatro bastions em 1600.', 'N ⁇ o havia outro poder pelo qual
+poderia ser entregue.', 'Qualidade é um m ⁇ nimo para nós e estamos sempre
+procurando maneiras/acessórios para nos ajudar a entregar o melhor.', 'A forma
+tinha se tornou concentrada e engraçada. Eu rii:', 'Embora n ⁇ o é completamente
+certo, muitos chefes brasileiros concordam que a picanha corteu o rio Grande do
+Sul, o estado mais sul do Brasil, famoso por seu churrasco.', 'A condiç ⁇ o de
+aceitaç ⁇ o completa em cada hora no processo de ajuste do primeiro bloco da
+oferta de venda significa que apenas o primeiro bloco será programado em uma
+hora espec ⁇ fica se n ⁇ o é ligado completamente, e todos os', 'Agora Davi,
+filho de Jesse reinou sobre todo o Israel.', 'O raz ⁇ o e os pensamentos do
+cérebro no processo de fazer decis ⁇ o.', 'Em outros fragmentos evangelizais,
+Jesus refere-se à falta de fé de seus seguidores.', '3 Jesus sabendo que o Pai
+tinha dado todas as coisas em suas m ⁇ os, e que ele era de Deus, e foi a
+Deus;', "Como jogar o jogo de Peppy's Thandie Newton Vestir:", 'Fabricaç ⁇ o de
+artigos de couro{\ldots}', 'Os valores do parâmetro variam de 0 a 200\%.', 'Downloads
+de software relacionados com a extens ⁇ o de arquivo RB:', 'Os Estados
+Contratados podem recusar reconhecer um diário ou separaç ⁇ o legal se é
+incompat ⁇ vel com uma decis ⁇ o anterior determinando o status matrimonial dos
+cônjuges e a decis ⁇ o é feita no Estado em que a reconhecimento é procurada',
+"Com uma localizaç ⁇ o em cima do Grand Place e do centro histórico de Brussels,
+o Ibis Brussels Off Grand'Place oferece um acesso direto ao aeroporto
+internacional pela estaç ⁇ o ferroviária.", 'A mapa energética descobri todas as
+perturbaç ⁇ es geológicas subterrâneas, perturbaç ⁇ es que foram usadas para
+beneficiar os locais e aumentar muito o n ⁇ vel de energia.', 'Malaria O que
+você pode fazer', 'A PLEASURE do Santo Padre Thomas Aquinas ou SEC ⁇ O OLIVA
+DOMINICAN?. Esperamos que o Santo Padre, com ajuda do Esp ⁇ rito Santo, tem o
+poder de unir o mundo católico, hoje [{\ldots}]', 'Naquela noite José, Maria, e Jesus
+caminhou uma milha e uma metade ao local do antigo Jericó, onde Josuéu, por quem
+Jesus foi nomeado, tinha realizado suas exploitas com a tradiç ⁇ o judicana.',
+'O principal objetivo da miss ⁇ o será trazer um módulo russo Rassvet Mini-
+Research. Este será a  ⁇ ltima viagem do Shuttle Atlantis e [{\ldots}]', 'Eu pinto-os
+com epoxi para que n ⁇ o eram molhados com a condenaç ⁇ o da tenda.', 'Recuperaç
+⁇ o de Res ⁇ duos em Santa Clara (Villa Clara, Cuba) - Amarillascuba.net',
+'Nossa experiência com processos de separaç ⁇ o em refinarias{\ldots}', '(4) Nossas
+condiç ⁇ es gerais de compra também s ⁇ o requer relaç ⁇ es futuras com o
+fornecedor.', 'Em km 31, os verde intensos dos fluxos a essa ela começa a cruzar
+o limite do sul da gama de Montanha do vento, com uma formaç ⁇ o montanha de
+endereço ao norte-sul, tem o seu fim norte para o vulc ⁇ o Domuyo.', 'Cortinas
+de uso  ⁇ nico feitas de tecidos da posiç ⁇ o 5603, de um tipo utilizado durante
+procedimentos cir ⁇ rgicos 6307 90 92', 'Há 6 dias 10:01 XCafe esporradela,
+esporradela, caseira, caseira, esporradela, esporradela, esporradela,
+esporradela, esporradela', 'Excepcionalmente 120 sacerdotes jogaram trombetas na
+consagraç ⁇ o do templo de Salom ⁇ o.']
+tensor(25.5836)
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Process Process-42:
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 261, in \_bootstrap
+    util.\_exit\_function()
+  File "/usr/lib/python3.6/multiprocessing/util.py", line 322, in \_exit\_function
+    \_run\_finalizers()
+  File "/usr/lib/python3.6/multiprocessing/util.py", line 262, in
+\_run\_finalizers
+    finalizer()
+  File "/usr/lib/python3.6/multiprocessing/util.py", line 186, in \_\_call\_\_
+    res = self.\_callback(*self.\_args, **self.\_kwargs)
+  File "/usr/lib/python3.6/multiprocessing/queues.py", line 191, in
+\_finalize\_join
+    thread.join()
+  File "/usr/lib/python3.6/threading.py", line 1056, in join
+    self.\_wait\_for\_tstate\_lock()
+Exception ignored in: <bound method \_MultiProcessingDataLoaderIter.\_\_del\_\_ of
+<torch.utils.data.dataloader.\_MultiProcessingDataLoaderIter object at
+0x7efd4deba588>>
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/torch/utils/data/dataloader.py",
+line 962, in \_\_del\_\_
+    self.\_shutdown\_workers()
+  File "/usr/local/lib/python3.6/dist-packages/torch/utils/data/dataloader.py",
+line 942, in \_shutdown\_workers
+    w.join()
+  File "/usr/lib/python3.6/multiprocessing/process.py", line 124, in join
+    res = self.\_popen.wait(timeout)
+  File "/usr/lib/python3.6/multiprocessing/popen\_fork.py", line 50, in wait
+    return self.poll(os.WNOHANG if timeout == 0.0 else 0)
+  File "/usr/lib/python3.6/multiprocessing/popen\_fork.py", line 28, in poll
+    pid, sts = os.waitpid(self.pid, flag)
+KeyboardInterrupt:
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        KeyboardInterrupt                         Traceback (most recent call last)
+
+        <ipython-input-124-45d4afebefac> in <module>()
+    ----> 1 trainer.fit(model)
+    
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/trainer.py in fit(self, model, train\_dataloader, val\_dataloaders)
+        763 
+        764         elif self.single\_gpu:
+    --> 765             self.single\_gpu\_train(model)
+        766 
+        767         elif self.use\_tpu:  \# pragma: no-cover
+
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/distrib\_parts.py in single\_gpu\_train(self, model)
+        490             self.optimizers = optimizers
+        491 
+    --> 492         self.run\_pretrain\_routine(model)
+        493 
+        494     def tpu\_train(self, tpu\_core\_idx, model):
+
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/trainer.py in run\_pretrain\_routine(self, model)
+        878             \# only load test dataloader for testing
+        879             \# self.reset\_test\_dataloader(ref\_model)
+    --> 880             self.run\_evaluation(test\_mode=True)
+        881             return
+        882 
+
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/evaluation\_loop.py in run\_evaluation(self, test\_mode)
+        372 
+        373         \# run evaluation
+    --> 374         eval\_results = self.\_evaluate(self.model, dataloaders, max\_batches, test\_mode)
+        375         \_, prog\_bar\_metrics, log\_metrics, callback\_metrics, \_ = self.process\_output(eval\_results)
+        376 
+
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/evaluation\_loop.py in \_evaluate(self, model, dataloaders, max\_batches, test\_mode)
+        276                         output = self.evaluation\_forward(model, batch, batch\_idx, dataloader\_idx, test\_mode)
+        277                 else:
+    --> 278                     output = self.evaluation\_forward(model, batch, batch\_idx, dataloader\_idx, test\_mode)
+        279 
+        280                 \# on dp / ddp2 might still want to do something with the batch parts
+
+
+        /usr/local/lib/python3.6/dist-packages/pytorch\_lightning/trainer/evaluation\_loop.py in evaluation\_forward(self, model, batch, batch\_idx, dataloader\_idx, test\_mode)
+        443         \# CPU, TPU or gpu step
+        444         if test\_mode:
+    --> 445             output = model.test\_step(*args)
+        446         else:
+        447             output = model.validation\_step(*args)
+
+
+        <ipython-input-115-fffddfa0344e> in test\_step(self, batch, batch\_nb)
+         78     def test\_step(self, batch, batch\_nb):
+         79         source\_token\_ids, source\_mask, target\_token\_ids, target\_mask, source\_original, target\_original = batch
+    ---> 80         predicted = self(source\_token\_ids, source\_mask, target\_token\_ids)
+         81         translated = [self.tokenizer.decode(token) for token in predicted]
+         82         bleu = torch.tensor(sacrebleu.corpus\_bleu(translated, [target\_original]).score)
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        <ipython-input-115-fffddfa0344e> in forward(self, source\_token\_ids, source\_mask, target\_token\_ids)
+         29                 input\_ids = source\_token\_ids,
+         30                 max\_length = self.hparams.target\_max\_length,
+    ---> 31                 do\_sample = False, \# use greedy decoding
+         32             )
+         33             return predicted\_token\_ids
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/autograd/grad\_mode.py in decorate\_context(*args, **kwargs)
+         13         def decorate\_context(*args, **kwargs):
+         14             with self:
+    ---> 15                 return func(*args, **kwargs)
+         16         return decorate\_context
+         17 
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_utils.py in generate(self, input\_ids, max\_length, min\_length, do\_sample, early\_stopping, num\_beams, temperature, top\_k, top\_p, repetition\_penalty, bad\_words\_ids, bos\_token\_id, pad\_token\_id, eos\_token\_id, length\_penalty, no\_repeat\_ngram\_size, num\_return\_sequences, attention\_mask, decoder\_start\_token\_id)
+       1014                 batch\_size=effective\_batch\_size,
+       1015                 encoder\_outputs=encoder\_outputs,
+    -> 1016                 attention\_mask=attention\_mask,
+       1017             )
+       1018 
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_utils.py in \_generate\_no\_beam\_search(self, input\_ids, cur\_len, max\_length, min\_length, do\_sample, temperature, top\_k, top\_p, repetition\_penalty, no\_repeat\_ngram\_size, bad\_words\_ids, bos\_token\_id, pad\_token\_id, eos\_token\_id, decoder\_start\_token\_id, batch\_size, encoder\_outputs, attention\_mask)
+       1052             model\_inputs = self.prepare\_inputs\_for\_generation(input\_ids, past=past, attention\_mask=attention\_mask)
+       1053 
+    -> 1054             outputs = self(**model\_inputs)
+       1055             next\_token\_logits = outputs[0][:, -1, :]
+       1056 
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_t5.py in forward(self, input\_ids, attention\_mask, encoder\_outputs, decoder\_input\_ids, decoder\_attention\_mask, lm\_labels, inputs\_embeds, decoder\_inputs\_embeds, head\_mask)
+        956             encoder\_hidden\_states=hidden\_states,
+        957             encoder\_attention\_mask=attention\_mask,
+    --> 958             head\_mask=head\_mask,
+        959         )
+        960 
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_t5.py in forward(self, input\_ids, attention\_mask, encoder\_hidden\_states, encoder\_attention\_mask, inputs\_embeds, head\_mask)
+        666                 encoder\_attention\_mask=encoder\_extended\_attention\_mask,
+        667                 encoder\_decoder\_position\_bias=encoder\_decoder\_position\_bias,
+    --> 668                 head\_mask=head\_mask[i],
+        669             )
+        670             \# layer\_outputs is a tuple with:
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_t5.py in forward(self, hidden\_states, attention\_mask, position\_bias, encoder\_hidden\_states, encoder\_attention\_mask, encoder\_decoder\_position\_bias, head\_mask)
+        437                 attention\_mask=encoder\_attention\_mask,
+        438                 position\_bias=encoder\_decoder\_position\_bias,
+    --> 439                 head\_mask=head\_mask,
+        440             )
+        441             hidden\_states = cross\_attention\_outputs[0]
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_t5.py in forward(self, hidden\_states, kv, attention\_mask, position\_bias, head\_mask)
+        391 
+        392     def forward(self, hidden\_states, kv, attention\_mask=None, position\_bias=None, head\_mask=None):
+    --> 393         norm\_x = self.layer\_norm(hidden\_states)
+        394         attention\_output = self.EncDecAttention(
+        395             norm\_x, mask=attention\_mask, kv=kv, position\_bias=position\_bias, head\_mask=head\_mask
+
+
+        /usr/local/lib/python3.6/dist-packages/torch/nn/modules/module.py in \_\_call\_\_(self, *input, **kwargs)
+        548             result = self.\_slow\_forward(*input, **kwargs)
+        549         else:
+    --> 550             result = self.forward(*input, **kwargs)
+        551         for hook in self.\_forward\_hooks.values():
+        552             hook\_result = hook(self, input, result)
+
+
+        /usr/local/lib/python3.6/dist-packages/transformers/modeling\_t5.py in forward(self, x)
+        152     def forward(self, x):
+        153         variance = x.pow(2).mean(-1, keepdim=True)
+    --> 154         x = x / torch.sqrt(variance + self.variance\_epsilon)
+        155         return self.weight * x
+        156 
+
+
+        /usr/local/lib/python3.6/dist-packages/apex/amp/wrap.py in wrapper(*args, **kwargs)
+         51 
+         52         if len(types) <= 1:
+    ---> 53             return orig\_fn(*args, **kwargs)
+         54         elif len(types) == 2 and types == set(['HalfTensor', 'FloatTensor']):
+         55             new\_args = utils.casted\_args(cast\_fn,
+
+
+        /usr/local/lib/python3.6/dist-packages/apex/amp/wrap.py in wrapper(*args, **kwargs)
+         48             return orig\_fn(*args, **kwargs)
+         49 
+    ---> 50         types = utils.collect\_fp\_tensor\_types(args, kwargs)
+         51 
+         52         if len(types) <= 1:
+
+
+        /usr/local/lib/python3.6/dist-packages/apex/amp/utils.py in collect\_fp\_tensor\_types(args, kwargs)
+         45     types = set()
+         46     for x in all\_args:
+    ---> 47         if is\_fp\_tensor(x):
+         48             collect\_types(x, types)
+         49     return types
+
+
+        /usr/local/lib/python3.6/dist-packages/apex/amp/utils.py in is\_fp\_tensor(x)
+         19                 return False
+         20         return True
+    ---> 21     return compat.is\_tensor\_like(x) and compat.is\_floating\_point(x)
+         22 
+         23 def is\_nested(x):
+
+
+        /usr/local/lib/python3.6/dist-packages/apex/amp/compat.py in is\_floating\_point(x)
+         23 \# the suffix of `x.type()`.
+         24 def is\_floating\_point(x):
+    ---> 25     if hasattr(torch, 'is\_floating\_point'):
+         26         return torch.is\_floating\_point(x)
+         27     try:
+
+
+        KeyboardInterrupt: 
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  File "/usr/lib/python3.6/threading.py", line 1072, in \_wait\_for\_tstate\_lock
+    elif lock.acquire(block, timeout):
+    \end{Verbatim}
+
+    Training stopped manually
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+ch}{\PYZsh{}!mkdir /content/logs/model}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} save}
+\PY{c+c1}{\PYZsh{}torch.save(model.state\PYZus{}dict(), \PYZsq{}/content/logs/model/parameters\PYZsq{})}
+\PY{c+c1}{\PYZsh{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+\PY{c+c1}{\PYZsh{} load}
+\PY{c+c1}{\PYZsh{}model = TheModelClass(*args, **kwargs)}
+\PY{n}{model}\PY{o}{.}\PY{n}{load\PYZus{}state\PYZus{}dict}\PY{p}{(}\PY{n}{torch}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/content/logs/model/parameters}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\PY{c+c1}{\PYZsh{}model.eval()}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{80}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<All keys matched successfully>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{evaluation}{%
+\section*{6. Evaluation}\label{evaluation}}
+
+    \hypertarget{test-set}{%
+\subsection*{6.1 Test set}\label{test-set}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{125}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{model}\PY{o}{.}\PY{n}{prepare\PYZus{}data}
+\PY{n}{trainer}\PY{o}{.}\PY{n}{test}\PY{p}{(}\PY{n}{model}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Selected optimization level O1:  Insert automatic casts around Pytorch functions
+and Tensor methods.
+
+Defaults for this optimization level are:
+enabled                : True
+opt\_level              : O1
+cast\_model\_type        : None
+patch\_torch\_functions  : True
+keep\_batchnorm\_fp32    : None
+master\_weights         : None
+loss\_scale             : dynamic
+Processing user overrides (additional kwargs that are not None){\ldots}
+After processing overrides, optimization options are:
+enabled                : True
+opt\_level              : O1
+cast\_model\_type        : None
+patch\_torch\_functions  : True
+keep\_batchnorm\_fp32    : None
+master\_weights         : None
+loss\_scale             : dynamic
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+HBox(children=(IntProgress(value=1, bar_style='info', description='Testing', layout=Layout(flex='2'), max=1, s…
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+('In this way, the civil life of a nation matures, making it possible for all
+citizens to enjoy the fruits of genuine tolerance and mutual respect.', '1999
+XIII. Winnipeg, Canada July 23 to August 8', "In the mystery of Christmas,
+Christ's light shines on the earth, spreading, as it were, in concentric
+circles.", 'making it viable to drill two new boreholes in the west of that
+peninsula.', 'His eyes were shining and his voice was cheerful.', 'Injuries,
+accidents, bereavement, abuse, separation, shock, rape, bullying, harassment,
+stress, depression, anxiety, eating.', 'Whiteness HP Maxx is a 35\% hydrogen
+peroxide whitening gel for the whitening of vital and non-vital teeth.', 'Lines:
+with indication of Line Number, From and To ends, insulation, the P\&ID where
+they are drawn.', 'The cruises depart from Manaus, capital of the State of
+Amazonas, a city in the jungle that prospered during the rubber boom last
+century and where you will find a smaller copy of the Opera House in Paris,
+France. There is a choice of a three or four days cruises, both of which include
+the “Meeting of the Waters”, where the Rio Negro and the Amazon River
+converge.', 'By bringing 9/11 out into the open they ensured that it was given
+worldwide attention, and that the truth would be sought and the perpetrators
+identified and held to account.', '“Like Williams, Cosworth is an independent
+company whose owners share our passion for racing and engineering.', 'However,
+this can be avoided if infiltration is subepithelial.', 'Publication Type
+English: Bibliography', "Program Modification: Sometimes, not only virus
+Worm:Win32/Dedler.F or malware SWiJ SideWinder but also common softwares
+possessing the ability to modify the inner functions of FXUCU001.DLL, which
+means other programs can't find this DLL file again.", 'In some cases QuickTime
+media player halts smooth running of the MOV video due to some corruption
+issues.', 'He is currently Professor of Political Science at the University
+Pompeu Fabra in Barcelona.', 'Cosmetic additives must not penetrate.', 'Comments
+for Highway condom test', 'How do I obtain an extension of my student
+authorization?', 'Enough of US intervention in Latin !.', 'Nabertherm with 450
+employees worldwide have been developing and producing industrial furnaces for
+many different applications for over 60 years. As a manufacturer, Nabertherm
+offers the widest and deepest range of furnaces worldwide.', "We call these
+chemicals 'elements'.", 'Expert Review – coordination of teams of selected
+experts for the independent evaluation of complex environmental studies.',
+'Thereto there is a luggage storage room provided in the hostel.', 'This is a
+update module, must works together with Micronas OBD TOOL (CDC32XX) cable,
+cannot works alone.', '116 So exalted be Allah, the True King; no god is there
+but He, the Lord of the honorable dominion.', 'Technological education in
+Arequipa', 'Andinia.com - Outdoor Dictionary: Messan', 'VEMAG is the only
+manufacturer of vacuum fillers that complies with USDA requirements ex works.',
+'Institutes in Pereira (Risaralda, Colombia) Colleges and schools in Risaralda',
+'Mining equipment and supplies in Yugo-Zapadny okrug, Moscow', '• Correct
+provision of the service', 'When we speak the same language it is because we
+have the same mother. And this gives us hope.', 'Several kinds of accommodations
+available for your lodging in Carvoeiro: apartments, luxury or cheap Carvoeiro
+hotels, and also bed \& breakfast.', 'Prophecies concerning this are recorded in
+the 38th and 39th chapters of Ezekiel. Verse 8 of chapter 38 is addressed to
+Israel, and reads, “After many days thou shalt be visited: in the latter years
+thou shalt come into the land that is brought back from the sword, and is
+gathered out of many people, against the mountains of Israel, which have been
+always waste: but it is brought forth out of the nations, and they shall dwell
+safely all of them.”', 'The House immediately became place of cult and around to
+it developed the medieval Loreto: the impressive wall projected by Antonio da
+Sangallo il Giovane were erected in 1518 and reinforced with four bastions in
+1600.', 'There was no other power by which they could be delivered.', 'Quality
+is a must for us and we are always looking for ways/tools to help us to delivery
+the best.', 'The form had become focused and funny. I laughed:', 'Although it is
+not completely certain, many Brazilian chefs agree that the picanha cut
+originated in Rio Grande do Sul, the southernmost state of Brazil, famous for
+its churrasco.', 'The condition of complete acceptance in each hour in the
+matching process of the first block of the sale bid means that only the first
+block will be programmed in a specific hour if it is not matched completely, and
+all the blocks in that hour will be withdrawn and not the bid presented for the
+other hours.', 'Now David the son of Jesse reigned over all Israel.', 'The
+brain’s reasoning and thoughts in the decision-making process.', 'In other
+evangelic fragments the same Jesus refers to the lack of faith of his
+followers.', '3 Jesus knowing that the Father had given all things into his
+hands, and that he was come from God, and went to God;', "How to play Peppy' s
+Thandie Newton Dress Up:", 'Manufacture of leather goods{\ldots}', 'The values of
+the parameter vary from 0 to 200\%.', 'Software Downloads Associated with File
+Extension RB:', 'Contracting States may refuse to recognise a divorce or legal
+separation if it is incompatible with a previous decision determining the
+matrimonial status of the spouses and that decision either was rendered in the
+State in which recognition is sought, or is recognised, or fulfils the
+conditions required for recognition, in that State.', "With a top location at
+the Grand Place and the historical center of Brussels, the Ibis Brussels Off
+Grand'Place offers a direct access towards the international airport by the
+railway station.", 'Energetic mapping uncovers all geology disturbances
+underground, disturbances which were used to benefit the locations and greatly
+increase their energy level.', 'Malaria What You Can Do', 'THE PLEASURE OF
+HOMOSEXUAL SECOND Saint Thomas Aquinas OR SECOND THE DOMINICAN ADRIANO OLIVA? .
+We hope that the Holy Father, with the help of the Holy Spirit, has the power to
+unite the Catholic world, today […]', 'That evening Joseph, Mary, and Jesus
+walked a mile and a half to the site of the ancient Jericho, where Joshua, for
+whom Jesus was named, had performed his renowned exploits, according to Jewish
+tradition.', 'The main objective of the mission will be to bring a Russian
+module Rassvet Mini-Research Module. This will be the last trip of the Shuttle
+Atlantis, and [{\ldots}]', 'I paints them with epoxi so that they were not wet with
+the condensation of the tent.', 'Waste recycling in Santa Clara (Villa Clara,
+Cuba) - Amarillascuba.net', 'Our experience with separation processes in
+refineries {\ldots}', '(4) Our General Conditions of Purchase shall also apply for
+any future business relations with the supplier.', 'In km 31, the intense greens
+of the streams sink to the coloring and it begins to cross the south limit of
+the Mountain range of the Wind, with a mountain formation of address north-
+south, has their north end for the volcano Domuyo.', 'Single-use drapes made up
+of fabrics of heading 5603, of a kind used during surgical procedures 6307 90
+92', '6 days ago 10:01 XCafe blowjob, whore, dogging, homemade, facial, German,
+milf', 'Exceptionally, 120 priests played trumpets at the consecration of
+Solomon’s Temple.')
+('Deste modo, a vida civil de uma nação amadurece, fazendo com que todos os
+cidadãos gozem dos frutos da tolerância genuína e do respeito mútuo.', '1999
+XIII. Winnipeg, Canadá 23 de julho a 8 de agosto', 'No mistério do Natal, a luz
+de Cristo irradia-se sobre a terra, difundindo-se como círculos concêntricos.',
+'e tem o objetivo de viabilizar a perfuração de dois novos furos no ocidente da
+citada península.', 'Seus olhos brilhavam e sua voz era alegre.', 'Lesões,
+acidentes, luto, abuso, separação, choque, violação, assédio moral, assédio,
+stress, depressão, ansiedade, comer.', 'Whiteness HP Maxx é um clareador à base
+de peróxido de hidrogênio a 35\% para clareamento de dentes vitais e não
+vitais.', 'Linhas: com indicação do número de linha, as extremidades, o
+isolamento, o P\&ID onde estão desenhadas.', 'O Desafio parte de Manaus, capital
+do estado do Amazonas, uma cidade próspera pelo auge da borracha no séc.XIX, e
+onde se encontra uma cópia em menores proporções da Casa de Ópera de Paris, na
+França. Existe a possibilidade de 3 ou 4 dias de cruzeiro, dos que só incluem o
+encontro com as águas , onde o Rio Solimões e Negro se unem sem mesclar suas
+águas.', 'Ao trazer o assunto sobre o 9/11 para a ribalta asseguram que seja
+dada atenção mundial, e que a verdade seja pesquisada e tida em conta.', '“Como
+a Williams, Cosworth é uma empresa independente cujos donos partilham a nossa
+paixão pelas corridas e engenharia.', 'Contudo, isto pode ser evitado com uma
+infiltração subepitelial.', 'Tipo de Publicação Inglês: Bibliography',
+'Modificação do Programa: Às vezes, o vírus Virus:DOS/Clonewar\_252.C, malware
+History Killer Pro e softwares comuns têm a capacidade de modificar as funções
+de FXUCU001.DLL. Esta situação faria outros programas não podem encontrar este
+arquivo DLL.', 'Em alguns casos, media player QuickTime interrompe o bom
+funcionamento do vídeo MOV, devido a alguns problemas de corrupção.',
+'Atualmente é professor de Ciência Política na Universidade Pompeu Fabra em
+Barcelona.', 'Aditivos cosméticos não devem penetrar.', 'Comentários para o
+teste do preservativo da estrada', 'Como eu obtenho a extensão de minha
+Permissão de Estudos?', 'Chega de intervenção dos EUA na América Latina!.', 'A
+Nabertherm desenvolve e produz com os seus 450 colaboradores a nível mundial,
+desde há mais de 60 anos, fornos industriais para as mais diferentes áreas de
+aplicação.', "Chamamos a essas substâncias de 'elementos'.", 'Revisão
+Independente por Peritos (Independent Peer Review)- coordenação de equipas de
+especialistas para a avaliação independente de estudos ambientais complexos.',
+'Da mesma existe uma sala de bagagem prevista no albergue.', 'Este é um módulo
+de atualização, deve trabalha em conjunto com cabo Micronas OBD TOOL (CDC32XX),
+não trabalha sozinha.', "116 Exaltado seja Deus, Verdadeiro, Soberano! Não há
+mais divindade além d'Ele, Senhor do honorável Trono!", 'Educação tecnológica em
+Peru', 'Andinia.com - Dicionário ao ar livre: Messan', 'A VEMAG é a única
+fabricante de preenchedoras a vácuo que está em conformidade com as exigências
+do USDA ex works.', 'Escolas pré-universitário em Pereira (Risaralda,
+Colômbia)', 'Mineração: equipamentos e suprimentos em Yugo-Zapadny okrug,
+Moscú', '• A correcta prestação do serviço', 'Quando se fala a mesma língua é
+porque se tem a mesma mãe, e isto dá-nos esperança.', 'Vários tipos de
+acomodações disponíveis para o seu alojamento em Carvoeiro: apartamentos de luxo
+ou hotéis baratos Carvoeiro, e também bed \& breakfast.', 'As profecias sobre
+este assunto estão registradas nos capítulos 38 e 39 de Ezequiel. O versículo 8
+do capítulo 38 é dirigida a Israel, e diz: “ Depois de muitos dias serás
+visitado. No fim dos anos virás à terra que se recuperou da espada, e que foi
+congregada dentre muitos povos, junto aos montes de Israel, que sempre se faziam
+desertos; mas aquela terra foi tirada dentre as nações, e todas elas habitarão
+seguramente.”', 'A Casa torna-se imediatamente lugar de culto e ao redor desta
+se desenvolvem todas as habitações da Loreto medieval: as imponentes muralhas
+projetadas por Antonio da Sangallo il Giovane foram erguidas em 1518 e
+reforçadas com quatro bastiões, 1600.', 'Nenhum outro poder havia pelo qual
+pudesse ser libertado.', 'A qualidade é primordial para nós e estamos sempre à
+procura de maneiras/ferramentas para nos ajudar a entregar o melhor.', 'A forma
+tinha-se tornado o foco e engraçado. Eu ri:', 'Apesar de não estar comprovado,
+muitos cozinheiros brasileiros concordam que a picanha foi originada doRio
+Grande do Sul, um estado famoso pelos seus churrascos.', 'A condição de
+aceitação completa em cada hora na concertação do primeiro lanço da oferta de
+venda, implica que só será programada, numa hora determinada, o primeiro lanço
+em caso de ser concertado na sua totalidade, sendo retiradas todos os lanços
+para a referida hora, não sendo retirada a oferta realizada para as restantes
+horas.', 'Assim Davi, filho de Jessé, reinou sobre todo o Israel.', 'As
+reflexões e pensamentos do cérebro no processo de tomada de decisões da
+vontade.', 'Em outros fragmentos evangélicos, Jesus Cristo mesmo lamenta a falta
+de fé de seus seguidores.', '3 Jesus, sabendo que o Pai tinha depositado nas
+suas mãos todas as coisas, e que havia saído de Deus e ia para Deus,', 'Como
+jogar Peppy s vestir-se Thandie Newton:', 'Fabricação de artigos de couro{\ldots}',
+'Os valores do parâmetro varia de 0 a 200\%.', 'Downloads de Software Associados
+à Extensão de Ficheiro RB:', 'Qualquer Estado contratante pode recusar o
+reconhecimento de um divórcio ou de uma separação de pessoas se eles forem
+incompatíveis com uma decisão anterior cujo objectivo principal fosse o estado
+matrimonial dos cônjuges, quer proferida no Estado em que o reconhecimento foi
+invocado quer reconhecida ou reunindo as condições de reconhecimento neste
+Estado.', "Com uma excelente localização na Grand Place e no centro histórico de
+Bruxelas, o ibis Brussels Off Grand'Place oferece acesso direto ao aeroporto
+internacional pela estação ferroviária.", 'O mapeamento energético demonstra
+todas as perturbações geológicas subterrâneas, perturbações essas que eram
+usadas para beneficiar os locais e elevar grandemente o seu nível energético.',
+'Malária O que você pode fazer', 'O PRAZER DE HOMOSSEXUAL SEGUNDA Santo Tomás de
+Aquino ou o segundo o dominicano ADRIANO OLIVA? . Esperamos que o Santo Padre,
+com a ajuda do Espírito Santo, tem o poder de unir o mundo católico, hoje […]',
+'Naquela noite José, Maria e Jesus caminharam, por cerca de três quilômetros,
+até o local antigo de Jericó, onde Joshua, cujo nome foi dado a Jesus, tinha
+realizado as suas renomadas façanhas, de acordo com a tradição judaica.', 'O
+principal objetivo da missão terá um módulo russo RASSVET Mini-Módulo de
+Investigação. Esta será a última viagem do ônibus espacial Atlantis, e [{\ldots}]',
+'Pintei com epoxi para não se molharem com a condensação do barraco.',
+'Saneamento ambiental em Cifuentes (Villa Clara, Cuba) - Amarillascuba.net',
+'Nossa experiência com processos de separação em refinarias {\ldots}', '(4) Os nossos
+termos e condições de compra ainda terão vigor em todos os negócios futuros com
+o fornecedor.ier.', 'Em km 31, os intensos verdes dos fluxos afundam à coloração
+e começa a cruzar o limite sul da gama Montesa do Vento, com uma formação
+montesa de endereço norte-sul, tem o norte terminar para o vulcão Domuyo.',
+'Lençóis descartáveis confecionados com matérias da posição5603, do tipo
+utilizado durante as intervenções cirúrgicas 6307 90 92', 'Há 6 dias 10:01 XCafe
+sexo oral, putas, posição de cachorro, caseiras, ejaculação na cara, alemão,
+milf', 'Excepcionalmente, 120 sacerdotes tocaram trombetas na consagração do
+Templo de Salomão.')
+['Desta forma, a vida civil de uma naç ⁇ o se avança, tornando-o poss ⁇ vel para
+todos os cidad ⁇ os desfrutar dos frutos de tolerância verdadeira e respeito
+mutual.', '1999 XIII. Winnipeg, Canadá 23 a 8 de agosto', 'No mistério do Natal,
+a luz de Cristo brilha na terra, esporrendo-se, como era, em c ⁇ rculos
+concêncios.', 'fazendo viável fazer o ocidental dois novos fechados no ocidente
+daquela pen ⁇ nsula.', 'Os seus olhos estavam brilhantes e a sua voz foi
+linda.', 'Inferiç ⁇ es, acidentes, abuso, abuso, separaç ⁇ o, choque,
+rapaçamento, abuso, abuso, abuso, abuso, abuso, abuso, apress ⁇ o, apress ⁇ o, a
+ansiedade, abuso, alimentaç ⁇ o', 'A branque HP Maxx é um gel de clareamento de
+hidrogénio de 35\% para o clareamento de dentes vitales e n ⁇ o-vitais.',
+'Linhas: com indicaç ⁇ o do n ⁇ mero de linha, De e a fim, isolamento, o P\&ID
+onde eles s ⁇ o trazidas.', 'As crucificades sa ⁇ am de Manaus, capital do
+Estado de Amazonas, uma cidade na jungle que prosperou durante o bólvulo em
+século passado e onde você encontrará uma cópia menor da Opera House em Paris,
+França. Há um', 'Ao trazer os 9/11 aos abertos eles garantiram que era dada
+atenç ⁇ o mundial, e que a verdade seria buscada e os atentantes identificou e
+os ataqueiados.', '“Like Williams, Cosworth é uma empresa independente, cujos
+proprietários compartilham nossa paix ⁇ o pela corrida e engenharia.', 'No
+entanto, isto pode ser evitado se a infiltraç ⁇ o é subepithelial.', 'Tipo de
+Publicaç ⁇ o Português: Bibliografia', 'Modificaç ⁇ o do Programa:  ⁇ s vezes, v
+⁇ rus Worm:Win32/Dedler.F ou malware SWiJ SideWinder, mas também softwares
+comuns têm a capacidade de modificar as funç ⁇ es internas de FXUCU001.DLL, o
+que significa que outros programas n ⁇ o po', 'Em alguns casos o jogador de m ⁇
+dia QuickTime acabou o funcionamento liso do v ⁇ deo MOV devido a alguns
+problemas de corrupç ⁇ o.', 'Ele é professor de Ciência Pol ⁇ tica da
+Universidade Pompeu Fabra em Barcelona.', 'Aditivos cosméticos n ⁇ o devem
+perder.', 'Comentários para teste de preservativo de Estrada', 'Como eu obter
+uma extens ⁇ o da minha autorizaç ⁇ o estudante?', 'A  ⁇ ndia da intervenç ⁇ o
+dos EUA em l ⁇ ngua!', 'Nabertherm com 450 funcionários em todo o mundo est ⁇ o
+desenvolvidos e produzindo fornos industriais para muitos aplicaç ⁇ es
+diferentes para mais de 60 anos. Como fabricante, Nabertherm oferece a maior
+gama de fornos mundanos.', "Nós chamamos essas qu ⁇ micas 'elementos'.",
+'Avaliaç ⁇ o especializada – coordenaç ⁇ o de equipes de especialistas
+selecionados para a avaliaç ⁇ o independente de estudos ambientais complexos.',
+'Existe uma sala de armazenamento de bagagem fornecida no hostel.', 'Este é um
+módulo de atualizaç ⁇ o, deve trabalhar junto com cabo Micronas OBD TOOL
+(CDC32XX), n ⁇ o pode funcionar sozinho.', '116 Ent ⁇ o seja a Deus, o
+verdadeiro Rei; n ⁇ o é lá, mas Ele, o Senhor do dominion honrável.', 'Educaç ⁇
+o tecnológica em Arequipa', 'Andinia.com - Dicionário ao ar livre: Messan',
+'VEMAG é o  ⁇ nico fabricante de reservadores de pó de pó que cumprir com os
+requisitos da USDA ex trabalhos.', 'Institutos em Pereira (Risaralda, Colômbia)
+Faculdades e escolas em Risaralda', 'Mineraç ⁇ o: equipamentos e suprimentos em
+Yugo-Zapadny okrug, Moscou', '• Previs ⁇ o correta do serviço', 'Quando falamos
+a mesma linguagem é porque temos a mesma m ⁇ e. E isto nos dá esperança.',
+'Vários tipos de acomodaç ⁇ es dispon ⁇ veis para seu alojamento em Carvoeiro:
+apartamentos de luxo ou hotéis carvoeiro baratos, e também cama \& breakfast.',
+'As profecias sobre este s ⁇ o gravadas nos dias 38 e 39o capitulo de Ezequil.
+Verso 8 do capitulo 38 é abordado a Israel, e li: “Depois de muitos dias será
+visitado; nos  ⁇ ltimos anos vir ⁇ o na terra que ', 'A Casa imediatamente se
+tornou lugar de cult e em torno dele desenvolveu o médio Loreto: a parede incr ⁇
+vel projetada por Antonio da Sangallo il Giovane foram erradas em 1518 e
+reforçada com quatro bastions em 1600.', 'N ⁇ o havia outro poder pelo qual
+poderia ser entregue.', 'Qualidade é um m ⁇ nimo para nós e estamos sempre
+procurando maneiras/acessórios para nos ajudar a entregar o melhor.', 'A forma
+tinha se tornou concentrada e engraçada. Eu rii:', 'Embora n ⁇ o é completamente
+certo, muitos chefes brasileiros concordam que a picanha corteu o rio Grande do
+Sul, o estado mais sul do Brasil, famoso por seu churrasco.', 'A condiç ⁇ o de
+aceitaç ⁇ o completa em cada hora no processo de ajuste do primeiro bloco da
+oferta de venda significa que apenas o primeiro bloco será programado em uma
+hora espec ⁇ fica se n ⁇ o é ligado completamente, e todos os', 'Agora Davi,
+filho de Jesse reinou sobre todo o Israel.', 'O raz ⁇ o e os pensamentos do
+cérebro no processo de fazer decis ⁇ o.', 'Em outros fragmentos evangelizais,
+Jesus refere-se à falta de fé de seus seguidores.', '3 Jesus sabendo que o Pai
+tinha dado todas as coisas em suas m ⁇ os, e que ele era de Deus, e foi a
+Deus;', "Como jogar o jogo de Peppy's Thandie Newton Vestir:", 'Fabricaç ⁇ o de
+artigos de couro{\ldots}', 'Os valores do parâmetro variam de 0 a 200\%.', 'Downloads
+de software relacionados com a extens ⁇ o de arquivo RB:', 'Os Estados
+Contratados podem recusar reconhecer um diário ou separaç ⁇ o legal se é
+incompat ⁇ vel com uma decis ⁇ o anterior determinando o status matrimonial dos
+cônjuges e a decis ⁇ o é feita no Estado em que a reconhecimento é procurada',
+"Com uma localizaç ⁇ o em cima do Grand Place e do centro histórico de Brussels,
+o Ibis Brussels Off Grand'Place oferece um acesso direto ao aeroporto
+internacional pela estaç ⁇ o ferroviária.", 'A mapa energética descobri todas as
+perturbaç ⁇ es geológicas subterrâneas, perturbaç ⁇ es que foram usadas para
+beneficiar os locais e aumentar muito o n ⁇ vel de energia.', 'Malaria O que
+você pode fazer', 'A PLEASURE do Santo Padre Thomas Aquinas ou SEC ⁇ O OLIVA
+DOMINICAN?. Esperamos que o Santo Padre, com ajuda do Esp ⁇ rito Santo, tem o
+poder de unir o mundo católico, hoje [{\ldots}]', 'Naquela noite José, Maria, e Jesus
+caminhou uma milha e uma metade ao local do antigo Jericó, onde Josuéu, por quem
+Jesus foi nomeado, tinha realizado suas exploitas com a tradiç ⁇ o judicana.',
+'O principal objetivo da miss ⁇ o será trazer um módulo russo Rassvet Mini-
+Research. Este será a  ⁇ ltima viagem do Shuttle Atlantis e [{\ldots}]', 'Eu pinto-os
+com epoxi para que n ⁇ o eram molhados com a condenaç ⁇ o da tenda.', 'Recuperaç
+⁇ o de Res ⁇ duos em Santa Clara (Villa Clara, Cuba) - Amarillascuba.net',
+'Nossa experiência com processos de separaç ⁇ o em refinarias{\ldots}', '(4) Nossas
+condiç ⁇ es gerais de compra também s ⁇ o requer relaç ⁇ es futuras com o
+fornecedor.', 'Em km 31, os verde intensos dos fluxos a essa ela começa a cruzar
+o limite do sul da gama de Montanha do vento, com uma formaç ⁇ o montanha de
+endereço ao norte-sul, tem o seu fim norte para o vulc ⁇ o Domuyo.', 'Cortinas
+de uso  ⁇ nico feitas de tecidos da posiç ⁇ o 5603, de um tipo utilizado durante
+procedimentos cir ⁇ rgicos 6307 90 92', 'Há 6 dias 10:01 XCafe esporradela,
+esporradela, caseira, caseira, esporradela, esporradela, esporradela,
+esporradela, esporradela', 'Excepcionalmente 120 sacerdotes jogaram trombetas na
+consagraç ⁇ o do templo de Salom ⁇ o.']
+tensor(25.5836)
+--------------------------------------------------------------------------------
+TEST RESULTS
+\{'avg\_test\_bleu': tensor(25.9006)\}
+--------------------------------------------------------------------------------
+
+    \end{Verbatim}
+
+    \hypertarget{tensorboard}{%
+\subsection*{6.2 TensorBoard}\label{tensorboard}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{0}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{o}{\PYZpc{}}\PY{k}{tensorboard} \PYZhy{}\PYZhy{}logdir logs
+\end{Verbatim}
+\end{tcolorbox}
+
+    
+    \begin{verbatim}
+<IPython.core.display.Javascript object>
+    \end{verbatim}
+
+    
+    \hypertarget{end-of-the-notebook}{%
+\subsection*{End of the notebook}\label{end-of-the-notebook}}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
