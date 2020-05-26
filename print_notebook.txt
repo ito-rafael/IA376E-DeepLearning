@@ -1,6 +1,8 @@
 # print notebook in pdf
 jupyter nbconvert --to PDF "my-notebook.ipynb"
 
+#-------------------------------------------------
+
 # print notebook in latex
 jupyter nbconvert --to latex "my-notebook.ipynb"
 
@@ -9,3 +11,5 @@ sed -i '1 s/documentclass\[11pt\]/documentclass\[10pt\]/' "my-notebook.tex"
 
 # omit sections ans subsections numbering
 sed -i 's/section{/section\*{/' "my-notebook.tex"
+
+# compile tex file and generate pdf
