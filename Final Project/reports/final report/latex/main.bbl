@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
+
+\bibitem{raffel2019exploring}
+Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael
+  Matena, Yanqi Zhou, Wei Li, and Peter~J Liu.
+\newblock Exploring the limits of transfer learning with a unified text-to-text
+  transformer.
+\newblock {\em arXiv preprint arXiv:1910.10683}, 2019.
+
+\end{thebibliography}
