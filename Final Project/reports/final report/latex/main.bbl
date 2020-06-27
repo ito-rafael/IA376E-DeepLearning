@@ -1,4 +1,45 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{bryant2019bea}
+Christopher Bryant, Mariano Felice, {\O}istein~E Andersen, and Ted Briscoe.
+\newblock The bea-2019 shared task on grammatical error correction.
+\newblock In {\em Proceedings of the Fourteenth Workshop on Innovative Use of
+  NLP for Building Educational Applications}, pages 52--75, 2019.
+
+\bibitem{bryant-etal-2017-automatic}
+Christopher Bryant, Mariano Felice, and Ted Briscoe.
+\newblock Automatic annotation and evaluation of error types for grammatical
+  error correction.
+\newblock In {\em Proceedings of the 55th Annual Meeting of the Association for
+  Computational Linguistics (Volume 1: Long Papers)}, pages 793--805,
+  Vancouver, Canada, July 2017. Association for Computational Linguistics.
+
+\bibitem{dahlmeier2012better}
+Daniel Dahlmeier and Hwee~Tou Ng.
+\newblock Better evaluation for grammatical error correction.
+\newblock In {\em Proceedings of the 2012 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies}, pages 568--572, 2012.
+
+\bibitem{dale2012hoo}
+Robert Dale, Ilya Anisimoff, and George Narroway.
+\newblock Hoo 2012: A report on the preposition and determiner error correction
+  shared task.
+\newblock In {\em Proceedings of the Seventh Workshop on Building Educational
+  Applications Using NLP}, pages 54--62, 2012.
+
+\bibitem{dale2010helping}
+Robert Dale and Adam Kilgarriff.
+\newblock Helping our own: Text massaging for computational linguistics as a
+  new shared task.
+\newblock In {\em Proceedings of the 6th International Natural Language
+  Generation Conference}, 2010.
+
+\bibitem{dale2011helping}
+Robert Dale and Adam Kilgarriff.
+\newblock Helping our own: The hoo 2011 pilot shared task.
+\newblock In {\em Proceedings of the 13th European Workshop on Natural Language
+  Generation}, pages 242--249, 2011.
 
 \bibitem{devlin2018bert}
 Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
@@ -6,11 +47,85 @@ Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
   understanding.
 \newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
 
+\bibitem{granger1998computer}
+Sylviane Granger.
+\newblock {\em The computer learner corpus: a versatile new source of data for
+  SLA research}.
+\newblock na, 1998.
+
+\bibitem{kaneko2020encoder}
+Masahiro Kaneko, Masato Mita, Shun Kiyono, Jun Suzuki, and Kentaro Inui.
+\newblock Encoder-decoder models can benefit from pre-trained masked language
+  models in grammatical error correction.
+\newblock {\em arXiv preprint arXiv:2005.00987}, 2020.
+
+\bibitem{napoles2015ground}
+Courtney Napoles, Keisuke Sakaguchi, Matt Post, and Joel Tetreault.
+\newblock Ground truth for grammatical error correction metrics.
+\newblock In {\em Proceedings of the 53rd Annual Meeting of the Association for
+  Computational Linguistics and the 7th International Joint Conference on
+  Natural Language Processing (Volume 2: Short Papers)}, pages 588--593, 2015.
+
+\bibitem{napoles2016gleu}
+Courtney Napoles, Keisuke Sakaguchi, Matt Post, and Joel Tetreault.
+\newblock Gleu without tuning.
+\newblock {\em arXiv preprint arXiv:1605.02592}, 2016.
+
+\bibitem{napoles2017jfleg}
+Courtney Napoles, Keisuke Sakaguchi, and Joel Tetreault.
+\newblock Jfleg: A fluency corpus and benchmark for grammatical error
+  correction.
+\newblock {\em arXiv preprint arXiv:1702.04066}, 2017.
+
+\bibitem{ng2014conll}
+Hwee~Tou Ng, Siew~Mei Wu, Ted Briscoe, Christian Hadiwinoto, Raymond~Hendy
+  Susanto, and Christopher Bryant.
+\newblock The conll-2014 shared task on grammatical error correction.
+\newblock In {\em Proceedings of the Eighteenth Conference on Computational
+  Natural Language Learning: Shared Task}, pages 1--14, 2014.
+
+\bibitem{ng-etal-2013-conll}
+Hwee~Tou Ng, Siew~Mei Wu, Yuanbin Wu, Christian Hadiwinoto, and Joel Tetreault.
+\newblock The {C}o{NLL}-2013 shared task on grammatical error correction.
+\newblock In {\em Proceedings of the Seventeenth Conference on Computational
+  Natural Language Learning: Shared Task}, pages 1--12, Sofia, Bulgaria, August
+  2013. Association for Computational Linguistics.
+
+\bibitem{nunes2000processo}
+Maria das Gra{\c{c}}as~Volpe Nunes and ON~Oliveira~Jr.
+\newblock O processo de desenvolvimento do revisor gramatical regra.
+\newblock In {\em Anais do XXVII SEMISH (XX Congresso Nacional da Sociedade
+  Brasileira de Computa{\c{c}}{\~a}o)}, volume~1, page~6, 2000.
+
+\bibitem{omelianchuk2020gector}
+Kostiantyn Omelianchuk, Vitaliy Atrasevych, Artem Chernodub, and Oleksandr
+  Skurzhanskyi.
+\newblock Gector--grammatical error correction: Tag, not rewrite.
+\newblock {\em arXiv preprint arXiv:2005.12592}, 2020.
+
 \bibitem{raffel2019exploring}
 Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael
   Matena, Yanqi Zhou, Wei Li, and Peter~J Liu.
 \newblock Exploring the limits of transfer learning with a unified text-to-text
   transformer.
 \newblock {\em arXiv preprint arXiv:1910.10683}, 2019.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock In {\em Advances in neural information processing systems}, pages
+  5998--6008, 2017.
+
+\bibitem{yannakoudakis2018developing}
+Helen Yannakoudakis, {\O}istein~E Andersen, Ardeshir Geranpayeh, Ted Briscoe,
+  and Diane Nicholls.
+\newblock Developing an automated writing placement system for esl learners.
+\newblock {\em Applied Measurement in Education}, 31(3):251--267, 2018.
+
+\bibitem{zhang2020spelling}
+Shaohua Zhang, Haoran Huang, Jicong Liu, and Hang Li.
+\newblock Spelling error correction with soft-masked bert.
+\newblock {\em arXiv preprint arXiv:2005.07421}, 2020.
 
 \end{thebibliography}

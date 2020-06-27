@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.6.23)  24 JUN 2020 15:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.6.23)  24 JUN 2020 07:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -134,28 +134,38 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 <../figures/t5.png, id=1, 1468.48625pt x 540.0175pt>
 File: ../figures/t5.png Graphic file (type png)
 <use ../figures/t5.png>
-Package pdftex.def Info: ../figures/t5.png  used on input line 49.
+Package pdftex.def Info: ../figures/t5.png  used on input line 55.
 (pdftex.def)             Requested size: 265.65147pt x 97.6851pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 60.
+(Font)              <7> on input line 66.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 60.
- (./main.bbl [1
+(Font)              <5> on input line 66.
 
-{/home/rafael/.texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../figures/t5.png>]) [2] (./main.aux) ) 
+Overfull \hbox (2.00058pt too wide) in paragraph at lines 123--159
+\OT1/cmr/m/n/10 Masked BERT [[]] GEC-ToR [[]] Re-GRA [[]] CoNLL-2013 [[]] CoNLL-2014 [[]]
+ []
+
+[1
+
+{/home/rafael/.texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <../figures/t5.png>] (./main.bbl [2]
+Underfull \hbox (badness 2221) in paragraph at lines 57--61
+\OT1/cmr/m/n/10 lan-guage mod-els in gram-mat-i-cal er-ror cor-rec-tion.  \OT1/cmr/m/it/10 arXiv preprint
+ []
+
+[3]) [4] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 2380 strings out of 480478
- 35040 string characters out of 5905959
- 287989 words of memory out of 5000000
- 18385 multiletter control sequences out of 15000+600000
+ 2399 strings out of 480478
+ 35398 string characters out of 5905959
+ 290072 words of memory out of 5000000
+ 18404 multiletter control sequences out of 15000+600000
  537546 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,6n,29p,239b,222s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (2 pages, 221869 bytes).
+Output written on main.pdf (4 pages, 244398 bytes).
 PDF statistics:
- 54 PDF objects out of 1000 (max. 8388607)
- 37 compressed objects within 1 object stream
+ 60 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

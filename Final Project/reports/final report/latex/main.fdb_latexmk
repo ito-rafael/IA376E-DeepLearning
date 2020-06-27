@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex main"] 1593024822 "main.aux" "main.bbl" "main" 1593024893
+["bibtex main"] 1592995596 "main.aux" "main.bbl" "main" 1592995633
   "/usr/share/texmf-dist/bibtex/bst/base/plain.bst" 1591545468 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1593024893 1930 6f983b58c860fd1281e986a6ac25c840 "pdflatex"
+  "main.aux" 1592995633 3229 bbb6334ae9afecbdb03c4c7bfb2caca2 "pdflatex"
   "main.bib" 1592995619 12173 38b1a61aed560ba72f88b78222aa4f7b ""
   (generated)
-  "main.bbl"
   "main.blg"
-["pdflatex"] 1593024892 "main.tex" "main.pdf" "main" 1593024893
+  "main.bbl"
+["pdflatex"] 1592995632 "main.tex" "main.pdf" "main" 1592995633
   "../figures/t5.png" 1592494724 143597 6541ac6709defd4516ab23650a8249c2 ""
   "/home/rafael/.texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1576676982 334320 d10c2901904b0a572e57c10ac4826b67 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1591545468 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -62,10 +62,10 @@
   "/usr/share/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty" 1591545468 19989 e08c4750d96640367c4b141017eda013 ""
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1591545468 33301 a3134070eacafb10b1f371612ce2650d ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1592957515 2514051 fc99ccf9f0ad5183264a2b80f9b80b8e ""
-  "main.aux" 1593024893 1930 6f983b58c860fd1281e986a6ac25c840 "pdflatex"
-  "main.bbl" 1593024822 599 5fdce63ef24162ee46f4f86937362102 "bibtex main"
-  "main.tex" 1593024892 4117 f59b746a635abf9427bdf952520c6840 ""
+  "main.aux" 1592995633 3229 bbb6334ae9afecbdb03c4c7bfb2caca2 "pdflatex"
+  "main.bbl" 1592995596 5724 78a015581af643671974a3fdc3143c70 "bibtex main"
+  "main.tex" 1592995631 4390 2be7803cb32de7361b07b31b52835d3e ""
   (generated)
-  "main.log"
   "main.pdf"
+  "main.log"
   "main.aux"
